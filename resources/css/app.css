@@ -1,11 +1,127 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default;
+}
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* @theme {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+} */
+
+/* @plugin "daisyui/theme" {
+    name: "dark";
+    default: false;
+    prefersdark: true;
+    --color-base-100: oklch(30.857% 0.023 264.149);
+    --color-base-200: oklch(28.036% 0.019 264.182);
+    --color-base-300: oklch(26.346% 0.018 262.177);
+    --color-base-content: oklch(82.901% 0.031 222.959);
+    --color-primary: oklch(86.133% 0.141 139.549);
+    --color-primary-content: oklch(17.226% 0.028 139.549);
+    --color-secondary: oklch(73.375% 0.165 35.353);
+    --color-secondary-content: oklch(14.675% 0.033 35.353);
+    --color-accent: oklch(74.229% 0.133 311.379);
+    --color-accent-content: oklch(14.845% 0.026 311.379);
+    --color-neutral: oklch(24.731% 0.02 264.094);
+    --color-neutral-content: oklch(82.901% 0.031 222.959);
+    --color-info: oklch(86.078% 0.142 206.182);
+    --color-info-content: oklch(17.215% 0.028 206.182);
+    --color-success: oklch(86.171% 0.142 166.534);
+    --color-success-content: oklch(17.234% 0.028 166.534);
+    --color-warning: oklch(86.163% 0.142 94.818);
+    --color-warning-content: oklch(17.232% 0.028 94.818);
+    --color-error: oklch(82.418% 0.099 33.756);
+    --color-error-content: oklch(16.483% 0.019 33.756);
+    --radius-selector: 0.5rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.5rem;
+    --size-selector: 0.21875rem;
+    --size-field: 0.21875rem;
+    --border: 1.5px;
+    --depth: 1;
+    --noise: 0;  
+} */
+
+@plugin "daisyui/theme" {
+    name: "wellness-dark";
+    default: true;
+    /* Wellness Dark Palette */
+    --color-base-100: #2a2a2a; /* Fondo negro */
+    --color-base-200: #202020; /* Fondo secundario oscuro */
+    --color-base-300: #1a1a1a; /* Tarjetas oscuras */
+    --color-base-content: #f5f5f5; /* Texto claro */
+    --color-primary: #53fa05; /* Verde fresco */
+    --color-primary-content: #000000; /* Texto sobre verde */
+    --color-secondary: #1a5276; /* Azul profundo */
+    --color-secondary-content: #f5f5f5; /* Texto sobre azul */
+    --color-accent: #1b4332; /* Verde muy oscuro */
+    --color-accent-content: #f5f5f5; /* Texto sobre verde oscuro */
+    --color-neutral: #2d3748; /* Bordes */
+    --color-neutral-content: #f5f5f5; /* Texto sobre neutro */
+    --color-info: #1a5276; /* Azul profundo para info */
+    --color-info-content: #f5f5f5; /* Texto sobre info */
+    --color-success: #87f46d; /* Verde fresco para éxito */
+    --color-success-content: #000000; /* Texto sobre éxito */
+    --color-warning: #a0aec0; /* Texto gris claro para warning */
+    --color-warning-content: #000000; /* Texto sobre warning */
+    --color-error: #e53e3e; /* Rojo para errores */
+    --color-error-content: #f5f5f5; /* Texto sobre error */
+    --radius-selector: 0.5rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.5rem;
+    --size-selector: 0.21875rem;
+    --size-field: 0.21875rem;
+    --border: 1.5px;
+    --depth: 1;
+    --noise: 0;
+}
+
+select,
+input,
+textarea {
+    @apply focus-within:border-primary text-base-content text-[16px] focus-within:shadow-md focus-within:outline-0;
+}
+
+.input {
+    @apply focus-within:border-primary text-base-content text-[16px] focus-within:shadow-md focus-within:outline-0;
+}
+
+button,
+a {
+    @apply transition-transform;
+}
+
+button {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+button:active,
+a:active {
+    @apply scale-95;
+}
+
+html {
+    /* scrollbar-gutter: stable; */
+    overflow: hidden;
+}
+
+/* !custom classes */
+.unselectable {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.my-side-container {
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    scrollbar-color: color-mix(in oklch, var(--color-primary) 40%, transparent)
+        transparent;
+    scrollbar-arrow-color: transparent;
 }
