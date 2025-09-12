@@ -2,9 +2,9 @@ name: Lint Code Style
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
 
 jobs:
   pint:
@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }} # Necesario para hacer push
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -22,10 +24,22 @@ jobs:
         tools: composer
 
     - name: Install dependencies
-      run: composer install
+      run: composer install --no-progress --no-interaction --prefer-dist
 
     - name: Generate Key
       run: php artisan key:generate
 
-    - name: Run Laravel Pint
-      run: vendor/bin/pint --test
+    - name: Run Laravel Pint (apply fixes)
+      run: vendor/bin/pint
+
+    - name: Commit and Push changes
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add .
+        if ! git diff --cached --quiet; then
+          git commit -m "chore: apply Laravel Pint fixes"
+          git push
+        else
+          echo "No code style fixes to commit."
+        fi
