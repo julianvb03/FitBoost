@@ -3,7 +3,7 @@
 return [
     'health_wellness' => 'Salud & Bienestar',
     'home' => 'Inicio',
-    'services' => 'Servicios',
+    'admin_dashboard' => 'Panel de Administración',
     'about' => 'Nosotros',
     'contact' => 'Contacto',
     'products' => 'Productos',
@@ -16,4 +16,7 @@ return [
     'goals' => 'Objetivos',
     'choose_language' => 'Elige tu idioma',
     'register' => 'Únete ahora',
+    'car_shop' => 'Carrito de Compras',
+    'logout' => 'Cerrar sesión',
+    'recommendations' => 'Recomendaciones',
 ];
