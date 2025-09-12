@@ -108,8 +108,13 @@ a:active {
 }
 
 html {
-    /* scrollbar-gutter: stable; */
+    scrollbar-gutter: unset;
     overflow: hidden;
+}
+
+#main-content {
+    scrollbar-gutter: stable;
+    scroll-behavior: smooth;
 }
 
 /* !custom classes */
@@ -119,7 +124,7 @@ html {
 }
 
 .my-side-container {
-    scrollbar-width: thin;
+    /* scrollbar-width: thin; */
     scroll-behavior: smooth;
     scrollbar-color: color-mix(in oklch, var(--color-primary) 40%, transparent)
         transparent;

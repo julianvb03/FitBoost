@@ -109,7 +109,7 @@
         </section>
 
         {{-- Sección 3: Recomendados por IA para ti --}}
-        <section>
+        <section id="products">
             <h2 class="text-4xl lg:text-5xl font-bold text-base-content mb-8">
                 Recomendados por IA para ti
             </h2>
