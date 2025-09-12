@@ -9,7 +9,7 @@ return [
     'products' => 'Productos',
     'free_evaluation' => 'Evaluación gratuita',
     'language' => 'Idioma',
-    'dashboard' => 'Dashboard',
+    'dashboard' => 'Panel',
     'profile' => 'Perfil',
     'statistics' => 'Estadísticas',
     'routines' => 'Rutinas',

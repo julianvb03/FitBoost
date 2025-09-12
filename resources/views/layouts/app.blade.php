@@ -16,7 +16,7 @@
                 {{-- Navbar --}}
                 <div class="navbar bg-base-100 shadow-sm px-6">
                     <div class="navbar-start">
-                        <label for="left-sidebar" class="btn btn-ghost lg:hidden">
+                        <label for="left-sidebar" class="btn btn-ghost xl:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -37,25 +37,32 @@
                     </div>
                     <div class="navbar-center hidden xl:flex">
                         <ul class="menu menu-horizontal px-1">
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.home') }} </a></li>
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.services') }} </a></li>
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.about') }} </a></li>
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.contact') }} </a></li>
+                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.home') }} </a>
+                            </li>
+                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.services') }} </a>
+                            </li>
+                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.about') }} </a>
+                            </li>
+                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.contact') }} </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="navbar-end">
                         <div class="flex items-center gap-3">
                             <!-- Language Selector by the momento only present on side bar -->
-                            <!-- <form action="{{ route('language.change') }}" method="POST" class="hidden xl:block">
+                            {{-- <form action="{{ route('language.change') }}" method="POST" class="hidden xl:block">
                                 @csrf
-                                <select name="lang" onchange="this.form.submit()" 
+                                <select name="lang" onchange="this.form.submit()"
                                     class="select select-bordered select-sm w-auto max-w-xs border-neutral text-base-content bg-base-100 hover:bg-base-200">
-                                    <option value="en" {{ session('lang', 'en') == 'en' ? 'selected' : '' }} >English</option>
-                                    <option value="es" {{ session('lang', 'en') == 'es' ? 'selected' : '' }} >Español</option>
+                                    <option value="en" {{ session('lang', 'en') == 'en' ? 'selected' : '' }}>English
+                                    </option>
+                                    <option value="es" {{ session('lang', 'en') == 'es' ? 'selected' : '' }}>Español
+                                    </option>
                                 </select>
-                            </form> -->
+                            </form> --}}
 
-                            <button class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:block">
+                            <button
+                                class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:block">
                                 {{ trans('layout/app.products') }}
                             </button>
                             <button class="btn btn-primary btn-sm text-primary-content">
@@ -66,9 +73,9 @@
                 </div>
 
                 {{-- <!-- Page content here --> --}}
-                <div class="h-[calc(100dvh-65px)] overflow-hidden overflow-y-auto bg-base-200"
-                    style="scrollbar-gutter: stable">
-                    <div class="container mx-auto my-side-container py-10 px-4 xl:px-8">
+                <div class="h-[calc(100dvh-65px)] overflow-hidden overflow-y-auto bg-base-200 my-side-container"
+                    id="main-content">
+                    <div class="container mx-auto py-10 px-4 xl:px-8">
                         @yield('content')
                     </div>
                 </div>
@@ -144,13 +151,13 @@
                     <div class="mt-8 space-y-3">
                         <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST">
                             @csrf
-                            <select name="lang" onchange="document.getElementById('language-form-sidebar').submit();" 
-                                class="select select-bordered select-sm w-full border-neutral text-base-content bg-base-100 hover:bg-base-200">
+                            <select name="lang" class="select"
+                                onchange="document.getElementById('language-form-sidebar').submit();">
                                 <option value="es" @selected(session('lang', 'es') === 'es')>Español</option>
                                 <option value="en" @selected(session('lang', 'es') === 'en')>English</option>
                             </select>
                         </form>
-                        
+
                         <button class="btn btn-outline w-full border-neutral text-base-content hover:bg-base-200">
                             {{ trans('layout/app.products') }}
                         </button>
