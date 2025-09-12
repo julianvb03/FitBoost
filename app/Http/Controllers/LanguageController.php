@@ -13,15 +13,8 @@ class LanguageController extends Controller
         $validatedData = $request->validated();
         $lang = $validatedData['lang'];
 
-                        Session::put('lang', $lang);
+        Session::put('lang', $lang);
 
-        
-        
-        
-        
-        
-        
-        
-                        return redirect()->back();
+        return redirect()->back();
     }
 }
