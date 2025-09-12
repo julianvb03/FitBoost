@@ -3,7 +3,7 @@
 return [
     'health_wellness' => 'Salud & Bienestar',
     'home' => 'Inicio',
-    'services' => 'Servicios', 
+    'services' => 'Servicios',
     'about' => 'Nosotros',
     'contact' => 'Contacto',
     'products' => 'Productos',
