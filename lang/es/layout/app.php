@@ -14,4 +14,6 @@ return [
     'statistics' => 'Estadísticas',
     'routines' => 'Rutinas',
     'goals' => 'Objetivos',
+    'choose_language' => 'Elige tu idioma',
+    'register' => 'Únete ahora',
 ];

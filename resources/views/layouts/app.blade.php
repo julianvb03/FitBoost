@@ -37,37 +37,43 @@
                     </div>
                     <div class="navbar-center hidden xl:flex">
                         <ul class="menu menu-horizontal px-1">
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.home') }} </a>
+                            <li><a href="{{ route('home.index') }}" class="text-base-content hover:text-primary"> {{ trans('layout/app.home') }} </a>
                             </li>
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.services') }} </a>
+                            <li><a href="#" class="text-base-content hover:text-primary"> {{ trans('layout/app.services') }} </a>
                             </li>
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.about') }} </a>
+                            <li><a href="#" class="text-base-content hover:text-primary"> {{ trans('layout/app.about') }} </a>
                             </li>
-                            <li><a class="text-base-content hover:text-primary"> {{ trans('layout/app.contact') }} </a>
+                            <li><a href="#" class="text-base-content hover:text-primary"> {{ trans('layout/app.contact') }} </a>
                             </li>
                         </ul>
                     </div>
                     <div class="navbar-end">
                         <div class="flex items-center gap-3">
-                            <!-- Language Selector by the momento only present on side bar -->
-                            {{-- <form action="{{ route('language.change') }}" method="POST" class="hidden xl:block">
+                            <!-- Language Selector -->
+                            <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST" class="hidden xl:block">
                                 @csrf
-                                <select name="lang" onchange="this.form.submit()"
-                                    class="select select-bordered select-sm w-auto max-w-xs border-neutral text-base-content bg-base-100 hover:bg-base-200">
-                                    <option value="en" {{ session('lang', 'en') == 'en' ? 'selected' : '' }}>English
-                                    </option>
-                                    <option value="es" {{ session('lang', 'en') == 'es' ? 'selected' : '' }}>Español
-                                    </option>
-                                </select>
-                            </form> --}}
+                                <select name="lang"
+                                    class="select select-bordered select-sm w-auto max-w-xs border-neutral text-base-content bg-base-100 hover:bg-base-200"
+                                    onchange="document.getElementById('language-form-sidebar').submit();">
 
-                            <button
-                                class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:block">
-                                {{ trans('layout/app.products') }}
-                            </button>
-                            <button class="btn btn-primary btn-sm text-primary-content">
+                                    <option disabled selected>
+                                        {{ trans('layout/app.choose_language') }}
+                                    </option>
+
+                                    <option value="es" @selected(session('lang', 'es') === 'es')>Español</option>
+                                    <option value="en" @selected(session('lang', 'es') === 'en')>English</option>
+                                </select>
+                            </form>
+
+                            <a href="#" class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:block">
                                 {{ trans('layout/app.free_evaluation') }}
-                            </button>
+                            </a>
+                            <a href="#" class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:block">
+                                {{ trans('layout/app.products') }}
+                            </a>
+                            <a href="{{ route('login') }}" class="btn btn-primary btn-sm text-primary-content">
+                                {{ trans('layout/app.register') }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -149,14 +155,20 @@
 
                     {{-- Language Selector on sidebar --}}
                     <div class="mt-8 space-y-3">
-                        <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST">
+                        <!-- <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST">
                             @csrf
-                            <select name="lang" class="select"
+                            <select name="lang"
+                                class="select select-bordered w-full max-w-xs"
                                 onchange="document.getElementById('language-form-sidebar').submit();">
-                                <option value="es" @selected(session('lang', 'es') === 'es')>Español</option>
-                                <option value="en" @selected(session('lang', 'es') === 'en')>English</option>
+
+                                <option disabled selected>
+                                    {{ __('Choose your language') }}
+                                </option>
+
+                                <option value="es" @selected(session('lang') === 'es')>Español</option>
+                                <option value="en" @selected(session('lang') === 'en')>English</option>
                             </select>
-                        </form>
+                        </form> -->
 
                         <button class="btn btn-outline w-full border-neutral text-base-content hover:bg-base-200">
                             {{ trans('layout/app.products') }}
