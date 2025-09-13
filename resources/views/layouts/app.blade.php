@@ -40,17 +40,21 @@
                     </div>
                     <div class="navbar-center hidden xl:flex">
                         <ul class="menu menu-horizontal px-1">
-                            <li><a href="{{ route('home.index') }}" class="text-base-content hover:text-primary"> {{ trans('layout/app.home') }} </a>
+                            <li><a href="{{ route('home.index') }}" class="text-base-content hover:text-primary">
+                                    {{ trans('layout/app.home') }} </a>
                             </li>
-                            <li><a href="#" class="text-base-content hover:text-primary"> {{ trans('layout/app.contact') }} </a>
+                            <li><a href="#" class="text-base-content hover:text-primary">
+                                    {{ trans('layout/app.contact') }} </a>
                             </li>
                             @auth
                                 @if (auth()->user()->hasRole('admin'))
-                                    <li><a href="#" class="text-base-content hover:text-primary"> {{ trans('layout/app.admin_dashboard') }} </a>
+                                    <li><a href="#" class="text-base-content hover:text-primary">
+                                            {{ trans('layout/app.admin_dashboard') }} </a>
                                     </li>
                                 @endif
                                 @if (auth()->user()->hasRole('user'))
-                                    <li><a href="#" class="text-base-content hover:text-primary"> {{ trans('layout/app.car_shop') }} </a>
+                                    <li><a href="#" class="text-base-content hover:text-primary">
+                                            {{ trans('layout/app.car_shop') }} </a>
                                     </li>
                                 @endif
 
@@ -61,10 +65,11 @@
                     <div class="navbar-end">
                         <div class="flex items-center gap-3">
                             <!-- Language Selector -->
-                            <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST" class="hidden xl:block">
+                            <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST"
+                                class="hidden xl:block">
                                 @csrf
                                 <select name="lang"
-                                    class="select select-bordered select-sm w-auto max-w-xs border-neutral text-base-content bg-base-100 hover:bg-base-200"
+                                    class="select select-bordered cursor-pointer select-sm w-auto max-w-xs border-neutral text-base-content bg-base-100 hover:bg-base-200"
                                     onchange="document.getElementById('language-form-sidebar').submit();">
 
                                     <option disabled selected>
@@ -76,10 +81,12 @@
                                 </select>
                             </form>
 
-                            <a href="#" class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:block">
+                            <a href="#"
+                                class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:flex">
                                 {{ trans('layout/app.free_evaluation') }}
                             </a>
-                            <a href="#" class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:block">
+                            <a href="#"
+                                class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:flex">
                                 {{ trans('layout/app.products') }}
                             </a>
                             @guest
@@ -166,33 +173,33 @@
                                 </a>
                             </li>
                             <!-- <li>
-                                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
-                                        </path>
-                                    </svg>
-                                    <span> {{ trans('layout/app.routines') }} </span>
-                                </a>
-                            </li> -->
+                                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
+                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                                            </path>
+                                                        </svg>
+                                                        <span> {{ trans('layout/app.routines') }} </span>
+                                                    </a>
+                                                </li> -->
                         </ul>
 
                         {{-- Language Selector on sidebar --}}
                         <div class="mt-8 space-y-3">
                             <!-- <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST">
-                                @csrf
-                                <select name="lang"
-                                    class="select select-bordered w-full max-w-xs"
-                                    onchange="document.getElementById('language-form-sidebar').submit();">
+                                                    @csrf
+                                                    <select name="lang"
+                                                        class="select select-bordered w-full max-w-xs"
+                                                        onchange="document.getElementById('language-form-sidebar').submit();">
 
-                                    <option disabled selected>
-                                        {{ __('Choose your language') }}
-                                    </option>
+                                                        <option disabled selected>
+                                                            {{ __('Choose your language') }}
+                                                        </option>
 
-                                    <option value="es" @selected(session('lang') === 'es')>Español</option>
-                                    <option value="en" @selected(session('lang') === 'en')>English</option>
-                                </select>
-                            </form> -->
+                                                        <option value="es" @selected(session('lang') === 'es')>Español</option>
+                                                        <option value="en" @selected(session('lang') === 'en')>English</option>
+                                                    </select>
+                                                </form> -->
 
                             <button class="btn btn-outline w-full border-neutral text-base-content hover:bg-base-200">
                                 {{ trans('layout/app.products') }}
