@@ -25,4 +25,4 @@ Route::get('/test-authorization', function () {
     } else {
         return response()->json(['message' => 'No authenticated user'], 401);
     }
-})->middleware('auth')->name('test.authorization');
+})->name('test.authorization')->middleware('role:admin|user');

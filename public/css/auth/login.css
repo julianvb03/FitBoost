@@ -1,0 +1,15 @@
+.input:focus {
+    box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.1);
+    border-color: var(--color-primary);
+}
+
+.card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 640px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+}

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fitboost | @yield('title', 'FitBoost')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 
 <body>
@@ -16,13 +17,15 @@
                 {{-- Navbar --}}
                 <div class="navbar bg-base-100 shadow-sm px-6">
                     <div class="navbar-start">
-                        <label for="left-sidebar" class="btn btn-ghost xl:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 12h8m-8 6h16" />
-                            </svg>
-                        </label>
+                        @auth
+                            <label for="left-sidebar" class="btn btn-ghost xl:hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h8m-8 6h16" />
+                                </svg>
+                            </label>
+                        @endauth
                         <div class="flex items-center gap-3">
                             <a href="/" class="">
                                 {{-- Logo --}}
@@ -203,6 +206,7 @@
             @endauth
         </div>
     </main>
+    @stack('scripts')
 </body>
 
 </html>
