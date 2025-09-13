@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     /**
-     * Category attributes that are mass assignable.
-     * $this->attributes['name'] = 'name';
-     * $this->attributes['description'] = 'description';
+     * ITEM ATTRIBUTES.
+     * $this->attributes['name'] - string - contains the category name
+     * $this->attributes['description'] - string - contains the category description
+     * $this->attributes['supplements'] - Supplement[] - contains the category supplements
      */
-
     protected $fillable = ['name', 'description'];
 
     public function getId(): int
@@ -30,7 +30,6 @@ class Category extends Model
     }
 
     public function setName(string $name): void
-
     {
         $this->attributes['name'] = $name;
     }
