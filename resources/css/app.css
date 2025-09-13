@@ -52,35 +52,36 @@
     name: "wellness-dark";
     default: true;
     /* Wellness Dark Palette */
-    --color-base-100: #2a2a2a; /* Fondo negro */
-    --color-base-200: #202020; /* Fondo secundario oscuro */
-    --color-base-300: #1a1a1a; /* Tarjetas oscuras */
-    --color-base-content: #f5f5f5; /* Texto claro */
-    --color-primary: #53fa05; /* Verde fresco */
-    --color-primary-content: #000000; /* Texto sobre verde */
-    --color-secondary: #1a5276; /* Azul profundo */
-    --color-secondary-content: #f5f5f5; /* Texto sobre azul */
-    --color-accent: #1b4332; /* Verde muy oscuro */
-    --color-accent-content: #f5f5f5; /* Texto sobre verde oscuro */
-    --color-neutral: #2d3748; /* Bordes */
-    --color-neutral-content: #f5f5f5; /* Texto sobre neutro */
-    --color-info: #1a5276; /* Azul profundo para info */
-    --color-info-content: #f5f5f5; /* Texto sobre info */
-    --color-success: #87f46d; /* Verde fresco para éxito */
-    --color-success-content: #000000; /* Texto sobre éxito */
-    --color-warning: #a0aec0; /* Texto gris claro para warning */
-    --color-warning-content: #000000; /* Texto sobre warning */
-    --color-error: #e53e3e; /* Rojo para errores */
-    --color-error-content: #f5f5f5; /* Texto sobre error */
-    --radius-selector: 0.5rem;
-    --radius-field: 0.5rem;
-    --radius-box: 0.5rem;
-    --size-selector: 0.21875rem;
-    --size-field: 0.21875rem;
-    --border: 1.5px;
-    --depth: 1;
-    --noise: 0;
+    --color-base-100: #2a2a2a;              /* Black background */
+    --color-base-200: #202020;              /* Secondary dark background */
+    --color-base-300: #1a1a1a;              /* Dark cards */
+    --color-base-content: #f5f5f5;          /* Light text */
+    --color-primary: #53fa05;               /* Fresh green */
+    --color-primary-content: #000000;       /* Text on green */
+    --color-secondary: #1a5276;             /* Deep blue */
+    --color-secondary-content: #f5f5f5;     /* Text on blue */
+    --color-accent: #1b4332;                /* Very dark green */
+    --color-accent-content: #f5f5f5;        /* Text on dark green */
+    --color-neutral: #2d3748;               /* Borders */
+    --color-neutral-content: #f5f5f5;       /* Text on neutral */
+    --color-info: #1a5276;                  /* Deep blue for info */
+    --color-info-content: #f5f5f5;          /* Text on info */
+    --color-success: #87f46d;               /* Fresh green for success */
+    --color-success-content: #000000;       /* Text on success */
+    --color-warning: #a0aec0;               /* Light gray for warning */
+    --color-warning-content: #000000;       /* Text on warning */
+    --color-error: #e53e3e;                 /* Red for errors */
+    --color-error-content: #f5f5f5;         /* Text on error */
+    --radius-selector: 0.5rem;              /* Selector border radius */
+    --radius-field: 0.5rem;                 /* Field border radius */
+    --radius-box: 0.5rem;                   /* Box border radius */
+    --size-selector: 0.21875rem;            /* Selector size */
+    --size-field: 0.21875rem;               /* Field size */
+    --border: 1.5px;                        /* Border thickness */
+    --depth: 1;                             /* Shadow depth */
+    --noise: 0;                             /* Background noise level */
 }
+
 
 select,
 input,
