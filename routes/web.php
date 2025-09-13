@@ -2,12 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function ($locale = null) {
-    if (isset($locale) && in_array($locale, config('app.available_locales'))) {
-        app()->setLocale($locale);
-    }
+// Authentication Routes
+Auth::routes();
 
-    return view('index');
-});
+// Home Route
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home.index');
 
+// Language Change Route
 Route::post('/language/change', 'App\Http\Controllers\LanguageController@change')->name('language.change');

@@ -3,7 +3,7 @@
 return [
     'health_wellness' => 'Health & Wellness',
     'home' => 'Home',
-    'services' => 'Services',
+    'admin_dashboard' => 'Admin Dashboard',
     'about' => 'About',
     'contact' => 'Contact',
     'products' => 'Products',
@@ -14,4 +14,9 @@ return [
     'statistics' => 'Statistics',
     'routines' => 'Routines',
     'goals' => 'Goals',
+    'choose_language' => 'Choose your language',
+    'register' => 'Join Now',
+    'car_shop' => 'Car Shop',
+    'logout' => 'Logout',
+    'recommendations' => 'Recommendations',
 ];
