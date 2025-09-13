@@ -85,7 +85,7 @@
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
                             </svg>
-                            {{ trans('auth.update_email') ?? 'Update Email' }}
+                            {{ trans('auth.update_email')}}
                         </a>
                     @endif
 
@@ -94,7 +94,7 @@
                         <a href="{{ route('logout') }}" 
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                            class="link link-primary link-hover text-sm">
-                            {{ trans('auth.logout') ?? 'Logout' }}
+                            {{ trans('auth.logout') }}
                         </a>
                     </div>
                 </div>
@@ -117,12 +117,12 @@
                     </div>
                     <div>
                         <h3 class="font-medium text-base-content mb-2">
-                            {{ trans('auth.having_trouble') ?? 'Having trouble?' }}
+                            {{ trans('auth.having_trouble') }}
                         </h3>
                         <ul class="text-sm text-base-content/70 space-y-1">
-                            <li>• {{ trans('auth.check_spam_folder') ?? 'Check your spam or junk folder' }}</li>
-                            <li>• {{ trans('auth.verification_expires') ?? 'Verification links expire after 60 minutes' }}</li>
-                            <li>• {{ trans('auth.contact_support') ?? 'Contact support if you continue having issues' }}</li>
+                            <li>• {{ trans('auth.check_spam_folder') }}</li>
+                            <li>• {{ trans('auth.verification_expires') }}</li>
+                            <li>• {{ trans('auth.contact_support') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
         <!-- Footer -->
         <div class="text-center mt-8">
             <p class="text-base-content/50 text-xs">
-                {{ trans('auth.verification_footer') ?? 'For your security, please verify your email address before continuing.' }}
+                {{ trans('auth.verification_footer') }}
             </p>
         </div>
     </div>

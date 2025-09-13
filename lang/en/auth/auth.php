@@ -94,6 +94,7 @@ return [
     'reset_link_expires' => 'Password reset links expire after 60 minutes',
     'one_time_use' => 'Each link can only be used once',
     'reset_footer' => 'We take your account security seriously and will never ask for your password via email.',
+    'update_password' => 'Update Password',
 
     // Password Reset Confirmation
     'new_password_subtitle' => 'Create a strong password for your account',

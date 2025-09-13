@@ -12,8 +12,8 @@
                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                 </svg>
             </div>
-            <h1 class="text-3xl font-bold text-base-content">{{ trans('auth/auth.new_password') ?? 'Set New Password' }}</h1>
-            <p class="text-base-content/70 mt-2">{{ trans('auth/auth.new_password_subtitle') ?? 'Create a strong password for your account' }}</p>
+            <h1 class="text-3xl font-bold text-base-content">{{ trans('auth/auth.new_password') }}</h1>
+            <p class="text-base-content/70 mt-2">{{ trans('auth/auth.new_password_subtitle') }}</p>
         </div>
 
         <!-- Reset Password Card -->
@@ -40,7 +40,7 @@
                 <!-- Instructions -->
                 <div class="text-center mb-8">
                     <p class="text-base-content leading-relaxed">
-                        {{ trans('auth/auth.password_reset_instructions') ?? 'Almost done! Create a strong password to secure your account.' }}
+                        {{ trans('auth/auth.password_reset_instructions') }}
                     </p>
                 </div>
 
@@ -60,7 +60,7 @@
                                 type="email" 
                                 class="input input-bordered w-full pl-12 bg-base-200 @error('email') input-error @enderror"
                                 name="email" 
-                                value="{{ $email ?? old('email') }}" 
+                                value="{{ old('email', $email) }}" 
                                 required 
                                 autocomplete="email" 
                                 readonly
@@ -124,7 +124,7 @@
                         <!-- Password Strength Indicator -->
                         <div id="password-strength" class="mt-2 hidden">
                             <div class="flex items-center space-x-2">
-                                <div class="text-xs text-base-content/70">{{ trans('auth/auth.password_strength') ?? 'Strength:' }}</div>
+                                <div class="text-xs text-base-content/70">{{ trans('auth/auth.password_strength') }}</div>
                                 <div class="flex space-x-1">
                                     <div id="strength-1" class="w-6 h-2 bg-base-300 rounded"></div>
                                     <div id="strength-2" class="w-6 h-2 bg-base-300 rounded"></div>
@@ -163,7 +163,7 @@
                             </div>
                         </div>
                         <div id="password-match-text" class="label hidden">
-                            <span class="label-text-alt text-success">{{ trans('auth/auth.passwords_match') ?? 'Passwords match' }}</span>
+                            <span class="label-text-alt text-success">{{ trans('auth/auth.passwords_match') }}</span>
                         </div>
                     </div>
 
@@ -191,25 +191,25 @@
                     </div>
                     <div>
                         <h3 class="font-medium text-base-content mb-2">
-                            {{ trans('auth/auth.password_requirements') ?? 'Password Requirements' }}
+                            {{ trans('auth/auth.password_requirements') }}
                         </h3>
                         <ul class="text-sm text-base-content/70 space-y-1">
                             <li id="req-length" class="flex items-center">
                                 <span class="w-4 h-4 mr-2">•</span>
-                                {{ trans('auth/auth.min_8_characters') ?? 'At least 8 characters' }}
+                                {{ trans('auth/auth.min_8_characters') }}
                             </li>
                             <!-- Actually we only validate the length -->
                             <!-- <li id="req-uppercase" class="flex items-center">
                                 <span class="w-4 h-4 mr-2">•</span>
-                                {{ trans('auth/auth.one_uppercase') ?? 'One uppercase letter' }}
+                                {{ trans('auth/auth.one_uppercase') }}
                             </li>
                             <li id="req-lowercase" class="flex items-center">
                                 <span class="w-4 h-4 mr-2">•</span>
-                                {{ trans('auth/auth.one_lowercase') ?? 'One lowercase letter' }}
+                                {{ trans('auth/auth.one_lowercase') }}
                             </li>
                             <li id="req-number" class="flex items-center">
                                 <span class="w-4 h-4 mr-2">•</span>
-                                {{ trans('auth/auth.one_number') ?? 'One number' }}
+                                {{ trans('auth/auth.one_number') }}
                             </li> -->
                         </ul>
                     </div>
@@ -220,7 +220,7 @@
         <!-- Footer -->
         <div class="text-center mt-8">
             <p class="text-base-content/50 text-xs">
-                {{ trans('auth/auth.secure_connection') ?? 'Your connection is secure and your password is encrypted.' }}
+                {{ trans('auth/auth.secure_connection') }}
             </p>
         </div>
     </div>

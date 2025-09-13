@@ -13,7 +13,7 @@
                 </svg>
             </div>
             <h1 class="text-3xl font-bold text-base-content">{{ trans('auth/auth.confirm_password') }}</h1>
-            <p class="text-base-content/70 mt-2">{{ trans('auth/auth.confirm_password_subtitle') ?? 'Verify your identity to continue' }}</p>
+            <p class="text-base-content/70 mt-2">{{ trans('auth/auth.confirm_password_subtitle') }}</p>
         </div>
 
         <!-- Confirm Password Card -->
@@ -38,7 +38,8 @@
                 </div>
 
                 <!-- User Info (if available) -->
-                @auth/auth
+                 <!-- Avoided for bad practices -->
+                <!-- @auth/auth
                     <div class="text-center mb-6">
                         <div class="flex items-center justify-center space-x-3 mb-3">
                             <div class="avatar placeholder">
@@ -54,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                @endauth/auth
+                @endauth/auth -->
 
                 <!-- Instructions -->
                 <div class="alert alert-info mb-6">
@@ -62,8 +63,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     <div>
-                        <h3 class="font-bold">{{ trans('auth/auth.security_check') ?? 'Security Check Required' }}</h3>
-                        <div class="text-xs">{{ trans('auth/auth.confirm_password_message') ?? 'Please confirm your password before continuing.' }}</div>
+                        <h3 class="font-bold">{{ trans('auth/auth.security_check') }}</h3>
+                        <div class="text-xs">{{ trans('auth/auth.confirm_password_message') }}</div>
                     </div>
                 </div>
 
@@ -84,7 +85,7 @@
                                 name="password" 
                                 required 
                                 autocomplete="current-password"
-                                placeholder="{{ trans('auth/auth.enter_current_password') ?? 'Enter your current password' }}"
+                                placeholder="{{ trans('auth/auth.enter_current_password') }}"
                                 autofocus
                             >
                             <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-base-content/50" 
@@ -139,7 +140,7 @@
                         <!-- Logout Option -->
                         <div class="text-center">
                             <p class="text-base-content/70 text-sm mb-2">
-                                {{ trans('auth/auth.not_you') ?? 'Not you?' }}
+                                {{ trans('auth/auth.not_you') }}
                             </p>
                             <a href="{{ route('logout') }}" 
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -147,7 +148,7 @@
                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
                                 </svg>
-                                {{ trans('auth/auth.switch_account') ?? 'Switch Account' }}
+                                {{ trans('auth/auth.switch_account') }}
                             </a>
                         </div>
                     </div>
@@ -171,12 +172,12 @@
                     </div>
                     <div>
                         <h3 class="font-medium text-base-content mb-2">
-                            {{ trans('auth/auth.why_confirm') ?? 'Why do I need to confirm?' }}
+                            {{ trans('auth/auth.why_confirm') }}
                         </h3>
                         <ul class="text-sm text-base-content/70 space-y-1">
-                            <li>• {{ trans('auth/auth.protect_sensitive_actions') ?? 'To protect sensitive actions on your account' }}</li>
-                            <li>• {{ trans('auth/auth.verify_identity') ?? 'To verify it\'s really you making this request' }}</li>
-                            <li>• {{ trans('auth/auth.session_timeout') ?? 'Your session has been idle for security reasons' }}</li>
+                            <li>• {{ trans('auth/auth.protect_sensitive_actions') }}</li>
+                            <li>• {{ trans('auth/auth.verify_identity') }}</li>
+                            <li>• {{ trans('auth/auth.session_timeout') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -186,7 +187,7 @@
         <!-- Footer -->
         <div class="text-center mt-8">
             <p class="text-base-content/50 text-xs">
-                {{ trans('auth/auth.confirm_footer') ?? 'This additional verification helps keep your account secure.' }}
+                {{ trans('auth/auth.confirm_footer') }}
             </p>
         </div>
     </div>

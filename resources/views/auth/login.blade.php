@@ -99,19 +99,33 @@
                         @endif
                     </div>
 
-                    <!-- Login Button -->
+                    <!-- Login Button - Centrado -->
                     <div class="form-control mt-8">
-                        <button type="submit" class="btn btn-primary btn-lg mx-auto">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                            {{ trans('auth/auth.login') }}
-                        </button>
+                        <div class="flex justify-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                {{ trans('auth/auth.login') }}
+                            </button>
+                        </div>
                     </div>
                 </form>
 
                 <!-- Divider -->
                 <div class="divider my-8">{{ trans('auth/auth.or') }}</div>
+
+                <!-- Update Password Button -->
+                <!-- <div class="text-center mb-6">
+                    @if (Route::has('password.update'))
+                        <a href="{{ route('password.update') }}" class="btn btn-outline btn-info w-full">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            {{ trans('auth/auth.update_password') }}
+                        </a>
+                    @endif
+                </div> -->
 
                 <!-- Register Link -->
                 <div class="text-center">

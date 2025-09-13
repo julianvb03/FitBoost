@@ -54,7 +54,7 @@
                 @if (!session('status'))
                     <div class="text-center mb-8">
                         <p class="text-base-content mb-4 leading-relaxed">
-                            {{ trans('auth/auth.forgot_password_instructions') ?? 'Enter your email address and we\'ll send you a link to reset your password.' }}
+                            {{ trans('auth/auth.forgot_password_instructions') }}
                         </p>
                     </div>
                 @endif
@@ -109,7 +109,7 @@
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
                                 </svg>
-                                {{ trans('auth/auth.send_another_link') ?? 'Send Another Link' }}
+                                {{ trans('auth/auth.send_another_link') }}
                             </button>
                         @endif
                     </div>
@@ -121,7 +121,7 @@
                 <!-- Back to Login -->
                 <div class="text-center">
                     <p class="text-base-content/70 text-sm mb-4">
-                        {{ trans('auth/auth.remember_password') ?? 'Remember your password?' }}
+                        {{ trans('auth/auth.remember_password') }}
                     </p>
                     <a href="{{ route('login') }}" class="btn btn-outline btn-primary">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -144,12 +144,12 @@
                     </div>
                     <div>
                         <h3 class="font-medium text-base-content mb-2">
-                            {{ trans('auth/auth.security_notice') ?? 'Security Notice' }}
+                            {{ trans('auth/auth.security_notice') }}
                         </h3>
                         <ul class="text-sm text-base-content/70 space-y-1">
-                            <li>• {{ trans('auth/auth.reset_link_expires') ?? 'Password reset links expire after 60 minutes' }}</li>
-                            <li>• {{ trans('auth/auth.check_spam_folder') ?? 'Check your spam or junk folder' }}</li>
-                            <li>• {{ trans('auth/auth.one_time_use') ?? 'Each link can only be used once' }}</li>
+                            <li>• {{ trans('auth/auth.reset_link_expires') }}</li>
+                            <li>• {{ trans('auth/auth.check_spam_folder') }}</li>
+                            <li>• {{ trans('auth/auth.one_time_use') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
         <!-- Footer -->
         <div class="text-center mt-8">
             <p class="text-base-content/50 text-xs">
-                {{ trans('auth/auth.reset_footer') ?? 'We take your account security seriously and will never ask for your password via email.' }}
+                {{ trans('auth/auth.reset_footer') }}
             </p>
         </div>
     </div>

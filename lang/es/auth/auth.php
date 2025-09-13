@@ -53,6 +53,7 @@ return [
     'new_password' => 'Nueva Contraseña',
     'new_password_placeholder' => 'Tu nueva contraseña',
     'reset_password_button' => 'Restablecer Contraseña',
+    'update_password' => 'Actualizar Contraseña',
 
     // Email Verification
     'verify_email' => 'Verificar Correo Electrónico',
