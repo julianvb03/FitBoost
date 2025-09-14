@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -9,15 +10,31 @@ class Item extends Model
 {
     /**
      * ITEM ATTRIBUTES
-     * $this->attributes['id'] - int - contains the int primary key (id)
-     * $this->attributes['quantity'] - int - contains the item quantity
-     * $this->attributes['totalPrice'] - int - contains the total price for the item (price (from Product) * quantity)
-     * $this->attributes['created_at'] - timestamp - contains the item creation date
-     * $this->attributes['updated_at'] - timestamp - contains the item update date
-     * $this->attributes['supplement_id'] - int - contains the referenced supplement
-     * $this->order - Order - contains the associated Order
-     * $this->supplement - Supplement - contains the associated Supplement
+     * $this->attributes['id']              - int           - contains the int primary key (id)
+     * $this->attributes['quantity']        - int           - contains the item quantity
+     * $this->attributes['supplement_id']   - int           - contains the referenced supplement
+     * $this->attributes['created_at']      - timestamp     - contains the item creation date
+     * $this->attributes['updated_at']      - timestamp     - contains the item update date
+     * $this->order                         - Order         - contains the associated Order
+     * $this->supplement                    - Supplement    - contains the associated Supplement
      */
+
+    /**
+     * CALCULATED VALUES
+     * totalPrice                          - int           - contains the total price for the item (price (
+     */
+
+    protected $fillable = [
+        'quantity',
+    ];
+
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+    ];
+
+    // Getters
+
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -28,15 +45,9 @@ class Item extends Model
         return $this->attributes['quantity'];
     }
 
-    // Other model necesary for total price calculation
-    // public function getTotalPrice(): int
-    // {
-    //     return $this->attributes['quantity'] * $this->supplement->getPrice();
-    // }
-
-    public function getOrderId(): int
+    public function getSupplementId(): int
     {
-        return $this->attributes['order_id'];
+        return $this->attributes['supplement_id'];
     }
 
     public function getProductId(): int
@@ -44,15 +55,17 @@ class Item extends Model
         return $this->attributes['product_id'];
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): Carbon
     {
         return $this->attributes['created_at'];
     }
 
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): Carbon
     {
         return $this->attributes['updated_at'];
     }
+
+    // Setters
 
     public function setQuantity(int $quantity): void
     {
@@ -69,13 +82,31 @@ class Item extends Model
         $this->attributes['product_id'] = $productId;
     }
 
+    // Eloquent Relationships
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
+    public function getOrder(): Order
+    {
+        return $this->order;
+    }
+
     public function supplement(): BelongsTo
     {
         return $this->belongsTo(Supplement::class);
+    }
+
+    public function getSupplement(): Supplement
+    {
+        return $this->supplement;
+    }
+
+    // Utility Methods
+    public function getTotalPrice(): int
+    {
+        return $this->getSupplement()->getPrice() * $this->getQuantity();
     }
 }
