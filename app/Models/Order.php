@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,18 +12,19 @@ class Order extends Model
 {
     /**
      * ITEM ATTRIBUTES
-     * $this->attributes['id']          - int       - contains the int primary key (id)
-     * $this->attributes['status']      - string    - contains the order status (eg. pending, completed, cancelled)
-     * $this->attributes['user_id']     - int       - contains the id of the user who made the order
-     * $this->attributes['created_at']  - timestamp - contains the item creation date
-     * $this->attributes['updated_at']  - timestamp - contains the item update date
-     * $this->user                      - User      - contains the associated User
-     * $this->items                     - Item[]    - contains the associated Items
+     * $this->attributes['id']              - int       - contains the int primary key (id)
+     * $this->attributes['status']          - string    - contains the order status (eg. pending, completed, cancelled)
+     * $this->attributes['user_id']         - int       - contains the id of the user who made the order
+     * $this->attributes['totalAmount']     - int       - contains the total amount for the order
+     * $this->attributes['created_at']      - timestamp - contains the item creation date
+     * $this->attributes['updated_at']      - timestamp - contains the item update date
+     * $this->user                          - User      - contains the associated User
+     * $this->items                         - Item[]    - contains the associated Items
      */
 
     /**
      * CALCULATED VALUES
-     * totalAmount                      - int       - contains the total price for the order
+     * totalAmount                          - int       - total price for the order
      */
 
     protected $hidden = [
@@ -41,6 +43,11 @@ class Order extends Model
     public function getStatus(): string
     {
         return $this->attributes['status'];
+    }
+
+    public function getTotalAmount(): int
+    {
+        return $this->calculateTotalAmount();
     }
 
     public function getUserId(): int
@@ -70,9 +77,19 @@ class Order extends Model
         $this->attributes['user_id'] = $userId;
     }
 
+    public function setTotalAmount(int $totalAmount): void
+    {
+        $this->attributes['totalAmount'] = $totalAmount;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
     public function items(): HasMany
@@ -80,9 +97,14 @@ class Order extends Model
         return $this->hasMany(Item::class);
     }
 
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
     // Utility Methods
 
-    public function getTotalAmount(): int
+    public function calculateTotalAmount(): int
     {
         return $this->items()->get()->sum(function ($item) {
             return $item->getTotalPrice();
