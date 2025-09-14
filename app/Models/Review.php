@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use \Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 class Review extends Model
 {
@@ -74,7 +74,6 @@ class Review extends Model
     {
         $this->attributes['status'] = $status;
     }
-    
 
     // Eloquent Relationships
     public function user(): BelongsTo

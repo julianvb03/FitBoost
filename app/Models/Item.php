@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 class Item extends Model
 {
@@ -12,6 +12,7 @@ class Item extends Model
      * ITEM ATTRIBUTES
      * $this->attributes['id']              - int           - contains the int primary key (id)
      * $this->attributes['quantity']        - int           - contains the item quantity
+     * $this->attributes['totalPrice']      - int           - contains the total price for the item
      * $this->attributes['supplement_id']   - int           - contains the referenced supplement
      * $this->attributes['created_at']      - timestamp     - contains the item creation date
      * $this->attributes['updated_at']      - timestamp     - contains the item update date
@@ -21,9 +22,8 @@ class Item extends Model
 
     /**
      * CALCULATED VALUES
-     * totalPrice                          - int           - contains the total price for the item (price (
+     * totalPrice                           - int           - total price for the item (price * quantity)
      */
-
     protected $fillable = [
         'quantity',
     ];
@@ -38,6 +38,11 @@ class Item extends Model
     public function getId(): int
     {
         return $this->attributes['id'];
+    }
+
+    public function getTotalPrice(): int
+    {
+        return $this->calculateTotalPrice();
     }
 
     public function getQuantity(): int
@@ -70,6 +75,11 @@ class Item extends Model
     public function setQuantity(int $quantity): void
     {
         $this->attributes['quantity'] = $quantity;
+    }
+
+    public function setTotalPrice(int $totalPrice): void
+    {
+        $this->attributes['totalPrice'] = $totalPrice;
     }
 
     public function setOrderId(int $orderId): void
@@ -105,7 +115,7 @@ class Item extends Model
     }
 
     // Utility Methods
-    public function getTotalPrice(): int
+    public function calculateTotalPrice(): int
     {
         return $this->getSupplement()->getPrice() * $this->getQuantity();
     }

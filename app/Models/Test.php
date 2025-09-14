@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Carbon;
-use \Illuminate\Database\Eloquent\Collection;
 
 final class Test extends Model
 {
@@ -29,7 +28,6 @@ final class Test extends Model
      * $this->user                        - User            - associated User
      * $this->supplements                 - Supplement[]    - associated Supplements
      */
-
     protected $fillable = [
         'context',
         'routine',
@@ -103,8 +101,6 @@ final class Test extends Model
     {
         return $this->getAttribute('status');
     }
-
-
 
     // Setters
     public function setUserId(int $userId): void
