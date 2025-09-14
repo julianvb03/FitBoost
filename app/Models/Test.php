@@ -4,33 +4,33 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
+use \Illuminate\Database\Eloquent\Collection;
 
-/**
- * TEST ATTRIBUTES
- * $this->attributes['id']            - int      - primary key (id)
- * $this->attributes['user_id']       - int      - user owner of the test
- * $this->attributes['context']       - string   - general context (e.g., Fitness)
- * $this->attributes['routine']       - string   - training routine
- * $this->attributes['diet']          - string   - diet description
- * $this->attributes['weight']        - int      - weight in kg (unsigned)
- * $this->attributes['height']        - int      - height in cm (unsigned)
- * $this->attributes['goals']         - string[] - goals list (stored as JSON text)
- * $this->attributes['responses']     - string[] - questionnaire responses (stored as JSON text)
- * $this->attributes['creation_date'] - date     - date when the test was taken
- * $this->attributes['status']        - string   - status (pending/completed)
- */
 final class Test extends Model
 {
-    use HasFactory;
+    /**
+     * TEST ATTRIBUTES
+     * $this->attributes['id']            - int             - primary key (id)
+     * $this->attributes['user_id']       - int             - user owner of the test
+     * $this->attributes['context']       - string          - general context (e.g., Fitness)
+     * $this->attributes['routine']       - string          - training routine
+     * $this->attributes['diet']          - string          - diet description
+     * $this->attributes['weight']        - int             - weight in kg (unsigned)
+     * $this->attributes['height']        - int             - height in cm (unsigned)
+     * $this->attributes['goals']         - string[]        - goals list
+     * $this->attributes['responses']     - string[]        - questionnaire responses
+     * $this->attributes['status']        - string          - status (pending/completed)
+     * $this->attributes['created_at']    - timestamp       - creation date
+     * $this->attributes['updated_at']    - timestamp       - last update date
+     * $this->user                        - User            - associated User
+     * $this->supplements                 - Supplement[]    - associated Supplements
+     */
 
     protected $fillable = [
-        'user_id',
         'context',
         'routine',
         'diet',
@@ -53,6 +53,7 @@ final class Test extends Model
         ];
     }
 
+    // Getters
     public function getId(): int
     {
         return $this->getAttribute('id');
@@ -98,16 +99,14 @@ final class Test extends Model
         return $this->getAttribute('responses') ?? [];
     }
 
-    public function getCreationDate(): Carbon
-    {
-        return $this->getAttribute('creation_date');
-    }
-
     public function getStatus(): string
     {
         return $this->getAttribute('status');
     }
 
+
+
+    // Setters
     public function setUserId(int $userId): void
     {
         $this->setAttribute('user_id', $userId);
@@ -148,11 +147,6 @@ final class Test extends Model
         $this->setAttribute('responses', $responses);
     }
 
-    public function setCreationDate(DateTimeInterface $creationDate): void
-    {
-        $this->setAttribute('creation_date', $creationDate);
-    }
-
     public function setStatus(string $status): void
     {
         $this->setAttribute('status', $status);
@@ -164,8 +158,18 @@ final class Test extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
     public function supplements(): BelongsToMany
     {
         return $this->belongsToMany(Supplement::class, 'supplement_test')->withTimestamps();
+    }
+
+    public function getSupplements(): Collection
+    {
+        return $this->supplements;
     }
 }

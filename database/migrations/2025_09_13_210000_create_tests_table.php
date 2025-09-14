@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedInteger('height');
             $table->text('goals');
             $table->text('responses');
-            $table->date('creation_date');
             $table->string('status');
             $table->timestamps();
         });
