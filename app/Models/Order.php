@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
@@ -19,7 +19,6 @@ class Order extends Model
      * $this->user - User - contains the associated User
      * $this->items - Item[] - contains the associated Items
      */
-
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -55,40 +54,13 @@ class Order extends Model
         $this->attributes['status'] = $status;
     }
 
-    // Relationship necesary for Eloquent
-    // public function setTotalAmount(int $totalAmount): void
-    // {
-    // 
-    // }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
-    // public function user(): BelongsTo
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-
-    // public function setUser(User $user): void
-    // {
-    //     $this->user()->associate($user);
-    // }
-
-    // public function getUser(): User
-    // {
-    //     return $this->user;
-    // }
-
-    // public function items()
-    // {
-    //     return $this->hasMany(Item::class);
-    // }
-
-    // public function setItems(Collection $items): void
-    // {
-    //     $this->items()->sync($items);
-    // }
-
-    // public function getItems(): Collection
-    // {
-    //     return $this->items;
-    // }
-
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
 }

@@ -7,6 +7,8 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -156,7 +158,14 @@ final class Test extends Model
         $this->setAttribute('status', $status);
     }
 
-    // Planned relationships (commented out until target models/migrations exist)
-    // public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo {}
-    // public function supplements(): \Illuminate\Database\Eloquent\Relations\BelongsToMany {}
+    // Eloquent relationships
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function supplements(): BelongsToMany
+    {
+        return $this->belongsToMany(Supplement::class, 'supplement_test')->withTimestamps();
+    }
 }

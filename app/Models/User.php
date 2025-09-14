@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -95,20 +94,9 @@ class User extends Authenticatable
     }
 
     // Eloquent Relationships
-    /*
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
-    }
-
-    public function setOrders(Collection $orders): void
-    {
-        $this->orders = $orders;
-    }
-
-    public function getOrders(): Collection
-    {
-        return $this->orders;
     }
 
     public function reviews(): HasMany
@@ -116,29 +104,8 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function setReviews(Collection $reviews): void
-    {
-        $this->reviews = $reviews;
-    }
-
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
-
     public function tests(): HasMany
     {
         return $this->hasMany(Test::class);
     }
-
-    public function setTests(Collection $tests): void
-    {
-        $this->tests = $tests;
-    }
-
-    public function getTests(): Collection
-    {
-        return $this->tests;
-    }
-    */
 }
