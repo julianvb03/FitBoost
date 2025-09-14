@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -147,9 +149,24 @@ final class Supplement extends Model
         $this->setAttribute('ingredients', $ingredients);
     }
 
-    // Planned relationships (commented out until target models/migrations exist)
-    // public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo {}
-    // public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany {}
-    // public function items(): \Illuminate\Database\Eloquent\Relations\HasMany {}
-    // public function tests(): \Illuminate\Database\Eloquent\Relations\BelongsToMany {}
+    // Eloquent relationships
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_supplement')->withTimestamps();
+    }
+
+    public function tests(): BelongsToMany
+    {
+        return $this->belongsToMany(Test::class, 'supplement_test')->withTimestamps();
+    }
 }

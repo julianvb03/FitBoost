@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
@@ -40,20 +41,8 @@ class Category extends Model
     }
 
     // Eloquent Relationships
-    /*
-    public function supplements(): HasMany
+    public function supplements(): BelongsToMany
     {
-        return $this->hasMany(Supplement::class);
+        return $this->belongsToMany(Supplement::class, 'category_supplement')->withTimestamps();
     }
-
-    public function getSupplements(): Collection
-    {
-        return $this->supplements;
-    }
-
-    public function setSupplements(Collection $supplements): void
-    {
-        $this->supplements = $supplements;
-    }
-    */
 }

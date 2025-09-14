@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
@@ -52,35 +53,13 @@ class Review extends Model
     }
 
     // Eloquent Relationships
-    /*
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
     }
 
     public function supplement(): BelongsTo
     {
         return $this->belongsTo(Supplement::class);
     }
-
-    public function getSupplement(): Supplement
-    {
-        return $this->supplement;
-    }
-
-    public function setSupplement(Supplement $supplement): void
-    {
-        $this->supplement = $supplement;
-    }
-    */
 }
