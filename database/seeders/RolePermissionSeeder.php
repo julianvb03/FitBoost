@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -13,11 +15,18 @@ class RolePermissionSeeder extends Seeder
         $adminRole = Role::create(['name' => 'admin']);
         $userRole = Role::create(['name' => 'user']);
 
-        $manageUsersPermission = Permission::create(['name' => 'manage users']);
+        // Example of creating a permission and assigning it to a role
+        // $manageUsersPermission = Permission::create(['name' => 'manage users']);
+        // $adminRole->givePermissionTo($manageUsersPermission);
 
-        $adminRole->givePermissionTo($manageUsersPermission);
+        // For Testing create a user with admin role
 
-        // $adminUser = User::find(1);
-        // $adminUser->assignRole($adminRole);
+        // $adminuser = $user = User::create([
+        //     'name' => 'Admin User',
+        //     'email' => 'valenciajuliann@hotmail.com',
+        //     'password' => Hash::make('contraseña'),
+        // ]);
+
+        // $adminuser->assignRole($adminRole);
     }
 }
