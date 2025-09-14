@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 class Item extends Model
 {
@@ -24,7 +24,6 @@ class Item extends Model
      * CALCULATED VALUES
      * totalPrice                           - int           - total price for the item (price * quantity)
      */
-
     protected $fillable = [
         'quantity',
     ];
@@ -82,6 +81,7 @@ class Item extends Model
     {
         $this->attributes['totalPrice'] = $totalPrice;
     }
+
     public function setOrderId(int $orderId): void
     {
         $this->attributes['order_id'] = $orderId;

@@ -26,7 +26,6 @@ class Order extends Model
      * CALCULATED VALUES
      * totalAmount                          - int       - total price for the order
      */
-
     protected $hidden = [
         'created_at',
         'updated_at',
