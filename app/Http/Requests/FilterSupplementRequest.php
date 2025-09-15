@@ -35,11 +35,11 @@ class FilterSupplementRequest extends FormRequest
         ]);
 
         $input = $this->all();
-        
+
         $filteredInput = array_filter($input, function ($value) {
             return $value !== null && $value !== '';
         });
-        
+
         $this->replace($filteredInput);
     }
 }

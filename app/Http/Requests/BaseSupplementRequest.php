@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
-use Exception;
 
 abstract class BaseSupplementRequest extends FormRequest
 {
@@ -34,16 +34,16 @@ abstract class BaseSupplementRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $input = $this->all();
-        
+
         if (isset($input['images'])) {
             $input['images'] = array_filter($input['images'] ?? [], function ($value) {
-                return !empty(trim($value));
+                return ! empty(trim($value));
             });
         }
-        
+
         if (isset($input['categories'])) {
             $input['categories'] = array_filter($input['categories'], function ($value) {
-                return !empty($value);
+                return ! empty($value);
             });
         }
 
@@ -59,7 +59,7 @@ abstract class BaseSupplementRequest extends FormRequest
         $filteredInput = array_filter($input, function ($value) {
             return $value !== null && $value !== '';
         });
-        
+
         $this->replace($filteredInput);
     }
 

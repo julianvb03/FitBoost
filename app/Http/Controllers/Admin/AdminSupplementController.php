@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterSupplementRequest;
 use App\Http\Requests\CreateSupplementRequest;
+use App\Http\Requests\FilterSupplementRequest;
 use App\Http\Requests\UpdateSupplementRequest;
 use App\Models\Category;
 use App\Models\Supplement;
-use \Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class AdminSupplementController extends Controller
@@ -60,7 +58,7 @@ class AdminSupplementController extends Controller
         $viewData['current_page'] = $currentPage;
 
         return view('admin.supplements.index')->with('viewData', $viewData);
-        
+
     }
 
     public function create()
@@ -73,7 +71,7 @@ class AdminSupplementController extends Controller
 
     public function store(CreateSupplementRequest $request): RedirectResponse
     {
-        $newSupplement = new Supplement();
+        $newSupplement = new Supplement;
         $newSupplement->setName($request->input('name'));
         $newSupplement->setDescription($request->input('description'));
         $newSupplement->setLaboratory($request->input('laboratory'));
@@ -90,22 +88,23 @@ class AdminSupplementController extends Controller
         return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_created'));
     }
 
-    public function delete(int $id): RedirectResponse   
+    public function delete(int $id): RedirectResponse
     {
         $supplement = Supplement::find($id);
         if ($supplement) {
             $supplement->delete();
+
             return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_deleted'));
         } else {
             return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
         }
     }
-    
+
     public function edit(int $id): mixed
     {
         $supplement = Supplement::with('categories')->find($id);
 
-        if (!$supplement) {
+        if (! $supplement) {
             return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
         }
 
@@ -135,5 +134,3 @@ class AdminSupplementController extends Controller
         }
     }
 }
-
-

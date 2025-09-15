@@ -265,6 +265,7 @@ final class Supplement extends Model
         }
 
         $total = $reviews->sum('rating');
+
         return round($total / $reviews->count(), 2);
     }
 }
