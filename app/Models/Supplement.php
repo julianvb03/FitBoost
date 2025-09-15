@@ -57,7 +57,6 @@ final class Supplement extends Model
     {
         return [
             'images' => 'array',
-            'ingredients' => 'array',
             'price' => 'integer',
             'stock' => 'integer',
             'expiration_date' => 'date',
@@ -111,9 +110,9 @@ final class Supplement extends Model
         return $this->getAttribute('expiration_date');
     }
 
-    public function getIngredients(): array
+    public function getIngredients(): string
     {
-        return $this->getAttribute('ingredients') ?? [];
+        return $this->getAttribute('ingredients');
     }
 
     public function getCreatedAt(): Carbon

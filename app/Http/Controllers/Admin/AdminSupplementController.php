@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterSupplementRequest;
 use App\Http\Requests\CreateSupplementRequest;
+use App\Http\Requests\UpdateSupplementRequest;
 use App\Models\Category;
 use App\Models\Supplement;
 use \Illuminate\Http\RedirectResponse;
@@ -89,7 +90,7 @@ class AdminSupplementController extends Controller
         return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_created'));
     }
 
-    public function delete(int $id)
+    public function delete(int $id): RedirectResponse   
     {
         $supplement = Supplement::find($id);
         if ($supplement) {
@@ -99,10 +100,40 @@ class AdminSupplementController extends Controller
             return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
         }
     }
-
-    public function update(int $id)
+    
+    public function edit(int $id): mixed
     {
-        // To be implemented in the future
-        dd('Update supplement with id ' . $id);
+        $supplement = Supplement::with('categories')->find($id);
+
+        if (!$supplement) {
+            return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
+        }
+
+        $viewData = [];
+        $viewData['categories'] = Category::all();
+        $viewData['supplement'] = $supplement;
+
+        return view('admin.supplements.edit')->with('viewData', $viewData);
+    }
+
+    public function update(UpdateSupplementRequest $request, int $id): RedirectResponse
+    {
+        $supplement = Supplement::find($id);
+        if ($supplement) {
+            // When the save picture functionality is implemented, handle image uploads here and on the model
+            $supplement->fill($request->validated());
+
+            if ($request->has('categories') && is_array($request->input('categories'))) {
+                $supplement->categories()->sync($request->input('categories'));
+            }
+
+            $supplement->save();
+
+            return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_updated'));
+        } else {
+            return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
+        }
     }
 }
+
+

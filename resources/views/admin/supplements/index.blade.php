@@ -238,7 +238,7 @@
                                 </div>
                                 <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow-lg border border-neutral/20">
                                     <li>
-                                        <a href="#" class="text-base-content">
+                                        <a href="{{ route('admin.supplements.edit', ['id' => $supplement->getId()]) }}" class="text-base-content">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
@@ -368,6 +368,14 @@
 function confirmDelete(supplementId, supplementName) {
     document.getElementById('supplement_name').textContent = supplementName;
     document.getElementById('delete_form').action = `/supplements/${supplementId}`;
+    document.getElementById('delete_modal').showModal();
+}
+</script>
+
+<script>
+function confirmDelete(supplementId, supplementName) {
+    document.getElementById('supplement_name').textContent = supplementName;
+    document.getElementById('delete_form').action = "{{ route('admin.supplements.delete', ['id' => ':id']) }}".replace(':id', supplementId);
     document.getElementById('delete_modal').showModal();
 }
 </script>

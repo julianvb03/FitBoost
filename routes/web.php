@@ -21,5 +21,7 @@ Route::prefix('admin/supplements')->name('admin.supplements.')->group(function (
     Route::get('/create', 'App\Http\Controllers\Admin\AdminSupplementController@create')->name('create');
     Route::post('/', 'App\Http\Controllers\Admin\AdminSupplementController@store')->name('store');
     Route::delete('/{id}', 'App\Http\Controllers\Admin\AdminSupplementController@delete')->name('delete');
+    Route::get('/edit/{id}', 'App\Http\Controllers\Admin\AdminSupplementController@edit')->name('edit');
+    Route::patch('/edit/{id}', 'App\Http\Controllers\Admin\AdminSupplementController@update')->name('update');
 
 });
