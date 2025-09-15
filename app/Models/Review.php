@@ -30,49 +30,49 @@ class Review extends Model
 
     public function getId(): int
     {
-        return $this->attributes['id'];
+        return $this->getAttribute('id');
     }
 
     public function getRating(): int
     {
-        return $this->attributes['rating'];
+        return $this->getAttribute('rating');
     }
 
     public function getComment(): string
     {
-        return $this->attributes['comment'];
+        return $this->getAttribute('comment');
     }
 
     public function getStatus(): bool
     {
-        return $this->attributes['status'];
+        return $this->getAttribute('status');
     }
 
     public function getCreatedAt(): Carbon
     {
-        return $this->attributes['created_at'];
+        return $this->getAttribute('created_at');
     }
 
     public function getUpdatedAt(): Carbon
     {
-        return $this->attributes['updated_at'];
+        return $this->getAttribute('updated_at');
     }
 
     // Setters
 
     public function setRating(int $rating): void
     {
-        $this->attributes['rating'] = $rating;
+        $this->setAttribute('rating', $rating);
     }
 
     public function setComment(string $comment): void
     {
-        $this->attributes['comment'] = $comment;
+        $this->setAttribute('comment', $comment);
     }
 
     public function setStatus(bool $status): void
     {
-        $this->attributes['status'] = $status;
+        $this->setAttribute('status', $status);
     }
 
     // Eloquent Relationships

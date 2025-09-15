@@ -20,29 +20,29 @@ class Category extends Model
     // Getters Section
     public function getId(): int
     {
-        return $this->attributes['id'];
+        return $this->getAttribute('id');
     }
 
     public function getName(): string
     {
-        return $this->attributes['name'];
+        return $this->getAttribute('name');
     }
 
     public function getDescription(): string
     {
-        return $this->attributes['description'];
+        return $this->getAttribute('description');
     }
 
     // Setters Section
 
     public function setName(string $name): void
     {
-        $this->attributes['name'] = $name;
+        $this->setAttribute('name', $name);
     }
 
     public function setDescription(string $description): void
     {
-        $this->attributes['description'] = $description;
+        $this->setAttribute('description', $description);
     }
 
     // Eloquent Relationships

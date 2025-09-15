@@ -36,49 +36,49 @@ class Order extends Model
 
     public function getId(): int
     {
-        return $this->attributes['id'];
+        return $this->getAttribute('id');
     }
 
     public function getStatus(): string
     {
-        return $this->attributes['status'];
+        return $this->getAttribute('status');
     }
 
     public function getTotalAmount(): int
     {
-        return $this->calculateTotalAmount();
+        return $this->getAttribute('totalAmount');
     }
 
     public function getUserId(): int
     {
-        return $this->attributes['user_id'];
+        return $this->getAttribute('user_id');
     }
 
     public function getCreatedAt(): Carbon
     {
-        return $this->attributes['created_at'];
+        return $this->getAttribute('created_at');
     }
 
     public function getUpdatedAt(): Carbon
     {
-        return $this->attributes['updated_at'];
+        return $this->getAttribute('updated_at');
     }
 
     // Setters
 
     public function setStatus(string $status): void
     {
-        $this->attributes['status'] = $status;
+        $this->setAttribute('status', $status);
     }
 
     public function setUserId(int $userId): void
     {
-        $this->attributes['user_id'] = $userId;
+        $this->setAttribute('user_id', $userId);
     }
 
     public function setTotalAmount(int $totalAmount): void
     {
-        $this->attributes['totalAmount'] = $totalAmount;
+        $this->setAttribute('totalAmount', $totalAmount);
     }
 
     public function user(): BelongsTo
