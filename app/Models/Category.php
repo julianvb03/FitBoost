@@ -15,6 +15,8 @@ class Category extends Model
      * $this->attributes['description']     - string        - contains the category description
      * $this->supplements                   - Supplement[]  - contains the category supplements
      */
+    public $timestamps = false;
+
     protected $fillable = ['name', 'description'];
 
     // Getters Section

@@ -38,6 +38,9 @@ class AdminSupplementController extends Controller
             $query->sortBy($request->input('order_by'));
         }
 
+        // For avoid the N + 1 problem
+        $query->with('reviews');
+
         $supplementsPaginated = $query->paginate(
             $request->input('per_page'),
             ['*'],
@@ -58,7 +61,6 @@ class AdminSupplementController extends Controller
         $viewData['current_page'] = $currentPage;
 
         return view('admin.supplements.index')->with('viewData', $viewData);
-
     }
 
     public function create()
@@ -118,19 +120,20 @@ class AdminSupplementController extends Controller
     public function update(UpdateSupplementRequest $request, int $id): RedirectResponse
     {
         $supplement = Supplement::find($id);
-        if ($supplement) {
-            // When the save picture functionality is implemented, handle image uploads here and on the model
-            $supplement->fill($request->validated());
 
-            if ($request->has('categories') && is_array($request->input('categories'))) {
-                $supplement->categories()->sync($request->input('categories'));
-            }
-
-            $supplement->save();
-
-            return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_updated'));
-        } else {
-            return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
+        if (! $supplement) {
+            return redirect()->route('admin.supplements.edit')->with('error', trans('admin/admin.failed_supplement_not_found'));
         }
+
+        // When the save picture functionality is implemented, handle image uploads here and on the model
+        $supplement->fill($request->validated());
+
+        if ($request->has('categories') && is_array($request->input('categories'))) {
+            $supplement->categories()->sync($request->input('categories'));
+        }
+
+        $supplement->save();
+
+        return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_updated'));
     }
 }

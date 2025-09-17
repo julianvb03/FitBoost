@@ -9,9 +9,13 @@ return [
     'success_supplement_deleted' => 'Suplemento eliminado exitosamente',
     'failed_supplement_not_found' => 'Suplemento no encontrado',
     'success_supplement_updated' => 'Suplemento actualizado correctamente',
+    'success_category_created' => 'Categoría creada exitosamente',
+    'category_not_found' => 'Categoría no encontrada',
+    'success_category_updated' => 'Categoría actualizada correctamente',
+    'success_category_deleted' => 'Categoría eliminada exitosamente',
 
-    // Validation messages for creating/updating supplements
-    'validation.name.required' => 'El nombre del suplemento es obligatorio',
+    // Validation messages for creating/updating supplements and categories
+    'validation.name.required' => 'El nombre es obligatorio',
     'validation.description.required' => 'La descripción es obligatoria',
     'validation.laboratory.required' => 'El laboratorio es obligatorio',
     'validation.price.required' => 'El precio es obligatorio',

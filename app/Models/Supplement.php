@@ -231,11 +231,11 @@ final class Supplement extends Model
             });
         }
 
-        if ($minPrice !== null) {
+        if ($minPrice) {
             $query->where('price', '>=', $minPrice);
         }
 
-        if ($maxPrice !== null) {
+        if ($maxPrice) {
             $query->where('price', '<=', $maxPrice);
         }
 

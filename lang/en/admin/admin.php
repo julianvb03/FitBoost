@@ -9,9 +9,13 @@ return [
     'success_supplement_deleted' => 'Supplement deleted successfully',
     'failed_supplement_not_found' => 'Supplement not found',
     'success_supplement_updated' => 'Supplement updated successfully',
+    'success_category_created' => 'Category created successfully',
+    'category_not_found' => 'Category not found',
+    'success_category_updated' => 'Category updated successfully',
+    'success_category_deleted' => 'Category deleted successfully',
 
-    // Validation messages for creating/updating supplements
-    'validation.name.required' => 'The supplement name is required',
+    // Validation messages for creating/updating supplements and categories
+    'validation.name.required' => 'The name is required',
     'validation.description.required' => 'The description is required',
     'validation.laboratory.required' => 'The laboratory is required',
     'validation.price.required' => 'The price is required',
