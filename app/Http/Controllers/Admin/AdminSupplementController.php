@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateSupplementRequest;
 use App\Http\Requests\FilterSupplementRequest;
 use App\Http\Requests\UpdateSupplementRequest;
+use App\Interfaces\ImageStorage;
 use App\Models\Category;
 use App\Models\Supplement;
 use Illuminate\Http\RedirectResponse;
@@ -13,11 +14,14 @@ use Illuminate\View\View;
 
 class AdminSupplementController extends Controller
 {
-    // Is a best practice to use middleware for authentication and authorization here or on routes?
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    private $imageStorage;
+
+    public function __construct(ImageStorage $imageStorage)
+    {
+        $this->imageStorage = $imageStorage;
+        // Is a best practice to use middleware for authentication and authorization here or on routes?
+        // $this->middleware('auth');
+    }
 
     public function index(FilterSupplementRequest $request): View
     {
@@ -77,12 +81,19 @@ class AdminSupplementController extends Controller
         $newSupplement->setName($request->input('name'));
         $newSupplement->setDescription($request->input('description'));
         $newSupplement->setLaboratory($request->input('laboratory'));
-        $newSupplement->setImages($request->input('images'));
         $newSupplement->setPrice($request->input('price'));
         $newSupplement->setStock($request->input('stock'));
         $newSupplement->setFlavour($request->input('flavour'));
         $newSupplement->setExpirationDate($request->input('expiration_date'));
         $newSupplement->setIngredients($request->input('ingredients'));
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagePath = $this->imageStorage->store($request->file('image'), 'supplements');
+            if ($imagePath) {
+                $newSupplement->setImagePath($imagePath);
+            }
+        }
+
         $newSupplement->save();
 
         $newSupplement->categories()->attach($request->input('categories'));
@@ -94,6 +105,11 @@ class AdminSupplementController extends Controller
     {
         $supplement = Supplement::find($id);
         if ($supplement) {
+            $imagePath = $supplement->getImagePath();
+            if ($imagePath) {
+                $this->imageStorage->delete($imagePath);
+            }
+
             $supplement->delete();
 
             return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_deleted'));
@@ -109,7 +125,7 @@ class AdminSupplementController extends Controller
         if (! $supplement) {
             return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
         }
-
+        
         $viewData = [];
         $viewData['categories'] = Category::all();
         $viewData['supplement'] = $supplement;
@@ -125,8 +141,27 @@ class AdminSupplementController extends Controller
             return redirect()->route('admin.supplements.edit')->with('error', trans('admin/admin.failed_supplement_not_found'));
         }
 
-        // When the save picture functionality is implemented, handle image uploads here and on the model
-        $supplement->fill($request->validated());
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $oldImagePath = $supplement->getImagePath();
+            if ($oldImagePath) {
+                $this->imageStorage->delete($oldImagePath);
+            }
+
+            $imagePath = $this->imageStorage->store($request->file('image'), 'supplements');
+            if ($imagePath) {
+                $supplement->setImagePath($imagePath);
+            }
+        } elseif ($request->has('remove_image') && $request->input('remove_image')) {
+            $oldImagePath = $supplement->getImagePath();
+            if ($oldImagePath) {
+                $this->imageStorage->delete($oldImagePath);
+                $supplement->setImagePath(null);
+            }
+        }
+
+        $validatedData = $request->validated();
+        unset($validatedData['image'], $validatedData['remove_image']);
+        $supplement->fill($validatedData);
 
         if ($request->has('categories') && is_array($request->input('categories'))) {
             $supplement->categories()->sync($request->input('categories'));

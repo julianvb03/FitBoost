@@ -18,7 +18,7 @@ use Illuminate\Support\Carbon;
  * $this->attributes['name']             - string    - supplement name
  * $this->attributes['description']      - string    - detailed description
  * $this->attributes['laboratory']       - string    - manufacturer or laboratory name
- * $this->attributes['images']           - string[]  - list of image URLs
+ * $this->attributes['image_path']       - string    - path to the product image
  * $this->attributes['price']            - int       - price (unsigned integer)
  * $this->attributes['stock']            - int       - available quantity (unsigned integer)
  * $this->attributes['flavour']          - string    - flavour of the supplement
@@ -39,7 +39,7 @@ final class Supplement extends Model
         'name',
         'description',
         'laboratory',
-        'images',
+        'image_path',
         'price',
         'stock',
         'flavour',
@@ -56,7 +56,6 @@ final class Supplement extends Model
     protected function casts(): array
     {
         return [
-            'images' => 'array',
             'price' => 'integer',
             'stock' => 'integer',
             'expiration_date' => 'date',
@@ -85,9 +84,9 @@ final class Supplement extends Model
         return $this->getAttribute('laboratory');
     }
 
-    public function getImages(): array
+    public function getImagePath(): ?string
     {
-        return $this->getAttribute('images') ?? [];
+        return $this->getAttribute('image_path');
     }
 
     public function getPrice(): int
@@ -141,9 +140,9 @@ final class Supplement extends Model
         $this->setAttribute('laboratory', $laboratory);
     }
 
-    public function setImages(array $images): void
+    public function setImagePath(?string $imagePath): void
     {
-        $this->setAttribute('images', $images);
+        $this->setAttribute('image_path', $imagePath);
     }
 
     public function setPrice(int $price): void

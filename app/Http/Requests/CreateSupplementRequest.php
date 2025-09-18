@@ -9,7 +9,7 @@ class CreateSupplementRequest extends BaseSupplementRequest
         $rules = $this->baseRules();
 
         foreach ($rules as $field => $rule) {
-            if ($field !== 'images.*' && $field !== 'categories.*') {
+            if ($field !== 'categories.*' && $field !== 'image' && $field !== 'image_path') {
                 $rules[$field] = 'required|'.$rule;
             }
         }

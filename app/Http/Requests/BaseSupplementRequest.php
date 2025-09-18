@@ -19,8 +19,8 @@ abstract class BaseSupplementRequest extends FormRequest
             'name' => 'string|max:255',
             'description' => 'string',
             'laboratory' => 'string|max:255',
-            'images' => 'array',
-            'images.*' => 'string|max:255|min:1',
+            'image' => 'image|max:2048', // 2MB max size
+            'image_path' => 'nullable|string',
             'price' => 'integer|min:0',
             'stock' => 'integer|min:0',
             'flavour' => 'string|max:255',
@@ -34,12 +34,6 @@ abstract class BaseSupplementRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $input = $this->all();
-
-        if (isset($input['images'])) {
-            $input['images'] = array_filter($input['images'] ?? [], function ($value) {
-                return ! empty(trim($value));
-            });
-        }
 
         if (isset($input['categories'])) {
             $input['categories'] = array_filter($input['categories'], function ($value) {

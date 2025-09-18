@@ -23,7 +23,7 @@
         </div>
 
         <!-- Form ('admin.supplements.store') -->
-        <form action="{{ route('admin.supplements.store') }}" method="POST" class="space-y-8">
+        <form action="{{ route('admin.supplements.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
             @csrf
             
             <!-- Basic Information Card -->
@@ -217,58 +217,33 @@
                 </div>
             </div>
 
-            <!-- Images Card -->
+            <!-- Image Card -->
             <div class="card bg-base-300 shadow-lg">
                 <div class="card-body">
                     <h2 class="card-title text-primary mb-4">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        Imágenes
+                        Imagen
                         <span class="text-sm font-normal text-base-content/60">(Opcional)</span>
                     </h2>
                     
-                    <div id="images-container" class="space-y-3">
-                        @if(old('images'))
-                            @foreach(old('images') as $index => $image)
-                                <div class="flex gap-2 image-input-group">
-                                    <input type="url" 
-                                           name="images[]" 
-                                           value="{{ $image }}"
-                                           class="input input-bordered flex-1" 
-                                           placeholder="https://ejemplo.com/imagen.jpg">
-                                    <button type="button" class="btn btn-error btn-sm remove-image">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="flex gap-2 image-input-group">
-                                <input type="url" 
-                                       name="images[]" 
-                                       class="input input-bordered flex-1" 
-                                       placeholder="https://ejemplo.com/imagen.jpg">
-                                <button type="button" class="btn btn-error btn-sm remove-image">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        @endif
+                    <div class="form-control">
+                        <label class="label" for="image">
+                            <span class="label-text">Imagen del producto</span>
+                        </label>
+                        <input type="file" 
+                               id="image"
+                               name="image" 
+                               accept="image/*"
+                               class="file-input file-input-bordered w-full @error('image') file-input-error @enderror">
+                        <p class="text-xs text-base-content/60 mt-2">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB.</p>
+                        @error('image')
+                            <label class="label">
+                                <span class="label-text-alt text-error">{{ $message }}</span>
+                            </label>
+                        @enderror
                     </div>
-                    
-                    <button type="button" id="add-image" class="btn btn-secondary btn-sm mt-4">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        Agregar Imagen
-                    </button>
-                    
-                    @error('images')
-                        <div class="text-error text-sm mt-2">{{ $message }}</div>
-                    @enderror
                 </div>
             </div>
 
@@ -316,37 +291,42 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Add image functionality
-    const addImageBtn = document.getElementById('add-image');
-    const imagesContainer = document.getElementById('images-container');
+    // Preview image functionality
+    const imageInput = document.getElementById('image');
     
-    addImageBtn.addEventListener('click', function() {
-        if (imagesContainer.children.length < 10) {
-            const div = document.createElement('div');
-            div.className = 'flex gap-2 image-input-group';
-            div.innerHTML = `
-                <input type="url" 
-                       name="images[]" 
-                       class="input input-bordered flex-1" 
-                       placeholder="https://ejemplo.com/imagen.jpg">
-                <button type="button" class="btn btn-error btn-sm remove-image">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                    </svg>
-                </button>
-            `;
-            imagesContainer.appendChild(div);
-        }
-    });
-    
-    // Remove image functionality
-    imagesContainer.addEventListener('click', function(e) {
-        if (e.target.closest('.remove-image')) {
-            if (imagesContainer.children.length > 1) {
-                e.target.closest('.image-input-group').remove();
+    if (imageInput) {
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Si ya existe una vista previa, la eliminamos
+                    let existingPreview = document.querySelector('.image-preview');
+                    if (existingPreview) {
+                        existingPreview.remove();
+                    }
+                    
+                    // Crear elemento para la vista previa
+                    const preview = document.createElement('div');
+                    preview.className = 'image-preview mt-4';
+                    preview.innerHTML = `
+                        <div class="flex items-center gap-4">
+                            <img src="${e.target.result}" class="h-24 w-auto object-contain border rounded" alt="Vista previa">
+                            <div class="text-sm">
+                                <p class="font-medium">Vista previa de la imagen</p>
+                                <p class="text-base-content/70">${imageInput.files[0].name}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Insertar después del input
+                    imageInput.parentNode.appendChild(preview);
+                };
+                
+                reader.readAsDataURL(this.files[0]);
             }
-        }
-    });
+        });
+    }
 });
 </script>
 @endsection

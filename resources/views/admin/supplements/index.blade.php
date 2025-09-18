@@ -23,7 +23,7 @@
             <h1 class="text-3xl font-bold text-base-content">Suplementos</h1>
             <p class="text-base-content/70 mt-1">Gestiona el catálogo de suplementos</p>
         </div>
-        <a href="#" class="btn btn-primary btn-lg">
+        <a href="{{ route('admin.supplements.create') }}" class="btn btn-primary btn-lg">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
@@ -156,9 +156,9 @@
                     <!-- Imagen del producto -->
                     <figure class="px-4 pt-4">
                         <div class="aspect-square w-full bg-base-200 rounded-lg overflow-hidden">
-                            @if(!empty($supplement->getImages()))
+                            @if($supplement->getImagePath())
                                 <img 
-                                    src="{{ $supplement->getImages()[0] }}" 
+                                    src="{{ asset('storage/'.$supplement->getImagePath()) }}" 
                                     alt="{{ $supplement->getName() }}"
                                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                                     loading="lazy"
@@ -332,10 +332,10 @@
                 <h3 class="text-xl font-semibold text-base-content mb-2">No hay suplementos</h3>
                 <p class="text-base-content/70 mb-6">No se encontraron suplementos que coincidan con los filtros seleccionados.</p>
                 <div class="flex gap-2 justify-center">
-                    <a href="#" class="btn btn-ghost">
+                    <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost">
                         Limpiar filtros
                     </a>
-                    <a href="#" class="btn btn-primary">
+                    <a href="{{ route('admin.supplements.create') }}" class="btn btn-primary">
                         Crear primer suplemento
                     </a>
                 </div>
@@ -363,14 +363,6 @@
         </div>
     </div>
 </dialog>
-
-<script>
-function confirmDelete(supplementId, supplementName) {
-    document.getElementById('supplement_name').textContent = supplementName;
-    document.getElementById('delete_form').action = `/supplements/${supplementId}`;
-    document.getElementById('delete_modal').showModal();
-}
-</script>
 
 <script>
 function confirmDelete(supplementId, supplementName) {
