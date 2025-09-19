@@ -53,9 +53,8 @@
                                     </li>
                                 @endif
                                 @if (auth()->user()->hasRole('user'))
-                                    <li><a href="#" class="text-base-content hover:text-primary">
-                                            {{ trans('layout/app.car_shop') }} </a>
-                                    </li>
+                                    <li><a href="#" class="text-base-content hover:text-primary">{{ trans('layout/app.car_shop') }}</a></li>
+                                    <li><a href="{{ route('tests.recommendations.create') }}" class="text-base-content hover:text-primary">Recomendaciones con IA</a></li>
                                 @endif
 
                             @endauth
