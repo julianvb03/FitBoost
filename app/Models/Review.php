@@ -95,4 +95,11 @@ class Review extends Model
     {
         return $this->supplement;
     }
+
+    // Utility methods
+    public function getUserName(): string
+    {
+        return $this->getUser()->getName();
+    }
+
 }

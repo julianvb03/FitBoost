@@ -35,3 +35,7 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::get('/edit/{id}', 'App\Http\Controllers\Admin\AdminCategoryController@edit')->name('edit');
     Route::patch('/edit/{id}', 'App\Http\Controllers\Admin\AdminCategoryController@update')->name('update');
 });
+
+// User Supplement Routes
+Route::get('/supplements', 'App\Http\Controllers\SupplementController@index')->name('supplements.index');
+Route::get('/supplements/{id}/{page?}', 'App\Http\Controllers\SupplementController@show')->where(['id' => '[0-9]+', 'page' => '[0-9]+'])->defaults('page', 1)->name('supplements.show');

@@ -49,7 +49,7 @@ class AdminCategoryController extends Controller
         return redirect()->route('admin.categories.index')->with('success', trans('admin/admin.success_category_deleted'));
     }
 
-    public function edit(int $id): mixed
+    public function edit(int $id): View|RedirectResponse
     {
         $category = Category::find($id);
 
