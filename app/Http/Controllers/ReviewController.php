@@ -3,26 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterSupplementRequest;
-use App\Models\Supplement;
+use App\Http\Requests\CreateReviewRequest;
+use App\Http\Requests\UpdateReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
 
-    public function __construct()
+    public function __construct(){}
+
+    public function store(CreateReviewRequest $request): RedirectResponse
     {
-        // Is a best practice to use middleware for authentication and authorization here or on routes?
-        // $this->middleware('auth');
+        $review = new Review();
+        $review->setRating($request->input('rating'));
+        $review->setComment($request->input('comment'));
+        $review->setUserId(Auth::user()->getId());
+        $review->setSupplementId($request->input('supplement_id'));
+        $review->setStatus(true);
+        $review->save();
+
+        return redirect()->back()->with('success', 'Review submitted successfully.');
     }
 
-    public function store(Request $request): View
+    public function update(int $id, UpdateReviewRequest $request): RedirectResponse
     {
+        $review = Review::find($id);
+        if (!$review) {
+            return redirect()->back()->with('error', 'Review not found.');
+        }
+
+        if ($review->getUserId() !== Auth::user()->getId()) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        $review->setRating($request->input('rating'));
+        $review->setComment($request->input('comment'));
+        $review->save();
+
+        return redirect()->back()->with('success', 'Review updated successfully.');
     }
 
-    public function show(int $id, int $page): View|RedirectResponse
+    public function delete(int $id): RedirectResponse
     {
+        $review = Review::find($id);
+        if (!$review) {
+            return redirect()->back()->with('error', 'Review not found.');
+        }
+
+        if ($review->getUserId() !== Auth::user()->getId()) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        $review->delete();
+
+        return redirect()->back()->with('success', 'Review deleted successfully.');
     }
 }
