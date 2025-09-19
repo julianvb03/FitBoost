@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,16 +14,16 @@ use Illuminate\Support\Carbon;
 
 /**
  * SUPPLEMENT ATTRIBUTES
- * $this->attributes['id']               - int      - primary key (id)
- * $this->attributes['name']             - string   - supplement name
- * $this->attributes['description']      - string   - detailed description
- * $this->attributes['laboratory']       - string   - manufacturer or laboratory name
- * $this->attributes['images']           - string[] - list of image URLs
- * $this->attributes['price']            - int      - price (unsigned integer)
- * $this->attributes['stock']            - int      - available quantity (unsigned integer)
- * $this->attributes['flavour']          - string   - flavour of the supplement
- * $this->attributes['expiration_date']  - date     - expiration date
- * $this->attributes['ingredients']      - string[] - list of ingredients
+ * $this->attributes['id']               - int       - primary key (id)
+ * $this->attributes['name']             - string    - supplement name
+ * $this->attributes['description']      - string    - detailed description
+ * $this->attributes['laboratory']       - string    - manufacturer or laboratory name
+ * $this->attributes['image_path']       - string    - path to the product image
+ * $this->attributes['price']            - int       - price (unsigned integer)
+ * $this->attributes['stock']            - int       - available quantity (unsigned integer)
+ * $this->attributes['flavour']          - string    - flavour of the supplement
+ * $this->attributes['expiration_date']  - date      - expiration date
+ * $this->attributes['ingredients']      - string    - description of the ingredients
  * $this->attributes['created_at']       - timestamp - creation date
  * $this->attributes['updated_at']       - timestamp - update date
  * $this->reviews                        - Review[]  - contains the supplement's reviews
@@ -38,7 +39,7 @@ final class Supplement extends Model
         'name',
         'description',
         'laboratory',
-        'images',
+        'image_path',
         'price',
         'stock',
         'flavour',
@@ -55,8 +56,6 @@ final class Supplement extends Model
     protected function casts(): array
     {
         return [
-            'images' => 'array',
-            'ingredients' => 'array',
             'price' => 'integer',
             'stock' => 'integer',
             'expiration_date' => 'date',
@@ -85,9 +84,9 @@ final class Supplement extends Model
         return $this->getAttribute('laboratory');
     }
 
-    public function getImages(): array
+    public function getImagePath(): ?string
     {
-        return $this->getAttribute('images') ?? [];
+        return $this->getAttribute('image_path');
     }
 
     public function getPrice(): int
@@ -110,9 +109,9 @@ final class Supplement extends Model
         return $this->getAttribute('expiration_date');
     }
 
-    public function getIngredients(): array
+    public function getIngredients(): string
     {
-        return $this->getAttribute('ingredients') ?? [];
+        return $this->getAttribute('ingredients');
     }
 
     public function getCreatedAt(): Carbon
@@ -141,9 +140,9 @@ final class Supplement extends Model
         $this->setAttribute('laboratory', $laboratory);
     }
 
-    public function setImages(array $images): void
+    public function setImagePath(?string $imagePath): void
     {
-        $this->setAttribute('images', $images);
+        $this->setAttribute('image_path', $imagePath);
     }
 
     public function setPrice(int $price): void
@@ -161,12 +160,12 @@ final class Supplement extends Model
         $this->setAttribute('flavour', $flavour);
     }
 
-    public function setExpirationDate(\DateTimeInterface $expirationDate): void
+    public function setExpirationDate(string $expirationDate): void
     {
         $this->setAttribute('expiration_date', $expirationDate);
     }
 
-    public function setIngredients(array $ingredients): void
+    public function setIngredients(string $ingredients): void
     {
         $this->setAttribute('ingredients', $ingredients);
     }
@@ -210,5 +209,62 @@ final class Supplement extends Model
     public function getTests(): Collection
     {
         return $this->tests;
+    }
+
+    // Utility methods
+    public function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where(function ($query) use ($search) {
+            $query->where('name', 'LIKE', "%$search%")
+                ->orWhere('description', 'LIKE', "%$search%")
+                ->orWhere('laboratory', 'LIKE', "%$search%")
+                ->orWhere('flavour', 'LIKE', "%$search%");
+        });
+    }
+
+    public function scopeFilter(Builder $query, ?int $categoryId = null, ?int $minPrice = null, ?int $maxPrice = null, ?int $inStock = null): Builder
+    {
+        if ($categoryId) {
+            $query->whereHas('categories', function ($q) use ($categoryId) {
+                $q->where('categories.id', $categoryId);
+            });
+        }
+
+        if ($minPrice) {
+            $query->where('price', '>=', $minPrice);
+        }
+
+        if ($maxPrice) {
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        if ($inStock === 1) {
+            $query->where('stock', '>', 0);
+        }
+
+        return $query;
+    }
+
+    public function scopeSortBy(Builder $query, string $field): Builder
+    {
+        if ($field === 'rating') {
+            $query->withAvg('reviews', 'rating')->orderBy('reviews_avg_rating', 'desc');
+        } else {
+            $query->orderBy($field, 'asc');
+        }
+
+        return $query;
+    }
+
+    public function getAverageRating(): float
+    {
+        $reviews = $this->getReviews();
+        if ($reviews->isEmpty()) {
+            return 0.0;
+        }
+
+        $total = $reviews->sum('rating');
+
+        return round($total / $reviews->count(), 2);
     }
 }
