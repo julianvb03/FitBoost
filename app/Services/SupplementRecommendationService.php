@@ -14,7 +14,7 @@ class SupplementRecommendationService
     {
         $candidates = Supplement::query()
             ->where('stock', '>', 0)
-            ->select(['id', 'name'])
+            ->select(['id', 'name', 'stock'])
             ->get();
 
         $payload = [
