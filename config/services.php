@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+        'debug_dummy' => env('OPENAI_DEBUG_DUMMY', false),
+    ],
+
 ];

@@ -248,12 +248,10 @@ final class Supplement extends Model
     public function scopeSortBy(Builder $query, string $field): Builder
     {
         if ($field === 'rating') {
-            $query->withAvg('reviews', 'rating')->orderBy('reviews_avg_rating', 'desc');
-        } else {
-            $query->orderBy($field, 'asc');
+            return $query->withAvg('reviews', 'rating')->orderBy('reviews_avg_rating', 'desc');
         }
 
-        return $query;
+        return $query->orderBy($field, 'asc');
     }
 
     public function getAverageRating(): float
