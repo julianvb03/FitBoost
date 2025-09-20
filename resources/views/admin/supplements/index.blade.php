@@ -4,14 +4,14 @@
 
 @section('content')
 
-@if(session('success'))
+@if(isset($viewData['success']))
     <div class="alert alert-success">
-        {{ session('success') }}
+        {{ $viewData['success'] }}
     </div>
 @endif
-@if(session('error'))
+@if(isset($viewData['error']))
     <div class="alert alert-error">
-        {{ session('error') }}
+        {{ $viewData['error'] }}
     </div>
 @endif
 

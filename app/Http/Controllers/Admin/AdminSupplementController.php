@@ -95,15 +95,19 @@ class AdminSupplementController extends Controller
         }
 
         $newSupplement->save();
-
         $newSupplement->categories()->attach($request->input('categories'));
 
-        return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_created'));
+        $viewData = [];
+        $viewData['success'] = trans('admin/admin.success_supplement_created');
+
+        return redirect()->route('admin.supplements.index')->with('viewData', $viewData);
     }
 
     public function delete(int $id): RedirectResponse
     {
         $supplement = Supplement::find($id);
+        $viewData = [];
+
         if ($supplement) {
             $imagePath = $supplement->getImagePath();
             if ($imagePath) {
@@ -111,22 +115,27 @@ class AdminSupplementController extends Controller
             }
 
             $supplement->delete();
+            $viewData['success'] = trans('admin/admin.success_supplement_deleted');
 
-            return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_deleted'));
+            return redirect()->route('admin.supplements.index')->with('viewData', $viewData);
         } else {
-            return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
+            $viewData['error'] = trans('admin/admin.failed_supplement_not_found');
+
+            return redirect()->route('admin.supplements.index')->with('viewData', $viewData);
         }
     }
 
     public function edit(int $id): View|RedirectResponse
     {
         $supplement = Supplement::with('categories')->find($id);
+        $viewData = [];
 
         if (! $supplement) {
-            return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
+            $viewData['error'] = trans('admin/admin.failed_supplement_not_found');
+
+            return redirect()->route('admin.supplements.index')->with('viewData', $viewData);
         }
 
-        $viewData = [];
         $viewData['categories'] = Category::all();
         $viewData['supplement'] = $supplement;
 
@@ -136,9 +145,12 @@ class AdminSupplementController extends Controller
     public function update(UpdateSupplementRequest $request, int $id): RedirectResponse
     {
         $supplement = Supplement::find($id);
+        $viewData = [];
 
         if (! $supplement) {
-            return redirect()->route('admin.supplements.edit')->with('error', trans('admin/admin.failed_supplement_not_found'));
+            $viewData['error'] = trans('admin/admin.failed_supplement_not_found');
+
+            return redirect()->route('admin.supplements.edit')->with('viewData', $viewData);
         }
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -168,7 +180,8 @@ class AdminSupplementController extends Controller
         }
 
         $supplement->save();
+        $viewData['success'] = trans('admin/admin.success_supplement_updated');
 
-        return redirect()->route('admin.supplements.index')->with('success', trans('admin/admin.success_supplement_updated'));
+        return redirect()->route('admin.supplements.index')->with('viewData', $viewData);
     }
 }

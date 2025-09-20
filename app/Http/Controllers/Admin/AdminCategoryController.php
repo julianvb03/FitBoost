@@ -34,30 +34,40 @@ class AdminCategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('admin.categories.index')->with('success', trans('admin/admin.success_category_created'));
+        $viewData = [];
+        $viewData['success'] = trans('admin/admin.success_category_created');
+
+        return redirect()->route('admin.categories.index')->with('viewData', $viewData);
     }
 
     public function delete(int $id): RedirectResponse
     {
+        $viewData = [];
+
         $category = Category::find($id);
         if (! $category) {
-            return redirect()->route('admin.categories.index')->with('error', trans('admin/admin.category_not_found'));
+            $viewData['error'] = trans('admin/admin.category_not_found');
+
+            return redirect()->route('admin.categories.index')->with('viewData', $viewData);
         }
 
         $category->delete();
+        $viewData['success'] = trans('admin/admin.success_category_deleted');
 
-        return redirect()->route('admin.categories.index')->with('success', trans('admin/admin.success_category_deleted'));
+        return redirect()->route('admin.categories.index')->with('viewData', $viewData);
     }
 
     public function edit(int $id): View|RedirectResponse
     {
         $category = Category::find($id);
+        $viewData = [];
 
         if (! $category) {
-            return redirect()->route('admin.categories.index')->with('error', trans('admin/admin.category_not_found'));
+            $viewData['error'] = trans('admin/admin.category_not_found');
+
+            return redirect()->route('admin.categories.index')->with('viewData', $viewData);
         }
 
-        $viewData = [];
         $viewData['category'] = $category;
 
         return view('admin.categories.edit')->with('viewData', $viewData);
@@ -66,14 +76,18 @@ class AdminCategoryController extends Controller
     public function update(UpdateCategoryResquest $request, int $id): RedirectResponse
     {
         $category = Category::find($id);
+        $viewData = [];
 
         if (! $category) {
-            return redirect()->route('admin.categories.index')->with('error', trans('admin/admin.category_not_found'));
+            $viewData['error'] = trans('admin/admin.category_not_found');
+
+            return redirect()->route('admin.categories.index')->with('viewData', $viewData);
         }
 
         $category->fill($request->validated());
         $category->save();
+        $viewData['success'] = trans('admin/admin.success_category_updated');
 
-        return redirect()->route('admin.categories.index')->with('success', trans('admin/admin.success_category_updated'));
+        return redirect()->route('admin.categories.index')->with('viewData', $viewData);
     }
 }

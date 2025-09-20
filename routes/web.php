@@ -50,7 +50,6 @@ Route::get('tests/recommendations/create', 'App\\Http\\Controllers\\TestRecommen
 Route::post('tests/recommendations', 'App\\Http\\Controllers\\TestRecommendationController@store')->name('tests.recommendations.store');
 Route::get('tests/recommendations/{id}', 'App\\Http\\Controllers\\TestRecommendationController@show')->name('tests.recommendations.show');
 
-
 // User Profile routes
 
 Route::get('/profile', 'App\\Http\\Controllers\\UserController@show')->name('users.show');
@@ -59,7 +58,7 @@ Route::patch('/profile', 'App\\Http\\Controllers\\UserController@update')->name(
 
 // Cart Routes
 Route::prefix('cart')->name('cart.')->group(function () {
-  
+
     Route::get('/', 'App\\Http\\Controllers\\CartController@index')->name('index');
     Route::post('/items', 'App\\Http\\Controllers\\CartController@store')->name('items.store');
     Route::patch('/items/{supplement}', 'App\\Http\\Controllers\\CartController@update')->where(['supplement' => '[0-9]+'])->name('items.update');
