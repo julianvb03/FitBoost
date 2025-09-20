@@ -127,12 +127,21 @@
             <!-- Botón de Acción -->
             <div class="pt-4">
                 @if($viewData['supplement']->getStock() > 0)
-                    <button class="btn btn-primary btn-lg w-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0H17M9 19.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM20.5 19.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                        </svg>
-                        Agregar al Carrito
-                    </button>
+                    <form method="POST" action="{{ route('cart.items.store') }}" class="grid grid-cols-4 gap-3">
+                        @csrf
+                        <input type="hidden" name="supplement_id" value="{{ $viewData['supplement']->getId() }}" />
+                        <div class="col-span-1">
+                            <input type="number" name="quantity" min="1" max="99" value="1" class="input input-bordered w-full" />
+                        </div>
+                        <div class="col-span-3">
+                            <button class="btn btn-primary btn-lg w-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0H17M9 19.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM20.5 19.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                                </svg>
+                                Agregar al Carrito
+                            </button>
+                        </div>
+                    </form>
                 @else
                     <button class="btn btn-disabled btn-lg w-full" disabled>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

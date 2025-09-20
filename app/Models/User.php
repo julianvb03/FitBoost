@@ -118,6 +118,11 @@ class User extends Authenticatable
         $this->setAttribute('cardData', $cardData);
     }
 
+    public function hasActivePaymentMethod(): bool
+    {
+        return $this->getCardData() !== null && $this->getCardData() !== '';
+    }
+
     // Eloquent Relationships
     public function orders(): HasMany
     {

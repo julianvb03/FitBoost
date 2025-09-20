@@ -50,8 +50,20 @@ Route::get('tests/recommendations/create', 'App\\Http\\Controllers\\TestRecommen
 Route::post('tests/recommendations', 'App\\Http\\Controllers\\TestRecommendationController@store')->name('tests.recommendations.store');
 Route::get('tests/recommendations/{id}', 'App\\Http\\Controllers\\TestRecommendationController@show')->name('tests.recommendations.show');
 
+
 // User Profile routes
 
 Route::get('/profile', 'App\\Http\\Controllers\\UserController@show')->name('users.show');
 Route::get('/profile/edit', 'App\\Http\\Controllers\\UserController@edit')->name('users.edit');
 Route::patch('/profile', 'App\\Http\\Controllers\\UserController@update')->name('users.update');
+
+// Cart Routes
+Route::prefix('cart')->name('cart.')->group(function () {
+  
+    Route::get('/', 'App\\Http\\Controllers\\CartController@index')->name('index');
+    Route::post('/items', 'App\\Http\\Controllers\\CartController@store')->name('items.store');
+    Route::patch('/items/{supplement}', 'App\\Http\\Controllers\\CartController@update')->where(['supplement' => '[0-9]+'])->name('items.update');
+    Route::delete('/items/{supplement}', 'App\\Http\\Controllers\\CartController@destroy')->where(['supplement' => '[0-9]+'])->name('items.destroy');
+    Route::delete('/', 'App\\Http\\Controllers\\CartController@clear')->name('clear');
+    Route::post('/checkout', 'App\\Http\\Controllers\\CartController@checkout')->middleware(['auth'])->name('checkout');
+});
