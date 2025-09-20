@@ -102,6 +102,7 @@ final class CartService
         $newQuantity = min($supplement->getStock(), $requested);
         $items[$supplementId] = ['quantity' => $newQuantity];
         Session::put('cart.items', $items);
+
         return ['capped' => $newQuantity < $requested];
     }
 
@@ -123,6 +124,7 @@ final class CartService
             $item->setQuantity($final);
             $item->setTotalPrice($supplement->getPrice() * $final);
             $item->save();
+
             return ['capped' => $final < $quantity];
         }
 
@@ -133,6 +135,7 @@ final class CartService
         $final = min($supplement->getStock(), $quantity);
         $items[$supplementId]['quantity'] = $final;
         Session::put('cart.items', $items);
+
         return ['capped' => $final < $quantity];
     }
 

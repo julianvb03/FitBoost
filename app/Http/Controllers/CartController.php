@@ -11,6 +11,7 @@ use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
+use Throwable;
 
 final class CartController extends Controller
 {
@@ -40,8 +41,9 @@ final class CartController extends Controller
 
             $flashKey = $result['capped'] ? 'warning' : 'success';
             $flashMsg = $result['capped'] ? Lang::get('cart.stock_capped') : Lang::get('cart.added');
+
             return back()->with($flashKey, $flashMsg);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return back()->with('error', Lang::get('cart.error'));
         }
     }
@@ -52,8 +54,9 @@ final class CartController extends Controller
             $result = $this->cartService->updateQuantity($supplement, $request->getQuantity());
             $flashKey = $result['capped'] ? 'warning' : 'success';
             $flashMsg = $result['capped'] ? Lang::get('cart.stock_capped') : Lang::get('cart.updated');
+
             return back()->with($flashKey, $flashMsg);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return back()->with('error', Lang::get('cart.error'));
         }
     }
@@ -64,7 +67,7 @@ final class CartController extends Controller
             $this->cartService->removeItem($supplement);
 
             return back()->with('success', Lang::get('cart.removed'));
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return back()->with('error', Lang::get('cart.error'));
         }
     }
@@ -75,7 +78,7 @@ final class CartController extends Controller
             $this->cartService->clear();
 
             return back()->with('success', Lang::get('cart.cleared'));
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return back()->with('error', Lang::get('cart.error'));
         }
     }
@@ -86,7 +89,7 @@ final class CartController extends Controller
             $this->cartService->checkout();
 
             return redirect()->route('cart.index')->with('success', Lang::get('cart.checkout_pending'));
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return back()->with('error', Lang::get('cart.error'));
         }
     }

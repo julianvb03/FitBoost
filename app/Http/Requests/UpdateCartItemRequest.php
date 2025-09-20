@@ -22,9 +22,6 @@ final class UpdateCartItemRequest extends FormRequest
 
     public function getQuantity(): int
     {
-        /** @var int */
-        $qty = (int) $this->input('quantity', 1);
-
-        return $qty;
+        return (int) $this->input('quantity', 1);
     }
 }

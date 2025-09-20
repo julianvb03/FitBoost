@@ -23,17 +23,11 @@ final class AddToCartRequest extends FormRequest
 
     public function getSupplementId(): int
     {
-        /** @var int */
-        $id = (int) $this->input('supplement_id');
-
-        return $id;
+        return (int) $this->input('supplement_id');
     }
 
     public function getQuantity(): int
     {
-        /** @var int */
-        $qty = (int) $this->input('quantity', 1);
-
-        return $qty;
+        return (int) $this->input('quantity', 1);
     }
 }
