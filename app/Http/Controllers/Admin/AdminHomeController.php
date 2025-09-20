@@ -7,7 +7,8 @@ use Illuminate\View\View;
 
 class AdminHomeController extends Controller
 {
-    public function home(): View {
+    public function home(): View
+    {
         return view('admin.home');
     }
 }

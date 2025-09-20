@@ -62,7 +62,10 @@ class SupplementController extends Controller
         $per_page = 6;
 
         if (! $supplement) {
-            return redirect()->route('supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
+            $viewData = [];
+            $viewData['error'] = trans('admin/admin.failed_supplement_not_found');
+
+            return redirect()->route('supplements.index')->with('viewData', $viewData);
         }
 
         $paginatedReviews = $supplement->reviews()
