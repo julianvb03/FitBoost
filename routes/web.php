@@ -11,9 +11,6 @@ Route::get('/', 'App\\Http\\Controllers\\HomeController@index')->name('home.inde
 // Language Change Route
 Route::post('/language/change', 'App\\Http\\Controllers\\LanguageController@change')->name('language.change');
 
-// Dev Testing Route
-Route::get('/testing', 'App\\Http\\Controllers\\TestingController@uno')->name('testing.uno');
-
 // Admin Supplement Routes
 Route::prefix('admin/supplements')->name('admin.supplements.')->group(function () {
 
@@ -34,6 +31,19 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::delete('/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@delete')->name('delete');
     Route::get('/edit/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@edit')->name('edit');
     Route::patch('/edit/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@update')->name('update');
+});
+
+
+// User Supplement Routes
+Route::get('/supplements', 'App\Http\Controllers\SupplementController@index')->name('supplements.index');
+Route::get('/supplements/{id}/{page?}', 'App\Http\Controllers\SupplementController@show')->where(['id' => '[0-9]+', 'page' => '[0-9]+'])->defaults('page', 1)->name('supplements.show');
+
+// User Review Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/reviews', 'App\Http\Controllers\ReviewController@store')->name('reviews.store');
+    Route::put('/reviews/{id}', 'App\Http\Controllers\ReviewController@update')->name('reviews.update');
+    Route::delete('/reviews/{id}', 'App\Http\Controllers\ReviewController@delete')->name('reviews.delete');
+    Route::post('/reviews/{id}/report', 'App\Http\Controllers\ReviewController@report')->name('reviews.report');
 });
 
 // Test Recommendations (web)

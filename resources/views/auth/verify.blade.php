@@ -143,6 +143,8 @@
     <link rel="stylesheet" href="{{ asset('css/auth/verify.css') }}">
 @endpush
 
+{{--
 @push('scripts')
     @vite('resources/js/auth/verificationScript.js')
 @endpush
+--}}

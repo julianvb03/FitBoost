@@ -118,7 +118,7 @@ class AdminSupplementController extends Controller
         }
     }
 
-    public function edit(int $id): mixed
+    public function edit(int $id): View|RedirectResponse
     {
         $supplement = Supplement::with('categories')->find($id);
 
