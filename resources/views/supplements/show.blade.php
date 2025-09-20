@@ -165,18 +165,29 @@
                 </span>
             </h2>
             
-            <!-- Resumen de Rating -->
-            <div class="text-center">
-                <div class="text-3xl font-bold text-primary mb-1">
-                    {{ number_format($viewData['averageRating'], 1) }}
+            <!-- Resumen de Rating y Botón Crear Reseña -->
+            <div class="flex items-center gap-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary mb-1">
+                        {{ number_format($viewData['averageRating'], 1) }}
+                    </div>
+                    <div class="rating rating-sm">
+                        @for($i = 1; $i <= 5; $i++)
+                            <input type="radio" class="mask mask-star-2 bg-warning pointer-events-none" 
+                                   {{ $i <= $viewData['averageRating'] ? 'checked' : '' }} />
+                        @endfor
+                    </div>
+                    <div class="text-xs text-base-content/60 mt-1">Promedio</div>
                 </div>
-                <div class="rating rating-sm">
-                    @for($i = 1; $i <= 5; $i++)
-                        <input type="radio" class="mask mask-star-2 bg-warning pointer-events-none" 
-                               {{ $i <= $viewData['averageRating'] ? 'checked' : '' }} />
-                    @endfor
-                </div>
-                <div class="text-xs text-base-content/60 mt-1">Promedio</div>
+
+                @auth
+                    <button class="btn btn-primary" onclick="createReviewModal.showModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Escribir Reseña
+                    </button>
+                @endauth
             </div>
         </div>
 
@@ -184,7 +195,7 @@
             <!-- Lista de Reseñas -->
             <div class="space-y-6 mb-8">
                 @foreach($viewData['reviews'] as $review)
-                    <div class="border-b border-neutral/20 pb-6 last:border-b-0 last:pb-0">
+                    <div class="border-b border-neutral/20 pb-6 last:border-b-0 last:pb-0" id="review-{{ $review->getId() }}">
                         <div class="flex items-start gap-4">
                             <!-- Avatar -->
                             <div class="avatar placeholder">
@@ -197,17 +208,65 @@
 
                             <!-- Contenido de la reseña -->
                             <div class="flex-1">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <h4 class="font-semibold text-base-content">{{ $review->getUserName() }}</h4>
-                                    <div class="rating rating-sm">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <input type="radio" class="mask mask-star-2 bg-warning pointer-events-none" 
-                                                   {{ $i <= $review->getRating() ? 'checked' : '' }} />
-                                        @endfor
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-3">
+                                        <h4 class="font-semibold text-base-content">{{ $review->getUserName() }}</h4>
+                                        <div class="rating rating-sm">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <input type="radio" class="mask mask-star-2 bg-warning pointer-events-none" 
+                                                       {{ $i <= $review->getRating() ? 'checked' : '' }} />
+                                            @endfor
+                                        </div>
+                                        <span class="text-sm text-base-content/60">
+                                            {{ $review->getCreatedAt()->diffForHumans() }}
+                                        </span>
+                                        @if($review->getUpdatedAt() && $review->getUpdatedAt() != $review->getCreatedAt())
+                                            <div class="badge badge-sm badge-info">Editada</div>
+                                        @endif
                                     </div>
-                                    <span class="text-sm text-base-content/60">
-                                        {{ $review->getCreatedAt()->diffForHumans() }}
-                                    </span>
+
+                                    @auth
+                                        <!-- Menú de Acciones -->
+                                        <div class="dropdown dropdown-end">
+                                            <div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-circle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
+                                                </svg>
+                                            </div>
+                                            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-300">
+                                                @if(Auth::user()->getId() == $review->getUserId())
+                                                    <li>
+                                                        <button onclick="editReview({{ $review->getId() }}, {{ $review->getRating() }}, '{{ addslashes($review->getComment()) }}')" 
+                                                                class="text-blue-600 hover:text-blue-800">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                            </svg>
+                                                            Editar Reseña
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button onclick="deleteReview({{ $review->getId() }})" 
+                                                                class="text-red-600 hover:text-red-800">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                            </svg>
+                                                            Eliminar Reseña
+                                                        </button>
+                                                    </li>
+                                                @else
+                                                    <li>
+                                                        <button onclick="reportReview({{ $review->getId() }})" 
+                                                                class="text-orange-600 hover:text-orange-800">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                                                            </svg>
+                                                            Reportar Reseña
+                                                        </button>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    @endauth
                                 </div>
                                 
                                 <p class="text-base-content/80 leading-relaxed">
@@ -302,12 +361,19 @@
                     <p class="text-base-content/70 mb-6">
                         Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu experiencia!
                     </p>
-                    <button class="btn btn-primary btn-outline">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                        </svg>
-                        Escribir Reseña
-                    </button>
+                    @auth
+                        <button class="btn btn-primary btn-outline" onclick="createReviewModal.showModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                            </svg>
+                            Escribir Reseña
+                        </button>
+                    @else
+                        <div class="text-center">
+                            <p class="text-base-content/60 mb-4">Inicia sesión para escribir una reseña</p>
+                            <a href="{{ route('auth.login') }}" class="btn btn-primary btn-outline">Iniciar Sesión</a>
+                        </div>
+                    @endauth
                 </div>
             </div>
         @endif
@@ -323,6 +389,244 @@
         </a>
     </div>
 </div>
+
+@auth
+<!-- Modal para Crear Reseña -->
+<dialog id="createReviewModal" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        
+        <h3 class="font-bold text-lg mb-6">Escribir Reseña</h3>
+        
+        <form action="{{ route('reviews.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="supplement_id" value="{{ $viewData['supplement']->getId() }}">
+            
+            <div class="space-y-4">
+                <!-- Calificación -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium">Calificación</span>
+                    </label>
+                    <div class="flex items-center gap-2">
+                        <div class="rating rating-lg">
+                            @for($i = 1; $i <= 5; $i++)
+                                <input type="radio" name="rating" value="{{ $i }}" class="mask mask-star-2 bg-warning" {{ $i == 5 ? 'checked' : '' }} />
+                            @endfor
+                        </div>
+                        <span class="text-sm text-base-content/60">Selecciona de 1 a 5 estrellas</span>
+                    </div>
+                </div>
+
+                <!-- Comentario -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium">Comentario</span>
+                    </label>
+                    <textarea 
+                        name="comment" 
+                        class="textarea textarea-bordered h-32" 
+                        placeholder="Comparte tu experiencia con este producto..."
+                        maxlength="500"
+                        required
+                    ></textarea>
+                    <div class="label">
+                        <span class="label-text-alt text-base-content/60">Máximo 500 caracteres</span>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="flex gap-3 pt-4">
+                    <button type="submit" class="btn btn-primary flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Publicar Reseña
+                    </button>
+                    <button type="button" class="btn btn-ghost flex-1" onclick="createReviewModal.close()">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<!-- Modal para Editar Reseña -->
+<dialog id="editReviewModal" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        
+        <h3 class="font-bold text-lg mb-6">Editar Reseña</h3>
+        
+        <form id="editReviewForm" method="POST">
+            @csrf
+            @method('PUT')
+            
+            <div class="space-y-4">
+                <!-- Calificación -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium">Calificación</span>
+                    </label>
+                    <div class="flex items-center gap-2">
+                        <div class="rating rating-lg">
+                            @for($i = 1; $i <= 5; $i++)
+                                <input type="radio" name="rating" value="{{ $i }}" class="mask mask-star-2 bg-warning" id="edit-rating-{{ $i }}" />
+                            @endfor
+                        </div>
+                        <span class="text-sm text-base-content/60">Selecciona de 1 a 5 estrellas</span>
+                    </div>
+                </div>
+
+                <!-- Comentario -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium">Comentario</span>
+                    </label>
+                    <textarea 
+                        id="editComment"
+                        name="comment" 
+                        class="textarea textarea-bordered h-32" 
+                        placeholder="Comparte tu experiencia con este producto..."
+                        maxlength="500"
+                        required
+                    ></textarea>
+                    <div class="label">
+                        <span class="label-text-alt text-base-content/60">Máximo 500 caracteres</span>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="flex gap-3 pt-4">
+                    <button type="submit" class="btn btn-primary flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Actualizar Reseña
+                    </button>
+                    <button type="button" class="btn btn-ghost flex-1" onclick="editReviewModal.close()">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<!-- Modal de Confirmación para Eliminar -->
+<dialog id="deleteReviewModal" class="modal">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg text-error mb-4">Eliminar Reseña</h3>
+        <p class="text-base-content/80 mb-6">
+            ¿Estás seguro de que deseas eliminar tu reseña? Esta acción no se puede deshacer.
+        </p>
+        
+        <div class="flex gap-3">
+            <form id="deleteReviewForm" method="POST" class="flex-1">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-error w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Eliminar
+                </button>
+            </form>
+            <button class="btn btn-ghost flex-1" onclick="deleteReviewModal.close()">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</dialog>
+
+<!-- Modal de Confirmación para Reportar -->
+<dialog id="reportReviewModal" class="modal">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg text-warning mb-4">Reportar Reseña</h3>
+        <p class="text-base-content/80 mb-6">
+            ¿Deseas reportar esta reseña? Los administradores revisarán el contenido para determinar si viola nuestras políticas.
+        </p>
+        
+        <div class="flex gap-3">
+            <form id="reportReviewForm" method="POST" class="flex-1">
+                @csrf
+                <button type="submit" class="btn btn-warning w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                    Reportar
+                </button>
+            </form>
+            <button class="btn btn-ghost flex-1" onclick="reportReviewModal.close()">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</dialog>
+@endauth
+
+<script>
+// Función para editar reseña
+function editReview(reviewId, currentRating, currentComment) {
+    // Configurar el formulario
+    document.getElementById('editReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
+    
+    // Establecer valores actuales
+    document.querySelector(`#edit-rating-${currentRating}`).checked = true;
+    document.getElementById('editComment').value = currentComment;
+    
+    // Mostrar modal
+    editReviewModal.showModal();
+}
+
+// Función para eliminar reseña
+function deleteReview(reviewId) {
+    document.getElementById('deleteReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
+    deleteReviewModal.showModal();
+}
+
+// Función para reportar reseña
+function reportReview(reviewId) {
+    document.getElementById('reportReviewForm').action = `{{ url('reviews') }}/${reviewId}/report`;
+    reportReviewModal.showModal();
+}
+
+// Contador de caracteres para textarea
+document.addEventListener('DOMContentLoaded', function() {
+    const textareas = document.querySelectorAll('textarea[maxlength]');
+    textareas.forEach(textarea => {
+        const maxLength = parseInt(textarea.getAttribute('maxlength'));
+        const label = textarea.parentElement.querySelector('.label-text-alt');
+        
+        textarea.addEventListener('input', function() {
+            const remaining = maxLength - this.value.length;
+            if (label) {
+                label.textContent = `${remaining} caracteres restantes`;
+                if (remaining < 50) {
+                    label.classList.add('text-warning');
+                } else {
+                    label.classList.remove('text-warning');
+                }
+            }
+        });
+    });
+});
+
+// Cerrar dropdowns cuando se hace click fuera
+document.addEventListener('click', function(event) {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(event.target)) {
+            dropdown.querySelector('[tabindex="0"]').blur();
+        }
+    });
+});
+</script>
 
 <style>
 .prose {
@@ -342,6 +646,58 @@
 .rating input:checked ~ input,
 .rating input[checked="checked"] ~ input {
     --tw-bg-opacity: 0.25;
+}
+
+/* Estilos para los dropdowns */
+.dropdown-content {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effects para botones de acción */
+.dropdown-content button:hover {
+    transform: translateX(2px);
+    transition: transform 0.2s ease;
+}
+
+/* Animación para modales */
+.modal[open] {
+    animation: modal-show 0.3s ease-out;
+}
+
+@keyframes modal-show {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Estados de los ratings interactivos */
+.rating input:hover,
+.rating input:hover ~ input {
+    --tw-bg-opacity: 0.5;
+}
+
+/* Mejoras visuales para estados de reseñas */
+.badge-info {
+    --tw-bg-opacity: 0.1;
+    color: #0ea5e9;
+    border: 1px solid #0ea5e9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dropdown-content {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 1rem 1rem 0 0;
+        max-height: 50vh;
+    }
 }
 </style>
 

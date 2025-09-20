@@ -36,3 +36,11 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
 // User Supplement Routes
 Route::get('/supplements', 'App\Http\Controllers\SupplementController@index')->name('supplements.index');
 Route::get('/supplements/{id}/{page?}', 'App\Http\Controllers\SupplementController@show')->where(['id' => '[0-9]+', 'page' => '[0-9]+'])->defaults('page', 1)->name('supplements.show');
+
+// User Review Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/reviews', 'App\Http\Controllers\ReviewController@store')->name('reviews.store');
+    Route::put('/reviews/{id}', 'App\Http\Controllers\ReviewController@update')->name('reviews.update');
+    Route::delete('/reviews/{id}', 'App\Http\Controllers\ReviewController@delete')->name('reviews.delete');
+    Route::post('/reviews/{id}/report', 'App\Http\Controllers\ReviewController@report')->name('reviews.report');
+});

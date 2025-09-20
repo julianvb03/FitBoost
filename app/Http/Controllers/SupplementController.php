@@ -12,11 +12,7 @@ use Illuminate\View\View;
 class SupplementController extends Controller
 {
 
-    public function __construct()
-    {
-        // Is a best practice to use middleware for authentication and authorization here or on routes?
-        // $this->middleware('auth');
-    }
+    public function __construct(){}
 
     public function index(FilterSupplementRequest $request): View
     {

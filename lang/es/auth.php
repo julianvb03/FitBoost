@@ -12,4 +12,5 @@ return [
     'name' => 'Nombre',
     'account_register' => '¿No tienes una cuenta?',
     'account_login' => '¿Ya tienes una cuenta?',
+    'unauthorized' => 'Acción no autorizada.',
 ];

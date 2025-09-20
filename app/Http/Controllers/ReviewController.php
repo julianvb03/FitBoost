@@ -25,40 +25,60 @@ class ReviewController extends Controller
         $review->setStatus(true);
         $review->save();
 
-        return redirect()->back()->with('success', 'Review submitted successfully.');
+        return redirect()->back()->with('success', trans('user/review.success_store_review'));
     }
 
     public function update(int $id, UpdateReviewRequest $request): RedirectResponse
     {
         $review = Review::find($id);
         if (!$review) {
-            return redirect()->back()->with('error', 'Review not found.');
+            return redirect()->back()->with('error', trans('user/review.error_review_not_found'));
         }
 
         if ($review->getUserId() !== Auth::user()->getId()) {
-            return redirect()->back()->with('error', 'Unauthorized action.');
+            return redirect()->back()->with('error', trans('auth.unauthorized'));
         }
 
-        $review->setRating($request->input('rating'));
-        $review->setComment($request->input('comment'));
+        
+        if($request->input('rating')) {
+            $review->setRating($request->input('rating'));
+        }
+
+        if($request->input('comment')) {
+            $review->setComment($request->input('comment'));
+        }
+
         $review->save();
 
-        return redirect()->back()->with('success', 'Review updated successfully.');
+        return redirect()->back()->with('success', trans('user/review.success_update_review'));
     }
 
     public function delete(int $id): RedirectResponse
     {
         $review = Review::find($id);
         if (!$review) {
-            return redirect()->back()->with('error', 'Review not found.');
+            return redirect()->back()->with('error', trans('user/review.error_review_not_found'));
         }
 
         if ($review->getUserId() !== Auth::user()->getId()) {
-            return redirect()->back()->with('error', 'Unauthorized action.');
+            return redirect()->back()->with('error', trans('auth.unauthorized'));
         }
 
         $review->delete();
 
-        return redirect()->back()->with('success', 'Review deleted successfully.');
+        return redirect()->back()->with('success', trans('user/review.success_delete_review'));
     }
+
+    public function report(int $id): RedirectResponse
+    {
+        $review = Review::find($id);
+        if (!$review) {
+            return redirect()->back()->with('error', trans('user/review.error_review_not_found'));
+        }
+
+        $review->setReported(true);
+        $review->save();
+
+        return redirect()->back()->with('success', trans('user/review.success_report_review'));
+    }       
 }
