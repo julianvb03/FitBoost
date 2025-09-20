@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -48,7 +49,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'cardData' => 'encrypted',
+            #'cardData' => 'encrypted',
         ];
     }
 
@@ -90,6 +91,12 @@ class User extends Authenticatable
     }
 
     // Setters
+
+    public function setPassword(string $password): void
+    {
+        $hashedPassword = Hash::make($password);
+        $this->setAttribute('password', $hashedPassword);
+    }
 
     public function setName(string $name): void
     {

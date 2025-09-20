@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterSupplementRequest;
 use App\Models\Category;
 use App\Models\Supplement;
@@ -11,8 +10,7 @@ use Illuminate\View\View;
 
 class SupplementController extends Controller
 {
-
-    public function __construct(){}
+    public function __construct() {}
 
     public function index(FilterSupplementRequest $request): View
     {

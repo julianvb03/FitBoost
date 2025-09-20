@@ -10,7 +10,7 @@ class UpdateSupplementRequest extends BaseSupplementRequest
 
         foreach ($rules as $field => $rule) {
             if ($field !== 'categories.*') {
-                $rules[$field] = 'nullable|' . $rule;
+                $rules[$field] = 'nullable|'.$rule;
             }
         }
 

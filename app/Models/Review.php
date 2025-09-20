@@ -132,5 +132,4 @@ class Review extends Model
     {
         return $this->getUser()->getName();
     }
-
 }

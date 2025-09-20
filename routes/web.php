@@ -33,7 +33,6 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::patch('/edit/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@update')->name('update');
 });
 
-
 // User Supplement Routes
 Route::get('/supplements', 'App\Http\Controllers\SupplementController@index')->name('supplements.index');
 Route::get('/supplements/{id}/{page?}', 'App\Http\Controllers\SupplementController@show')->where(['id' => '[0-9]+', 'page' => '[0-9]+'])->defaults('page', 1)->name('supplements.show');
@@ -50,3 +49,9 @@ Route::middleware(['auth'])->group(function () {
 Route::get('tests/recommendations/create', 'App\\Http\\Controllers\\TestRecommendationController@create')->name('tests.recommendations.create');
 Route::post('tests/recommendations', 'App\\Http\\Controllers\\TestRecommendationController@store')->name('tests.recommendations.store');
 Route::get('tests/recommendations/{id}', 'App\\Http\\Controllers\\TestRecommendationController@show')->name('tests.recommendations.show');
+
+// User Profile routes
+
+Route::get('/profile', 'App\\Http\\Controllers\\UserController@show')->name('users.show');
+Route::get('/profile/edit', 'App\\Http\\Controllers\\UserController@edit')->name('users.edit');
+Route::patch('/profile', 'App\\Http\\Controllers\\UserController@update')->name('users.update');
