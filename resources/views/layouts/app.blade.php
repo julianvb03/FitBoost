@@ -63,6 +63,27 @@
                     </div>
                     <div class="navbar-end">
                         <div class="flex items-center gap-3">
+                            {{-- Cart Link with counter for guests and users --}}
+                            <a href="{{ route('cart.index') }}" class="btn btn-ghost btn-sm relative">
+                                {{ trans('layout/app.car_shop') }}
+                                @php
+                                    $cartCount = 0;
+                                    if (Auth::check()) {
+                                        /** @var \App\Models\User $user */
+                                        $user = Auth::user();
+                                        $order = \App\Models\Order::where('user_id', $user->getId())->where('status', 'cart')->first();
+                                        if ($order) {
+                                            $cartCount = (int) $order->items()->sum('quantity');
+                                        }
+                                    } else {
+                                        $items = session('cart.items', []);
+                                        foreach ($items as $row) { $cartCount += (int) ($row['quantity'] ?? 0); }
+                                    }
+                                @endphp
+                                @if($cartCount > 0)
+                                    <span class="badge badge-primary badge-sm absolute -top-2 -right-2">{{ $cartCount }}</span>
+                                @endif
+                            </a>
                             <!-- Language Selector -->
                             <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST"
                                 class="hidden xl:block">

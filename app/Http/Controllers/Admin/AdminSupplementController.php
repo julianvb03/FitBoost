@@ -125,7 +125,7 @@ class AdminSupplementController extends Controller
         if (! $supplement) {
             return redirect()->route('admin.supplements.index')->with('error', trans('admin/admin.failed_supplement_not_found'));
         }
-        
+
         $viewData = [];
         $viewData['categories'] = Category::all();
         $viewData['supplement'] = $supplement;
