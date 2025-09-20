@@ -10,6 +10,7 @@ use App\Models\Supplement;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use RuntimeException;
 
 final class CartService
 {
@@ -173,7 +174,7 @@ final class CartService
         }
 
         if (! method_exists($user, 'hasActivePaymentMethod') || ! $user->hasActivePaymentMethod()) {
-            throw new \RuntimeException('Missing payment method');
+            throw new RuntimeException('Missing payment method');
         }
 
         $order = $this->getOrCreateUserCart();

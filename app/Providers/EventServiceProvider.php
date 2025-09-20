@@ -6,6 +6,7 @@ use App\Services\CartService;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        \Illuminate\Support\Facades\Event::listen(Login::class, function () {
+        Event::listen(Login::class, function () {
             /** @var CartService $service */
             $service = App::make(CartService::class);
             $service->mergeSessionToUserCart();
