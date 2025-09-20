@@ -11,21 +11,16 @@ use Illuminate\Support\Facades\Event;
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-        Login::class => [
-            // Merge session cart into DB cart on login
-            // We use a closure resolved via the container to call the service
-            // The default array syntax expects class@method, so we override boot
-        ],
+        Login::class => [],
     ];
 
     public function boot(): void
     {
         parent::boot();
 
+        // Merge session cart into the persistent user cart on login
         Event::listen(Login::class, function () {
-            /** @var CartService $service */
-            $service = App::make(CartService::class);
-            $service->mergeSessionToUserCart();
+            App::make(CartService::class)->mergeSessionToUserCart();
         });
     }
 }

@@ -217,7 +217,6 @@ final class CartService
 
     private function getOrCreateUserCart(): Order
     {
-        /** @var \App\Models\User $user */
         $user = $this->auth->user();
         $order = Order::where('user_id', $user->getId())
             ->where('status', self::STATUS_CART)
@@ -238,7 +237,6 @@ final class CartService
 
     private function createEmptyCartIfMissing(): void
     {
-        /** @var \App\Models\User $user */
         $user = $this->auth->user();
         $exists = Order::where('user_id', $user->getId())
             ->where('status', self::STATUS_CART)
