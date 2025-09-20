@@ -33,7 +33,6 @@ Route::prefix('admin/categories')->name('admin.categories.')->group(function () 
     Route::patch('/edit/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@update')->name('update');
 });
 
-
 // User Supplement Routes
 Route::get('/supplements', 'App\Http\Controllers\SupplementController@index')->name('supplements.index');
 Route::get('/supplements/{id}/{page?}', 'App\Http\Controllers\SupplementController@show')->where(['id' => '[0-9]+', 'page' => '[0-9]+'])->defaults('page', 1)->name('supplements.show');
@@ -50,3 +49,24 @@ Route::middleware(['auth'])->group(function () {
 Route::get('tests/recommendations/create', 'App\\Http\\Controllers\\TestRecommendationController@create')->name('tests.recommendations.create');
 Route::post('tests/recommendations', 'App\\Http\\Controllers\\TestRecommendationController@store')->name('tests.recommendations.store');
 Route::get('tests/recommendations/{id}', 'App\\Http\\Controllers\\TestRecommendationController@show')->name('tests.recommendations.show');
+
+// Cart Routes
+Route::prefix('cart')->name('cart.')->group(function () {
+    // View cart
+    Route::get('/', 'App\\Http\\Controllers\\CartController@index')->name('index');
+
+    // Add item to cart
+    Route::post('/items', 'App\\Http\\Controllers\\CartController@store')->name('items.store');
+
+    // Update quantity for supplement in cart
+    Route::patch('/items/{supplement}', 'App\\Http\\Controllers\\CartController@update')->where(['supplement' => '[0-9]+'])->name('items.update');
+
+    // Remove supplement from cart
+    Route::delete('/items/{supplement}', 'App\\Http\\Controllers\\CartController@destroy')->where(['supplement' => '[0-9]+'])->name('items.destroy');
+
+    // Clear cart
+    Route::delete('/', 'App\\Http\\Controllers\\CartController@clear')->name('clear');
+
+    // Checkout (requires auth)
+    Route::post('/checkout', 'App\\Http\\Controllers\\CartController@checkout')->middleware(['auth'])->name('checkout');
+});

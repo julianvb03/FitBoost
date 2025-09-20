@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateReviewRequest extends FormRequest
+final class CheckoutRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -13,9 +15,6 @@ class UpdateReviewRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'rating' => 'required|int|min:1|max:5',
-            'comment' => 'required|string|max:1000',
-        ];
+        return [];
     }
 }
