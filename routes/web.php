@@ -26,7 +26,6 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::post('/checkout', 'App\\Http\\Controllers\\CartController@checkout')->middleware(['auth'])->name('checkout');
 });
 
-
 // Admin Routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:admin']], function () {
 
