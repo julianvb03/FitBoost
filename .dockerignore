@@ -1,0 +1,8 @@
+.env
+.env.example
+.git*
+.github/
+.vscode/
+.vscode*
+vendor/
+node_modules/
