@@ -375,38 +375,4 @@
             </div>
         @endif
     </div>
-
-    <style>
-        /* Additional animations and styles */
-        /* .card:hover {
-                transform: translateY(-1px);
-                transition: transform 0.2s ease-in-out;
-            } */
-
-        .stat {
-            transition: all 0.2s ease-in-out;
-        }
-
-        /* .stat:hover {
-                transform: scale(1.02);
-            } */
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .grid-cols-1.md\\:grid-cols-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Avatar gradient */
-        .avatar .rounded-full {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        /* Disable any inherited scale on hover */
-        .hover\:scale-105:hover {
-            transform: none !important;
-        }
-    </style>
-
 @endsection

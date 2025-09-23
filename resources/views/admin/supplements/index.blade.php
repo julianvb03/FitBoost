@@ -421,22 +421,7 @@
             </div>
         </div>
     </dialog>
-
     @push('scripts')
         @vite(entrypoints: ['resources/js/admin/supplements/home.js'])
     @endpush
-
-    <style>
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* Active filters chips */
-        .chip {
-            @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-base-content/80 border border-neutral/20 hover:bg-base-300 transition-colors;
-        }
-    </style>
 @endsection

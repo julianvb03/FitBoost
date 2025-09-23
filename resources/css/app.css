@@ -137,3 +137,376 @@ html {
         transparent;
     scrollbar-arrow-color: transparent;
 }
+
+/* !Global styles */
+.prose {
+    color: inherit;
+}
+
+.prose p {
+    color: inherit;
+}
+
+/* Smooth animations */
+.hover\:scale-105:hover {
+    transform: scale(1.05);
+}
+
+/* Improvements for the rating */
+.rating input:checked ~ input,
+.rating input[checked="checked"] ~ input {
+    --tw-bg-opacity: 0.25;
+}
+
+/* Styles for the dropdowns */
+.dropdown-content {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effects for action buttons */
+.dropdown-content button:hover {
+    transform: translateX(2px);
+    transition: transform 0.2s ease;
+}
+
+/* Animation for modals */
+.modal[open] {
+    animation: modal-show 0.3s ease-out;
+}
+
+@keyframes modal-show {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Interactive rating states */
+.rating input:hover,
+.rating input:hover ~ input {
+    --tw-bg-opacity: 0.5;
+}
+
+/* Visual improvements for review states */
+.badge-info {
+    --tw-bg-opacity: 0.1;
+    color: #0ea5e9;
+    border: 1px solid #0ea5e9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dropdown-content {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 1rem 1rem 0 0;
+        max-height: 50vh;
+    }
+}
+
+/* !Supplements styles */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Smooth animation for hover effects */
+.group:hover .group-hover\:scale-105 {
+    transform: scale(1.05);
+}
+
+.group:hover .group-hover\:btn-accent {
+    @apply btn-accent;
+}
+
+/* Visual improvements for focus */
+.focus\:input-primary:focus {
+    @apply input-primary;
+}
+
+.focus\:select-primary:focus {
+    @apply select-primary;
+}
+
+/* Active filters chips */
+.chip {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-base-content/80 border border-neutral/20 hover:bg-base-300 transition-colors;
+}
+
+/* !Users styles */
+/* Animaciones suaves */
+.card {
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Focus styles mejorados */
+.input:focus,
+.textarea:focus,
+.select:focus {
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Avatar gradient animation */
+.avatar .rounded-full {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    animation: gradient-shift 4s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+    0%,
+    100% {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    33% {
+        background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
+    }
+
+    66% {
+        background: linear-gradient(135deg, #f093fb 0%, #667eea 100%);
+    }
+}
+
+/* Password strength bars animation */
+.h-3 {
+    transition: all 0.4s ease-in-out;
+    transform-origin: left center;
+}
+
+/* Card headers gradient animations */
+.card-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.card-header:hover::before {
+    left: 100%;
+}
+
+/* Form sections spacing and responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .grid-cols-1.md\\:grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .card-header {
+        padding: 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .input-lg,
+    .textarea-lg,
+    .btn-lg {
+        height: 3rem;
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    .textarea-lg {
+        min-height: 6rem;
+    }
+}
+
+/* Smooth scrolling for long forms */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading state animations */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Button hover effects */
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    z-index: 1000;
+}
+
+.toast-top {
+    top: 1rem;
+}
+
+.toast-end {
+    right: 1rem;
+}
+
+/* Enhanced form field styles */
+.form-control {
+    margin-bottom: 0.5rem;
+}
+
+.label-text {
+    font-weight: 600;
+    color: hsl(var(--bc) / 0.8);
+}
+
+/* Custom scrollbar for textarea */
+.textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.textarea::-webkit-scrollbar-track {
+    background: hsl(var(--b2));
+    border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+    background: hsl(var(--bc) / 0.3);
+    border-radius: 4px;
+}
+
+.textarea::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--bc) / 0.5);
+}
+
+/* Loading state for submit button */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Enhanced alert styles */
+.alert {
+    border-radius: 12px;
+    border: 1px solid;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Breadcrumb hover effects */
+.breadcrumbs a:hover {
+    color: hsl(var(--p));
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* !Users styles */
+/* Additional animations and styles */
+/* .card:hover {
+                transform: translateY(-1px);
+                transition: transform 0.2s ease-in-out;
+            } */
+
+.stat {
+    transition: all 0.2s ease-in-out;
+}
+
+/* .stat:hover {
+                transform: scale(1.02);
+            } */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-cols-1.md\\:grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Avatar gradient */
+.avatar .rounded-full {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Disable any inherited scale on hover */
+.hover\:scale-105:hover {
+    transform: none !important;
+}
+
+/* !Admin styles */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Active filters chips */
+.chip {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-base-content/80 border border-neutral/20 hover:bg-base-300 transition-colors;
+}
