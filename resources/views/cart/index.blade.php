@@ -28,31 +28,28 @@
                     </thead>
                     <tbody>
                         @foreach ($items as $row)
-                            @php
-                                $supplement = is_array($row) ? $row['supplement'] : $row->getSupplement();
-                                $quantity = is_array($row) ? $row['quantity'] : $row->getQuantity();
-                                $subtotal = is_array($row) ? $row['subtotal'] : $row->getTotalPrice();
-                            @endphp
                             <tr>
-                                <td>{{ $supplement->getName() }}</td>
-                                <td>${{ number_format($supplement->getPrice(), 0) }}</td>
+                                <td>{{ (is_array($row) ? $row['supplement'] : $row->getSupplement())->getName() }}</td>
+                                <td>${{ number_format((is_array($row) ? $row['supplement'] : $row->getSupplement())->getPrice(), 0) }}
+                                </td>
                                 <td>
                                     <form class="d-inline" method="POST"
-                                        action="{{ route('cart.items.update', ['supplement' => $supplement->getId()]) }}">
+                                        action="{{ route('cart.items.update', ['supplement' => (is_array($row) ? $row['supplement'] : $row->getSupplement())->getId()]) }}">
                                         @csrf
                                         @method('PATCH')
                                         <div class="input-group">
                                             <input name="quantity" type="number" min="1" max="99"
-                                                class="form-control" value="{{ $quantity }}">
+                                                class="form-control"
+                                                value="{{ is_array($row) ? $row['quantity'] : $row->getQuantity() }}">
                                             <button type="submit"
                                                 class="btn btn-outline-secondary">{{ __('Update') }}</button>
                                         </div>
                                     </form>
                                 </td>
-                                <td>${{ number_format($subtotal, 0) }}</td>
+                                <td>${{ number_format(is_array($row) ? $row['subtotal'] : $row->getTotalPrice(), 0) }}</td>
                                 <td>
                                     <form class="d-inline" method="POST"
-                                        action="{{ route('cart.items.destroy', ['supplement' => $supplement->getId()]) }}">
+                                        action="{{ route('cart.items.destroy', ['supplement' => (is_array($row) ? $row['supplement'] : $row->getSupplement())->getId()]) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-link text-danger">{{ __('Remove') }}</button>

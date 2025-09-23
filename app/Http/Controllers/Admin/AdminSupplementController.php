@@ -138,6 +138,7 @@ class AdminSupplementController extends Controller
 
         $viewData['categories'] = Category::all();
         $viewData['supplement'] = $supplement;
+        $viewData['selectedCategories'] = $supplement->getCategories()->pluck('id')->toArray();
 
         return view('admin.supplements.edit')->with('viewData', $viewData);
     }

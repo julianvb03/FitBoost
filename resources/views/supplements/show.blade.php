@@ -15,9 +15,9 @@
             </ul>
         </div>
 
-        <!-- Producto Principal -->
+        <!-- Main Product -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            <!-- Imagen del Producto -->
+            <!-- Product Image -->
             <div class="space-y-4">
                 <div class="aspect-square w-full bg-base-200 rounded-lg overflow-hidden shadow-lg">
                     @if ($viewData['supplement']->getImagePath())
@@ -35,7 +35,7 @@
                     @endif
                 </div>
 
-                <!-- Badge de Disponibilidad -->
+                <!-- Availability Badge -->
                 <div class="flex justify-center">
                     @if ($viewData['supplement']->getStock() > 0)
                         <div class="badge badge-success badge-lg font-medium px-4 py-2">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <!-- Información del Producto -->
+            <!-- Product Information -->
             <div class="space-y-6">
                 <!-- Header -->
                 <div>
@@ -67,7 +67,7 @@
                     <p class="text-lg text-base-content/70">{{ $viewData['supplement']->getLaboratory() }}</p>
                 </div>
 
-                <!-- Rating -->
+                <!-- Rating Stars -->
                 <div class="flex items-center gap-4">
                     <div class="rating rating-lg">
                         @for ($i = 1; $i <= 5; $i++)
@@ -83,7 +83,7 @@
                     </span>
                 </div>
 
-                <!-- Precio -->
+                <!-- Price -->
                 <div class="bg-base-200 rounded-lg p-6">
                     <div class="flex items-center justify-between">
                         <div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
 
-                <!-- Información Adicional -->
+                <!-- Additional Information -->
                 <div class="space-y-4">
                     @if ($viewData['supplement']->getFlavour())
                         <div class="flex items-center gap-3">
@@ -113,7 +113,7 @@
                         </div>
                     @endif
 
-                    <!-- Categorías -->
+                    <!-- Categories -->
                     @if (count($viewData['categories']) > 0)
                         <div class="flex items-start gap-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/60 mt-0.5"
@@ -133,7 +133,7 @@
                     @endif
                 </div>
 
-                <!-- Botón de Acción -->
+                <!-- Action Button -->
                 <div class="pt-4">
                     @if ($viewData['supplement']->getStock() > 0)
                         <form method="POST" action="{{ route('cart.items.store') }}" class="grid grid-cols-4 gap-3">
@@ -151,7 +151,7 @@
                                     Agregar al Carrito
                                 </button>
                             </div> --}}
-                            <!-- Input de Cantidad -->
+                            <!-- Quantity Input -->
                             <div class="flex flex-col gap-2">
                                 <div class="">
                                     <label class="label">
@@ -189,7 +189,7 @@
             </div>
         </div>
 
-        <!-- Descripción del Producto -->
+        <!-- Product Description -->
         <div class="bg-base-100 rounded-lg shadow-lg p-8 mb-8">
             <h2 class="text-2xl font-bold text-base-content mb-6">Descripción del Producto</h2>
             <div class="prose max-w-none">
@@ -199,7 +199,7 @@
             </div>
         </div>
 
-        <!-- Sección de Reseñas -->
+        <!-- Reviews Section -->
         <div class="bg-base-100 rounded-lg shadow-lg p-8">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold text-base-content">
@@ -209,7 +209,7 @@
                     </span>
                 </h2>
 
-                <!-- Resumen de Rating y Botón Crear Reseña -->
+                <!-- Rating Summary and Create Review Button -->
                 <div class="flex items-center gap-6">
                     <div class="text-center">
                         <div class="text-3xl font-bold text-primary mb-1">
@@ -237,7 +237,7 @@
             </div>
 
             @if (count($viewData['reviews']) > 0)
-                <!-- Lista de Reseñas -->
+                <!-- List of Reviews -->
                 <div class="space-y-6 mb-8">
                     @foreach ($viewData['reviews'] as $review)
                         <div class="border-b border-neutral/20 pb-6 last:border-b-0 last:pb-0"
@@ -253,7 +253,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Contenido de la reseña -->
+                                <!-- Review Content -->
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between mb-2">
                                         <div class="flex items-center gap-3">
@@ -274,7 +274,7 @@
                                         </div>
 
                                         @auth
-                                            <!-- Menú de Acciones -->
+                                            <!-- Actions Menu -->
                                             <div class="dropdown dropdown-end">
                                                 <div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-circle">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -339,11 +339,11 @@
                     @endforeach
                 </div>
 
-                <!-- Paginación de Reseñas -->
+                <!-- Reviews Pagination -->
                 @if ($viewData['total_pages'] > 1)
                     <div class="flex justify-center pt-6 border-t border-neutral/20">
                         <div class="join shadow">
-                            <!-- Primera página -->
+                            <!-- First page -->
                             @if ($viewData['current_page'] > 1)
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => 1]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -353,7 +353,7 @@
                                 <button class="join-item btn btn-sm btn-disabled">Primera</button>
                             @endif
 
-                            <!-- Página anterior -->
+                            <!-- Previous page -->
                             @if ($viewData['current_page'] > 1)
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $viewData['current_page'] - 1]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -373,7 +373,7 @@
                                 </button>
                             @endif
 
-                            <!-- Números de página -->
+                            <!-- Page numbers -->
                             @for ($i = max(1, $viewData['current_page'] - 2); $i <= min($viewData['total_pages'], $viewData['current_page'] + 2); $i++)
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $i]) }}"
                                     class="join-item btn btn-sm {{ $i == $viewData['current_page'] ? 'btn-active btn-primary' : 'hover:btn-primary' }}">
@@ -381,7 +381,7 @@
                                 </a>
                             @endfor
 
-                            <!-- Página siguiente -->
+                            <!-- Next page -->
                             @if ($viewData['current_page'] < $viewData['total_pages'])
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $viewData['current_page'] + 1]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -401,7 +401,7 @@
                                 </button>
                             @endif
 
-                            <!-- Última página -->
+                            <!-- Last page -->
                             @if ($viewData['current_page'] < $viewData['total_pages'])
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $viewData['total_pages']]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -418,7 +418,7 @@
                     </div>
                 @endif
             @else
-                <!-- Estado sin reseñas -->
+                <!-- Empty State -->
                 <div class="text-center py-12">
                     <div class="max-w-sm mx-auto">
                         <div class="mb-6">
@@ -452,7 +452,7 @@
             @endif
         </div>
 
-        <!-- Botón Volver -->
+        <!-- Back Button -->
         <div class="flex justify-center mt-8">
             <a href="{{ route('supplements.index') }}" class="btn btn-ghost btn-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
@@ -465,7 +465,7 @@
     </div>
 
     @auth
-        <!-- Modal para Crear Reseña -->
+        <!-- Modal for Create Review -->
         <dialog id="createReviewModal" class="modal">
             <div class="modal-box">
                 <form method="dialog">
@@ -479,7 +479,7 @@
                     <input type="hidden" name="supplement_id" value="{{ $viewData['supplement']->getId() }}">
 
                     <div class="space-y-4">
-                        <!-- Calificación -->
+                        <!-- Rating -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Calificación</span>
@@ -495,7 +495,7 @@
                             </div>
                         </div>
 
-                        <!-- Comentario -->
+                        <!-- Comment -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Comentario</span>
@@ -507,7 +507,7 @@
                             </div>
                         </div>
 
-                        <!-- Botones -->
+                        <!-- Buttons -->
                         <div class="flex gap-3 pt-4">
                             <button type="submit" class="btn btn-primary flex-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
@@ -526,7 +526,7 @@
             </div>
         </dialog>
 
-        <!-- Modal para Editar Reseña -->
+        <!-- Modal for Edit Review -->
         <dialog id="editReviewModal" class="modal">
             <div class="modal-box">
                 <form method="dialog">
@@ -540,7 +540,7 @@
                     @method('PUT')
 
                     <div class="space-y-4">
-                        <!-- Calificación -->
+                        <!-- Rating -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Calificación</span>
@@ -556,7 +556,7 @@
                             </div>
                         </div>
 
-                        <!-- Comentario -->
+                        <!-- Comment -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Comentario</span>
@@ -568,7 +568,7 @@
                             </div>
                         </div>
 
-                        <!-- Botones -->
+                        <!-- Buttons -->
                         <div class="flex gap-3 pt-4">
                             <button type="submit" class="btn btn-primary flex-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
@@ -587,7 +587,7 @@
             </div>
         </dialog>
 
-        <!-- Modal de Confirmación para Eliminar -->
+        <!-- Modal for Delete Confirmation -->
         <dialog id="deleteReviewModal" class="modal">
             <div class="modal-box">
                 <h3 class="font-bold text-lg text-error mb-4">Eliminar Reseña</h3>
@@ -615,7 +615,7 @@
             </div>
         </dialog>
 
-        <!-- Modal de Confirmación para Reportar -->
+        <!-- Modal for Report Confirmation -->
         <dialog id="reportReviewModal" class="modal">
             <div class="modal-box">
                 <h3 class="font-bold text-lg text-warning mb-4">Reportar Reseña</h3>
@@ -645,32 +645,32 @@
     @endauth
 
     <script>
-        // Función para editar reseña
+        // Edit Review
         function editReview(reviewId, currentRating, currentComment) {
-            // Configurar el formulario
+            // Set the form action
             document.getElementById('editReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
 
-            // Establecer valores actuales
+            // Set the current values
             document.querySelector(`#edit-rating-${currentRating}`).checked = true;
             document.getElementById('editComment').value = currentComment;
 
-            // Mostrar modal
+            // Show the modal
             editReviewModal.showModal();
         }
 
-        // Función para eliminar reseña
+        // Function to delete a review
         function deleteReview(reviewId) {
             document.getElementById('deleteReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
             deleteReviewModal.showModal();
         }
 
-        // Función para reportar reseña
+        // Function to report a review
         function reportReview(reviewId) {
             document.getElementById('reportReviewForm').action = `{{ url('reviews') }}/${reviewId}/report`;
             reportReviewModal.showModal();
         }
 
-        // Contador de caracteres para textarea
+        // Character counter for textarea
         document.addEventListener('DOMContentLoaded', function() {
             const textareas = document.querySelectorAll('textarea[maxlength]');
             textareas.forEach(textarea => {
@@ -691,7 +691,7 @@
             });
         });
 
-        // Cerrar dropdowns cuando se hace click fuera
+        // Close dropdowns when clicking outside
         document.addEventListener('click', function(event) {
             const dropdowns = document.querySelectorAll('.dropdown');
             dropdowns.forEach(dropdown => {
@@ -711,29 +711,29 @@
             color: inherit;
         }
 
-        /* Animaciones suaves */
+        /* Smooth animations */
         .hover\:scale-105:hover {
             transform: scale(1.05);
         }
 
-        /* Mejoras para el rating */
+        /* Improvements for the rating */
         .rating input:checked~input,
         .rating input[checked="checked"]~input {
             --tw-bg-opacity: 0.25;
         }
 
-        /* Estilos para los dropdowns */
+        /* Styles for the dropdowns */
         .dropdown-content {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* Hover effects para botones de acción */
+        /* Hover effects for action buttons */
         .dropdown-content button:hover {
             transform: translateX(2px);
             transition: transform 0.2s ease;
         }
 
-        /* Animación para modales */
+        /* Animation for modals */
         .modal[open] {
             animation: modal-show 0.3s ease-out;
         }
@@ -750,13 +750,13 @@
             }
         }
 
-        /* Estados de los ratings interactivos */
+        /* Interactive rating states */
         .rating input:hover,
         .rating input:hover~input {
             --tw-bg-opacity: 0.5;
         }
 
-        /* Mejoras visuales para estados de reseñas */
+        /* Visual improvements for review states */
         .badge-info {
             --tw-bg-opacity: 0.1;
             color: #0ea5e9;

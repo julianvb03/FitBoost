@@ -19,7 +19,7 @@
             <p class="text-base-content/70 text-lg">Gestiona tu información personal y revisa tu historial</p>
         </div>
 
-        <!-- Mensajes de éxito/error -->
+        <!-- Error/Success Messages -->
         @if (isset($viewData['success']))
             <div class="alert alert-success shadow-lg mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
@@ -43,7 +43,7 @@
         @endif
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Información del Usuario -->
+            <!-- Information of the User -->
             <div class="lg:col-span-2">
                 <div class="card bg-base-100 shadow-lg border border-neutral/20 overflow-hidden">
                     <div class="card-header bg-gradient-to-r from-primary to-accent text-primary-content p-6">
@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="card-body p-6">
-                        <!-- Información Personal -->
+                        <!-- Personal Information -->
                         <div class="space-y-6">
                             <div>
                                 <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
@@ -89,7 +89,7 @@
                                 </h3>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Nombre -->
+                                    <!-- Name -->
                                     <div class="form-control">
                                         <label class="label">
                                             <span class="label-text font-medium">Nombre Completo</span>
@@ -99,7 +99,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Email -->
+                                    <!-- Email Address -->
                                     <div class="form-control">
                                         <label class="label">
                                             <span class="label-text font-medium">Correo Electrónico</span>
@@ -117,7 +117,7 @@
                                 </div>
                             </div>
 
-                            <!-- Información de Contacto -->
+                            <!-- Contact Information -->
                             <div>
                                 <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
@@ -130,7 +130,7 @@
                                     Información de Contacto
                                 </h3>
 
-                                <!-- Dirección -->
+                                <!-- Address -->
                                 <div class="form-control">
                                     <label class="label">
                                         <span class="label-text font-medium">Dirección</span>
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
 
-                            <!-- Información de Pago -->
+                            <!-- Payment Information -->
                             <div>
                                 <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
@@ -157,7 +157,7 @@
                                     Información de Pago
                                 </h3>
 
-                                <!-- Datos de Tarjeta -->
+                                <!-- Card Data -->
                                 <div class="form-control">
                                     <label class="label">
                                         <span class="label-text font-medium">Datos de Tarjeta</span>
@@ -185,7 +185,7 @@
                                 </div>
                             </div>
 
-                            <!-- Botón de Actualización usando PATCH -->
+                            <!-- Update Button using PATCH -->
                             <div class="card-actions pt-6 border-t border-neutral/20">
                                 <form action="{{ route('users.update') }}" method="POST" class="w-full">
                                     @csrf
@@ -206,9 +206,9 @@
                 </div>
             </div>
 
-            <!-- Sidebar con Estadísticas y Acciones Rápidas -->
+            <!-- Sidebar with Statistics and Quick Actions -->
             <div class="space-y-6">
-                <!-- Estadísticas -->
+                <!-- Statistics -->
                 <div class="card bg-base-100 shadow-lg border border-neutral/20">
                     <div class="card-body p-6">
                         <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
@@ -221,7 +221,7 @@
                         </h3>
 
                         <div class="space-y-4">
-                            <!-- Total de Órdenes -->
+                            <!-- Total Orders -->
                             <div class="stat bg-primary/10 rounded-lg p-4">
                                 <div class="stat-figure text-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
@@ -234,7 +234,7 @@
                                 <div class="stat-value text-primary">{{ count($viewData['orders']) }}</div>
                             </div>
 
-                            <!-- Monto Total Gastado -->
+                            <!-- Total Spent -->
                             <div class="stat bg-success/10 rounded-lg p-4">
                                 <div class="stat-figure text-success">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
@@ -249,7 +249,7 @@
                                 </div>
                             </div>
 
-                            <!-- Estado de la Cuenta -->
+                            <!-- Account Status -->
                             <div class="stat bg-info/10 rounded-lg p-4">
                                 <div class="stat-figure text-info">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
@@ -265,7 +265,7 @@
                     </div>
                 </div>
 
-                <!-- Acciones Rápidas -->
+                <!-- Quick Actions -->
                 <div class="card bg-base-100 shadow-lg border border-neutral/20">
                     <div class="card-body p-6">
                         <h3 class="text-lg font-semibold text-base-content mb-4 flex items-center gap-2">
@@ -302,7 +302,7 @@
             </div>
         </div>
 
-        <!-- Historial de Órdenes Recientes -->
+        <!-- Recent Orders History -->
         @if (count($viewData['orders']) > 0)
             <div class="mt-8">
                 <div class="card bg-base-100 shadow-lg border border-neutral/20">
@@ -377,20 +377,19 @@
     </div>
 
     <style>
-        /* Animaciones y estilos adicionales */
-        .card:hover {
-            /* Sin scale/translate agresivo para consistencia */
-            transform: translateY(-1px);
-            transition: transform 0.2s ease-in-out;
-        }
+        /* Additional animations and styles */
+        /* .card:hover {
+                transform: translateY(-1px);
+                transition: transform 0.2s ease-in-out;
+            } */
 
         .stat {
             transition: all 0.2s ease-in-out;
         }
 
-        .stat:hover {
-            transform: scale(1.02);
-        }
+        /* .stat:hover {
+                transform: scale(1.02);
+            } */
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -404,7 +403,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        /* Desactivar cualquier escala en hover heredada */
+        /* Disable any inherited scale on hover */
         .hover\:scale-105:hover {
             transform: none !important;
         }

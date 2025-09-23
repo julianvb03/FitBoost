@@ -44,11 +44,11 @@
             </a>
         </div>
 
-        <!-- Filtros y Búsqueda -->
+        <!-- Filters and Search -->
         <form id="filterForm" method="GET" action="{{ route('admin.supplements.index') }}"
             class="card bg-base-100 border border-neutral/20 rounded-xl p-6 mb-6 shadow space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Búsqueda -->
+                <!-- Search -->
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Buscar</span>
@@ -57,7 +57,7 @@
                         class="input input-bordered w-full focus:input-primary" />
                 </div>
 
-                <!-- Categoría -->
+                <!-- Category -->
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Categoría</span>
@@ -73,7 +73,7 @@
                     </select>
                 </div>
 
-                <!-- Precio Mínimo -->
+                <!-- Minimum Price -->
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Precio Mínimo</span>
@@ -82,7 +82,7 @@
                         class="input input-bordered w-full focus:input-primary" />
                 </div>
 
-                <!-- Precio Máximo -->
+                <!-- Maximum Price -->
                 <div class="form-control">
                     <label class="label">
                         <span class="label-text">Precio Máximo</span>
@@ -93,7 +93,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <!-- Stock y Ordenar -->
+                <!-- Stock and Order -->
                 <div class="flex flex-col sm:flex-row gap-4">
                     <!-- Stock -->
                     <div class="form-control">
@@ -104,7 +104,7 @@
                         </label>
                     </div>
 
-                    <!-- Order By -->
+                    <!-- Order By (Sort By) -->
                     <div class="form-control min-w-[200px]">
                         <select name="order_by" class="select select-bordered select-sm">
                             <option value="">Ordenar por</option>
@@ -120,7 +120,7 @@
                         </select>
                     </div>
 
-                    <!-- Per Page -->
+                    <!-- Per Page (Items per page) -->
                     <div class="form-control min-w-[120px]">
                         <select name="per_page" class="select select-bordered select-sm">
                             <option value="4" {{ request('per_page', 4) == 4 ? 'selected' : '' }}>4 por página
@@ -131,7 +131,7 @@
                     </div>
                 </div>
 
-                <!-- Botones -->
+                <!-- Buttons -->
                 <div class="flex gap-2">
                     <button type="submit" class="btn btn-primary">
                         Filtrar
@@ -188,13 +188,13 @@
             </div>
         @endif
 
-        <!-- Grid de Productos -->
+        <!-- Grid of Products -->
         @if (count($viewData['supplements']) > 0)
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
                 @foreach ($viewData['supplements'] as $supplement)
                     <div
                         class="card bg-base-100 shadow-lg hover:shadow-2xl transition-all duration-300 border border-neutral/20">
-                        <!-- Imagen del producto -->
+                        <!-- Product Image -->
                         <figure class="px-4 pt-4">
                             <div class="aspect-square w-full bg-base-200 rounded-lg overflow-hidden">
                                 @if ($supplement->getImagePath())
@@ -215,7 +215,7 @@
                         </figure>
 
                         <div class="card-body p-4 flex flex-grow">
-                            <!-- Header del card -->
+                            <!-- Header of the card -->
                             <div class="flex justify-between items-start mb-2">
                                 <h2 class="card-title text-lg font-bold text-base-content line-clamp-2">
                                     {{ $supplement->getName() }}
@@ -228,7 +228,7 @@
                                 @endif
                             </div>
 
-                            <!-- Información del producto -->
+                            <!-- Product Information -->
                             <div class="space-y-2 mb-4">
                                 <p class="text-sm text-base-content/70">
                                     <span class="font-medium">Laboratorio:</span> {{ $supplement->getLaboratory() }}
@@ -251,18 +251,18 @@
                                         class="text-sm text-base-content/70">({{ $supplement->getAverageRating() }})</span>
                                 </div>
 
-                                <!-- Precio -->
+                                <!-- Price -->
                                 <p class="text-2xl font-bold text-primary">
                                     ${{ number_format($supplement->getPrice(), 0, ',', '.') }}
                                 </p>
 
-                                <!-- Descripción truncada -->
+                                <!-- Truncated Description -->
                                 <p class="text-sm text-base-content/60 line-clamp-2">
                                     {{ $supplement->getDescription() }}
                                 </p>
                             </div>
 
-                            <!-- Acciones -->
+                            <!-- Actions -->
                             <div class="card-actions justify-between items-center pt-4 border-t border-neutral/20 mt-auto">
                                 <a href="{{ route('supplements.show', ['id' => $supplement->getId(), 'page' => 1]) }}"
                                     class="btn btn-primary btn-sm flex-1 mr-2">
@@ -317,7 +317,7 @@
                 @endforeach
             </div>
 
-            Paginación
+            {{-- Pagination --}}
             @if ($viewData['total_pages'] > 1)
                 <div class="flex justify-center mt-8">
                     <div class="join shadow-lg">
@@ -376,7 +376,7 @@
                 </div>
             @endif
         @else
-            <!-- Estado vacío -->
+            <!-- Empty State -->
             <div class="text-center py-12">
                 <div class="max-w-sm mx-auto">
                     <div class="mb-6">
@@ -402,7 +402,7 @@
         @endif
     </div>
 
-    <!-- Modal de confirmación de eliminación -->
+    <!-- Modal of confirmation of deletion -->
     <dialog id="delete_modal" class="modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold text-base-content">Confirmar eliminación</h3>
@@ -422,14 +422,9 @@
         </div>
     </dialog>
 
-    <script>
-        function confirmDelete(supplementId, supplementName) {
-            document.getElementById('supplement_name').textContent = supplementName;
-            document.getElementById('delete_form').action = "{{ route('admin.supplements.delete', ['id' => ':id']) }}"
-                .replace(':id', supplementId);
-            document.getElementById('delete_modal').showModal();
-        }
-    </script>
+    @push('scripts')
+        @vite(entrypoints: ['resources/js/admin/supplements/home.js'])
+    @endpush
 
     <style>
         .line-clamp-2 {
@@ -439,7 +434,7 @@
             overflow: hidden;
         }
 
-        /* Chips de filtros activos */
+        /* Active filters chips */
         .chip {
             @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-base-content/80 border border-neutral/20 hover:bg-base-300 transition-colors;
         }
