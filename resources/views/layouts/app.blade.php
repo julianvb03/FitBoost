@@ -48,13 +48,16 @@
                             </li>
                             @auth
                                 @if (auth()->user()->hasRole('admin'))
-                                    <li><a href="#" class="text-base-content hover:text-primary">
+                                    <li><a href="/admin/supplements" class="text-base-content hover:text-primary">
                                             {{ trans('layout/app.admin_dashboard') }} </a>
                                     </li>
                                 @endif
                                 @if (auth()->user()->hasRole('user'))
-                                    <li><a href="#" class="text-base-content hover:text-primary">{{ trans('layout/app.car_shop') }}</a></li>
-                                    <li><a href="{{ route('tests.recommendations.create') }}" class="text-base-content hover:text-primary">Recomendaciones con IA</a></li>
+                                    {{-- <li><a href="#"
+                                            class="text-base-content hover:text-primary">{{ trans('layout/app.car_shop') }}</a>
+                                    </li> --}}
+                                    <li><a href="{{ route('tests.recommendations.create') }}"
+                                            class="text-base-content hover:text-primary">Recomendaciones con IA</a></li>
                                 @endif
 
                             @endauth
@@ -64,24 +67,30 @@
                     <div class="navbar-end">
                         <div class="flex items-center gap-3">
                             {{-- Cart Link with counter for guests and users --}}
-                            <a href="{{ route('cart.index') }}" class="btn btn-ghost btn-sm relative">
+                            <a href="{{ route('cart.index') }}"
+                                class="btn btn-outline btn-sm border-neutral relative text-base-content hover:bg-base-200">
                                 {{ trans('layout/app.car_shop') }}
                                 @php
                                     $cartCount = 0;
                                     if (Auth::check()) {
                                         /** @var \App\Models\User $user */
                                         $user = Auth::user();
-                                        $order = \App\Models\Order::where('user_id', $user->getId())->where('status', 'cart')->first();
+                                        $order = \App\Models\Order::where('user_id', $user->getId())
+                                            ->where('status', 'cart')
+                                            ->first();
                                         if ($order) {
                                             $cartCount = (int) $order->items()->sum('quantity');
                                         }
                                     } else {
                                         $items = session('cart.items', []);
-                                        foreach ($items as $row) { $cartCount += (int) ($row['quantity'] ?? 0); }
+                                        foreach ($items as $row) {
+                                            $cartCount += (int) ($row['quantity'] ?? 0);
+                                        }
                                     }
                                 @endphp
-                                @if($cartCount > 0)
-                                    <span class="badge badge-primary badge-sm absolute -top-2 -right-2">{{ $cartCount }}</span>
+                                @if ($cartCount > 0)
+                                    <span
+                                        class="badge badge-primary badge-sm absolute -top-2 -right-2">{{ $cartCount }}</span>
                                 @endif
                             </a>
                             <!-- Language Selector -->
@@ -101,11 +110,11 @@
                                 </select>
                             </form>
 
-                            <a href="#"
+                            {{-- <a href="#"
                                 class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:flex">
                                 {{ trans('layout/app.free_evaluation') }}
-                            </a>
-                            <a href="#"
+                            </a> --}}
+                            <a href="/supplements"
                                 class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:flex">
                                 {{ trans('layout/app.products') }}
                             </a>
@@ -154,13 +163,29 @@
                         <ul class="menu w-full space-y-2">
                             @if (auth()->user()->hasRole('admin'))
                                 <li>
-                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
+                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors"
+                                        href="/admin/supplements">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
                                             </path>
                                         </svg>
                                         <span> {{ trans('layout/app.dashboard') }} </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors"
+                                        href="/admin/categories">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-layers2-icon lucide-layers-2">
+                                            <path
+                                                d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74z" />
+                                            <path
+                                                d="m20 14.285 1.5.845a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74l1.5-.845" />
+                                        </svg>
+                                        <span> {{ trans('layout/app.categories') }} </span>
                                     </a>
                                 </li>
                                 <li>
@@ -175,7 +200,8 @@
                                 </li>
                             @endif
                             <li>
-                                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
+                                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors"
+                                    href="/profile">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -183,7 +209,7 @@
                                     <span> {{ trans('layout/app.profile') }} </span>
                                 </a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -191,7 +217,7 @@
                                     </svg>
                                     <span> {{ trans('layout/app.recommendations') }} </span>
                                 </a>
-                            </li>
+                            </li> --}}
                             {{-- <li>
                                 <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,12 +246,12 @@
                                 </select>
                             </form> --}}
 
-                            <button class="btn btn-outline w-full border-neutral text-base-content hover:bg-base-200">
+                            {{-- <button class="btn btn-outline w-full border-neutral text-base-content hover:bg-base-200">
                                 {{ trans('layout/app.products') }}
                             </button>
                             <button class="btn btn-primary w-full text-primary-content">
                                 {{ trans('layout/app.free_evaluation') }}
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
                 </div>
