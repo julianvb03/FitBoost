@@ -23,10 +23,17 @@ class RolePermissionSeeder extends Seeder
 
         // $adminuser = $user = User::create([
         //     'name' => 'Admin User',
-        //     'email' => 'valenciajuliann@hotmail.com',
-        //     'password' => Hash::make('contraseña'),
+        //     'email' => '',
+        //     'password' => Hash::make(''),
         // ]);
 
         // $adminuser->assignRole($adminRole);
+
+        // for ($i = 1; $i <= 5; $i++) {
+        //     $user = User::find($i);
+        //     if ($user) {
+        //         $user->assignRole($userRole);
+        //     }
+        // }
     }
 }

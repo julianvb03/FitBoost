@@ -37,59 +37,59 @@ class Item extends Model
 
     public function getId(): int
     {
-        return $this->attributes['id'];
+        return $this->getAttribute('id');
     }
 
     public function getTotalPrice(): int
     {
-        return $this->calculateTotalPrice();
+        return $this->getAttribute('totalPrice');
     }
 
     public function getQuantity(): int
     {
-        return $this->attributes['quantity'];
+        return $this->getAttribute('quantity');
     }
 
     public function getSupplementId(): int
     {
-        return $this->attributes['supplement_id'];
+        return $this->getAttribute('supplement_id');
     }
 
     public function getProductId(): int
     {
-        return $this->attributes['product_id'];
+        return $this->getAttribute('product_id');
     }
 
     public function getCreatedAt(): Carbon
     {
-        return $this->attributes['created_at'];
+        return $this->getAttribute('created_at');
     }
 
     public function getUpdatedAt(): Carbon
     {
-        return $this->attributes['updated_at'];
+        return $this->getAttribute('updated_at');
     }
 
     // Setters
 
     public function setQuantity(int $quantity): void
     {
-        $this->attributes['quantity'] = $quantity;
+        $this->setAttribute('quantity', $quantity);
     }
 
     public function setTotalPrice(int $totalPrice): void
     {
-        $this->attributes['totalPrice'] = $totalPrice;
+        $this->setAttribute('totalPrice', $totalPrice);
     }
 
     public function setOrderId(int $orderId): void
     {
-        $this->attributes['order_id'] = $orderId;
+        $this->setAttribute('order_id', $orderId);
     }
 
     public function setProductId(int $productId): void
     {
-        $this->attributes['product_id'] = $productId;
+        $this->setAttribute('product_id', $productId);
     }
 
     // Eloquent Relationships

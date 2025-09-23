@@ -4,6 +4,7 @@ return [
     'health_wellness' => 'Health & Wellness',
     'home' => 'Home',
     'admin_dashboard' => 'Admin Dashboard',
+    'categories' => 'Categories',
     'about' => 'About',
     'contact' => 'Contact',
     'products' => 'Products',

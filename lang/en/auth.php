@@ -24,5 +24,6 @@ return [
     'name' => 'Name',
     'account_register' => "Don't have an account?",
     'account_login' => 'Do you already have an account?',
+    'unauthorized' => 'Unauthorized action.',
 
 ];

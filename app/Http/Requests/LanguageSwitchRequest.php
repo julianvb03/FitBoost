@@ -14,7 +14,7 @@ class LanguageSwitchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lang' => ['required', 'string', 'in:es,en'],
+            'lang' => 'required|string|in:es,en',
         ];
     }
 }

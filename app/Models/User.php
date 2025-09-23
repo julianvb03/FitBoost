@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -48,7 +49,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'cardData' => 'encrypted',
+            // 'cardData' => 'encrypted',
         ];
     }
 
@@ -56,59 +57,70 @@ class User extends Authenticatable
 
     public function getId(): int
     {
-        return $this->attributes['id'];
+        return $this->getAttribute('id');
     }
 
     public function getName(): string
     {
-        return $this->attributes['name'];
+        return $this->getAttribute('name');
     }
 
     public function getEmail(): string
     {
-        return $this->attributes['email'];
+        return $this->getAttribute('email');
     }
 
     public function getAddress(): ?string
     {
-        return $this->attributes['address'] ?? null;
+        return $this->getAttribute('address');
     }
 
     public function getCardData(): ?string
     {
-        return $this->attributes['cardData'] ?? null;
+        return $this->getAttribute('cardData');
     }
 
     public function getCreatedAt(): Carbon
     {
-        return $this->attributes['created_at'];
+        return $this->getAttribute('created_at');
     }
 
     public function getUpdatedAt(): Carbon
     {
-        return $this->attributes['updated_at'];
+        return $this->getAttribute('updated_at');
     }
 
     // Setters
 
+    public function setPassword(string $password): void
+    {
+        $hashedPassword = Hash::make($password);
+        $this->setAttribute('password', $hashedPassword);
+    }
+
     public function setName(string $name): void
     {
-        $this->attributes['name'] = $name;
+        $this->setAttribute('name', $name);
     }
 
     public function setEmail(string $email): void
     {
-        $this->attributes['email'] = $email;
+        $this->setAttribute('email', $email);
     }
 
     public function setAddress(string $address): void
     {
-        $this->attributes['address'] = $address;
+        $this->setAttribute('address', $address);
     }
 
     public function setCardData(string $cardData): void
     {
-        $this->attributes['cardData'] = $cardData;
+        $this->setAttribute('cardData', $cardData);
+    }
+
+    public function hasActivePaymentMethod(): bool
+    {
+        return $this->getCardData() !== null && $this->getCardData() !== '';
     }
 
     // Eloquent Relationships
