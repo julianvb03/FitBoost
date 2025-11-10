@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Editar Categoría')
 
@@ -57,7 +57,7 @@
                         Información de la Categoría
                     </h2>
 
-                    <form action="{{ route('admin.categories.update', $viewData['category']->id) }}" method="POST" id="categoryForm">
+                    <form action="{{ route('admin.categories.update', $viewData['category']->id) }}" method="POST" id="categoryForm" data-category-form>
                         @csrf
                         @method('PATCH')
 
@@ -73,6 +73,9 @@
                                 class="input input-bordered w-full @error('name') input-error @enderror"
                                 placeholder="Ej: Suplementos Deportivos"
                                 value="{{ old('name', $viewData['category']->name) }}"
+                                data-max-length="255"
+                                data-counter-id="nameCounter"
+                                data-error-class="input-error"
                                 required>
                             @error('name')
                             <label class="label">
@@ -99,7 +102,10 @@
                             <textarea id="description"
                                 name="description"
                                 class="textarea textarea-bordered h-32 resize-none @error('description') textarea-error @enderror"
-                                placeholder="Describe brevemente esta categoría y qué tipos de productos incluye...">{{ old('description', $viewData['category']->description) }}</textarea>
+                                placeholder="Describe brevemente esta categoría y qué tipos de productos incluye..."
+                                data-max-length="500"
+                                data-counter-id="descCounter"
+                                data-error-class="textarea-error">{{ old('description', $viewData['category']->description) }}</textarea>
                             @error('description')
                             <label class="label">
                                 <span class="label-text-alt text-error">
@@ -119,8 +125,11 @@
                         <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row gap-4 justify-end">
                             <button type="button"
-                                onclick="resetToOriginal()"
-                                class="btn btn-ghost btn-lg order-2 sm:order-1">
+                                class="btn btn-ghost btn-lg order-2 sm:order-1"
+                                data-category-reset="restore"
+                                data-original-name="{{ e($viewData['category']->name) }}"
+                                data-original-description="{{ e($viewData['category']->description ?? '') }}"
+                                data-reset-focus="#name">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                 </svg>
@@ -128,7 +137,8 @@
                             </button>
                             <button type="submit"
                                 class="btn btn-primary btn-lg order-1 sm:order-2"
-                                id="submitBtn">
+                                id="submitBtn"
+                                data-loading-text="Actualizando...">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
@@ -219,8 +229,12 @@
                         <p class="text-sm text-base-content/70 mb-4">
                             Estas acciones son irreversibles. Úsalas con precaución.
                         </p>
-                        <button onclick="deleteCategory({{ $viewData['category']->id }}, '{{ addslashes($viewData['category']->name) }}')"
-                            class="btn btn-error btn-outline w-full gap-2">
+                        <button type="button"
+                            class="btn btn-error btn-outline w-full gap-2"
+                            data-category-delete
+                            data-category-id="{{ $viewData['category']->id }}"
+                            data-category-name="{{ e($viewData['category']->name) }}"
+                            data-category-url="{{ route('admin.categories.destroy', $viewData['category']->id) }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
@@ -254,8 +268,8 @@
                 @csrf
                 @method('DELETE')
             </form>
-            <button type="button" class="btn btn-ghost" onclick="document.getElementById('delete_modal').close()">Cancelar</button>
-            <button type="button" class="btn btn-error" onclick="confirmDelete()">
+            <button type="button" class="btn btn-ghost" data-modal-close="delete_modal">Cancelar</button>
+            <button type="button" class="btn btn-error" data-category-confirm-delete>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
@@ -267,108 +281,8 @@
         <button>close</button>
     </form>
 </dialog>
-
-<!-- Hidden inputs for original values -->
-<input type="hidden" id="original-name" value="{{ $viewData['category']->name }}">
-<input type="hidden" id="original-description" value="{{ $viewData['category']->description ?? '' }}">
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const nameInput = document.getElementById('name');
-        const descTextarea = document.getElementById('description');
-        const nameCounter = document.getElementById('nameCounter');
-        const descCounter = document.getElementById('descCounter');
-        const submitBtn = document.getElementById('submitBtn');
-        const form = document.getElementById('categoryForm');
-
-        // Get original values from hidden inputs
-        const originalName = document.getElementById('original-name').value;
-        const originalDescription = document.getElementById('original-description').value;
-
-        // Initialize counters
-        updateNameCounter();
-        updateDescCounter();
-
-        // Name counter
-        nameInput.addEventListener('input', updateNameCounter);
-        descTextarea.addEventListener('input', updateDescCounter);
-
-        function updateNameCounter() {
-            const length = nameInput.value.length;
-            nameCounter.textContent = `${length}/255`;
-
-            if (length > 255) {
-                nameCounter.classList.add('text-error');
-                nameInput.classList.add('input-error');
-            } else {
-                nameCounter.classList.remove('text-error');
-                nameInput.classList.remove('input-error');
-            }
-        }
-
-        function updateDescCounter() {
-            const length = descTextarea.value.length;
-            descCounter.textContent = `${length}/500`;
-
-            if (length > 500) {
-                descCounter.classList.add('text-error');
-                descTextarea.classList.add('textarea-error');
-            } else {
-                descCounter.classList.remove('text-error');
-                descTextarea.classList.remove('textarea-error');
-            }
-        }
-
-        // Form submission with loading state
-        form.addEventListener('submit', function() {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `
-                <span class="loading loading-spinner loading-sm mr-2"></span>
-                Actualizando...
-            `;
-        });
-
-        // Auto-hide alerts
-        const alerts = document.querySelectorAll('.alert');
-        alerts.forEach(alert => {
-            setTimeout(() => {
-                alert.style.transition = 'opacity 0.5s ease-out';
-                alert.style.opacity = '0';
-                setTimeout(() => {
-                    alert.remove();
-                }, 500);
-            }, 5000);
-        });
-
-        // Make resetToOriginal function available globally
-        window.resetToOriginal = function() {
-            nameInput.value = originalName || '';
-            descTextarea.value = originalDescription || '';
-
-            // Update counters
-            updateNameCounter();
-            updateDescCounter();
-
-            // Remove error classes
-            nameInput.classList.remove('input-error');
-            descTextarea.classList.remove('textarea-error');
-            nameCounter.classList.remove('text-error');
-            descCounter.classList.remove('text-error');
-
-            // Focus on first input
-            nameInput.focus();
-        };
-    });
-
-    // Delete functionality
-    function deleteCategory(categoryId, categoryName) {
-        document.getElementById('category-name').textContent = categoryName;
-        document.getElementById('delete-form').action = `/admin/categories/${categoryId}`;
-        document.getElementById('delete_modal').showModal();
-    }
-
-    function confirmDelete() {
-        document.getElementById('delete-form').submit();
-    }
-</script>
+@push('scripts')
+    @vite(entrypoints: ['resources/js/admin/categories/form.js'])
+    @vite(entrypoints: ['resources/js/admin/categories/index.js'])
+@endpush
 @endsection

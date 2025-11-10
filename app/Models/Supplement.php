@@ -201,6 +201,13 @@ final class Supplement extends Model
         return $this->categories;
     }
 
+    public function getCategoryNamesList(): string
+    {
+        return $this->getCategories()
+            ->map(fn ($category) => $category->getName())
+            ->implode(', ');
+    }
+
     public function tests(): BelongsToMany
     {
         return $this->belongsToMany(Test::class, 'supplement_test')->withTimestamps();

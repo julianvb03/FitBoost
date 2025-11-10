@@ -29,6 +29,8 @@ Route::prefix('cart')->name('cart.')->group(function () {
 // Admin Routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:admin']], function () {
 
+    Route::get('/', 'App\\Http\\Controllers\\Admin\\AdminHomeController@home')->name('dashboard');
+
     // Supplement Routes
     Route::prefix('supplements')->name('supplements.')->group(function () {
         Route::get('/', 'App\\Http\\Controllers\\Admin\\AdminSupplementController@index')->name('index');
