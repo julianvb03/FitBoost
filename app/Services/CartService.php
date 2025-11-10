@@ -10,7 +10,6 @@ use App\Models\Supplement;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use RuntimeException;
 
 final class CartService
 {
