@@ -116,7 +116,8 @@ select:active {
 
 html {
     scrollbar-gutter: unset;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 #main-content {

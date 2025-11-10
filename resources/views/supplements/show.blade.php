@@ -225,7 +225,7 @@
                     </div>
 
                     @auth
-                        <button class="btn btn-primary" onclick="createReviewModal.showModal()">
+                        <button type="button" class="btn btn-primary" data-modal-open="createReviewModal">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -287,9 +287,12 @@
                                                     class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-300">
                                                     @if (Auth::user()->getId() == $review->getUserId())
                                                         <li>
-                                                            <button
-                                                                onclick="editReview({{ $review->getId() }}, {{ $review->getRating() }}, '{{ addslashes($review->getComment()) }}')"
-                                                                class="text-blue-600 hover:text-blue-800">
+                                                               <button type="button"
+                                                                   class="text-blue-600 hover:text-blue-800"
+                                                                   data-review-edit
+                                                                   data-review-edit-url="{{ url('reviews/' . $review->getId()) }}"
+                                                                   data-review-rating="{{ $review->getRating() }}"
+                                                                   data-review-comment="{{ e($review->getComment()) }}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -300,8 +303,10 @@
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <button onclick="deleteReview({{ $review->getId() }})"
-                                                                class="text-red-600 hover:text-red-800">
+                                                           <button type="button"
+                                                               class="text-red-600 hover:text-red-800"
+                                                               data-review-delete
+                                                               data-review-delete-url="{{ url('reviews/' . $review->getId()) }}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -313,8 +318,10 @@
                                                         </li>
                                                     @else
                                                         <li>
-                                                            <button onclick="reportReview({{ $review->getId() }})"
-                                                                class="text-orange-600 hover:text-orange-800">
+                                                               <button type="button"
+                                                                   class="text-orange-600 hover:text-orange-800"
+                                                                   data-review-report
+                                                                   data-review-report-url="{{ url('reviews/' . $review->getId() . '/report') }}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -433,7 +440,7 @@
                             Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu experiencia!
                         </p>
                         @auth
-                            <button class="btn btn-primary btn-outline" onclick="createReviewModal.showModal()">
+                            <button type="button" class="btn btn-primary btn-outline" data-modal-open="createReviewModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -517,7 +524,7 @@
                                 </svg>
                                 Publicar Reseña
                             </button>
-                            <button type="button" class="btn btn-ghost flex-1" onclick="createReviewModal.close()">
+                            <button type="button" class="btn btn-ghost flex-1" data-modal-close="createReviewModal">
                                 Cancelar
                             </button>
                         </div>
@@ -578,7 +585,7 @@
                                 </svg>
                                 Actualizar Reseña
                             </button>
-                            <button type="button" class="btn btn-ghost flex-1" onclick="editReviewModal.close()">
+                            <button type="button" class="btn btn-ghost flex-1" data-modal-close="editReviewModal">
                                 Cancelar
                             </button>
                         </div>
@@ -608,7 +615,7 @@
                             Eliminar
                         </button>
                     </form>
-                    <button class="btn btn-ghost flex-1" onclick="deleteReviewModal.close()">
+                    <button type="button" class="btn btn-ghost flex-1" data-modal-close="deleteReviewModal">
                         Cancelar
                     </button>
                 </div>
@@ -636,7 +643,7 @@
                             Reportar
                         </button>
                     </form>
-                    <button class="btn btn-ghost flex-1" onclick="reportReviewModal.close()">
+                    <button type="button" class="btn btn-ghost flex-1" data-modal-close="reportReviewModal">
                         Cancelar
                     </button>
                 </div>
@@ -644,61 +651,7 @@
         </dialog>
     @endauth
 
-    <script>
-        // Edit Review
-        function editReview(reviewId, currentRating, currentComment) {
-            // Set the form action
-            document.getElementById('editReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
-
-            // Set the current values
-            document.querySelector(`#edit-rating-${currentRating}`).checked = true;
-            document.getElementById('editComment').value = currentComment;
-
-            // Show the modal
-            editReviewModal.showModal();
-        }
-
-        // Function to delete a review
-        function deleteReview(reviewId) {
-            document.getElementById('deleteReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
-            deleteReviewModal.showModal();
-        }
-
-        // Function to report a review
-        function reportReview(reviewId) {
-            document.getElementById('reportReviewForm').action = `{{ url('reviews') }}/${reviewId}/report`;
-            reportReviewModal.showModal();
-        }
-
-        // Character counter for textarea
-        document.addEventListener('DOMContentLoaded', function() {
-            const textareas = document.querySelectorAll('textarea[maxlength]');
-            textareas.forEach(textarea => {
-                const maxLength = parseInt(textarea.getAttribute('maxlength'));
-                const label = textarea.parentElement.querySelector('.label-text-alt');
-
-                textarea.addEventListener('input', function() {
-                    const remaining = maxLength - this.value.length;
-                    if (label) {
-                        label.textContent = `${remaining} caracteres restantes`;
-                        if (remaining < 50) {
-                            label.classList.add('text-warning');
-                        } else {
-                            label.classList.remove('text-warning');
-                        }
-                    }
-                });
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdowns = document.querySelectorAll('.dropdown');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(event.target)) {
-                    dropdown.querySelector('[tabindex="0"]').blur();
-                }
-            });
-        });
-    </script>
+    @push('scripts')
+        @vite(entrypoints: ['resources/js/supplements/show.js'])
+    @endpush
 @endsection

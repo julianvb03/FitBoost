@@ -130,17 +130,7 @@
         </form>
 
         <!-- Active filters -->
-        @php
-            $hasFilters =
-                request('search') ||
-                request('category_id') ||
-                request('min_price') ||
-                request('max_price') ||
-                request('in_stock') ||
-                request('order_by') ||
-                request('per_page');
-        @endphp
-        @if ($hasFilters)
+        @if (! empty($viewData['has_filters']))
             <div class="flex flex-wrap items-center gap-2 mb-6">
                 <span class="text-sm text-base-content/70 mr-1">Filtros activos:</span>
                 @if (request('search'))
@@ -284,8 +274,8 @@
             <!-- Results Information -->
             <div class="text-center mb-6">
                 <p class="text-base-content/70">
-                    Mostrando {{ count($viewData['supplements']) }} de
-                    {{ $viewData['current_page'] * $viewData['per_page'] }} productos
+                    Mostrando {{ $viewData['current_items_count'] }} de
+                    {{ $viewData['total_results'] }} productos
                 </p>
             </div>
 
