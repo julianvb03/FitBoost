@@ -131,7 +131,7 @@ class User extends Authenticatable
 
     public function getOrders(): Collection
     {
-        return $this->orders;
+        return $this->orders()->where('status', '!=', 'cart')->get();
     }
 
     public function reviews(): HasMany

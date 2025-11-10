@@ -173,9 +173,11 @@ final class CartService
             return;
         }
 
-        if (! method_exists($user, 'hasActivePaymentMethod') || ! $user->hasActivePaymentMethod()) {
-            throw new RuntimeException('Missing payment method');
-        }
+        // Payment method validation disabled for simulation
+        // TODO: Re-enable when payment gateway is implemented
+        // if (! method_exists($user, 'hasActivePaymentMethod') || ! $user->hasActivePaymentMethod()) {
+        //     throw new RuntimeException('Missing payment method');
+        // }
 
         $order = $this->getOrCreateUserCart();
         $items = $order->items()->with('supplement')->get();
@@ -188,6 +190,8 @@ final class CartService
             $item->save();
         }
 
+        $totalAmount = $order->calculateTotalAmount();
+        $order->setTotalAmount($totalAmount);
         $order->setStatus('pending');
         $order->save();
 

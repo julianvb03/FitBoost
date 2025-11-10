@@ -4,14 +4,17 @@
     <div class="container">
         <h1>{{ trans('cart.added') }}</h1>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+        @if (isset($viewData['success']))
+            <div class="alert alert-success">{{ $viewData['success'] }}</div>
         @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+        @if (isset($viewData['error']))
+            <div class="alert alert-danger">{{ $viewData['error'] }}</div>
+        @endif
+        @if (isset($viewData['warning']))
+            <div class="alert alert-warning">{{ $viewData['warning'] }}</div>
         @endif
 
-        @if ($count === 0)
+        @if ($viewData['count'] === 0)
             <p>{{ __('Your cart is empty.') }}</p>
             <a class="btn btn-primary" href="{{ route('supplements.index') }}">{{ __('Continue shopping') }}</a>
         @else
@@ -27,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($items as $row)
+                        @foreach ($viewData['items'] as $row)
                             <tr>
                                 <td>{{ (is_array($row) ? $row['supplement'] : $row->getSupplement())->getName() }}</td>
                                 <td>${{ number_format((is_array($row) ? $row['supplement'] : $row->getSupplement())->getPrice(), 0) }}
@@ -69,7 +72,7 @@
                 </form>
 
                 <div>
-                    <h4 class="mb-3">{{ __('Total') }}: ${{ number_format($total, 0) }}</h4>
+                    <h4 class="mb-3">{{ __('Total') }}: ${{ number_format($viewData['total'], 0) }}</h4>
                     <form method="POST" action="{{ route('cart.checkout') }}">
                         @csrf
                         <button class="btn btn-success">{{ __('Buy now') }}</button>

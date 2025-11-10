@@ -245,7 +245,7 @@
                                 </div>
                                 <div class="stat-title text-base-content/70">Total Gastado</div>
                                 <div class="stat-value text-success">
-                                    ${{ number_format($viewData['orders']->sum('totalAmount'), 0, ',', '.') }}
+                                    ${{ number_format($viewData['orders']->sum(fn($order) => $order->getTotalAmount()), 0, ',', '.') }}
                                 </div>
                             </div>
 
