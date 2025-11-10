@@ -61,8 +61,6 @@ COPY --from=assets /app/public/build /var/www/html/public/build
 RUN cp .env.example .env \
     && php artisan key:generate --force \
     && php artisan storage:link --force \
-    && php artisan config:cache \
-    && php artisan route:cache \
     && php artisan view:cache \
     && chown -R www-data:www-data storage bootstrap/cache
 

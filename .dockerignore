@@ -1,7 +1,0 @@
-.env
-.git*
-.github/
-.vscode/
-.vscode*
-vendor/
-node_modules/
