@@ -5,7 +5,7 @@ on:
     branches: [ "main", "master" ]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   pint:
@@ -26,15 +26,7 @@ jobs:
         tools: composer
 
     - name: Install dependencies
-      run: composer install
+      run: composer install --no-interaction --prefer-dist
 
     - name: Run Laravel Pint
-      run: vendor/bin/pint
-
-    - name: Commit and Push changes
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "chore: apply Laravel Pint fixes [skip ci]"
-        branch: ${{ github.head_ref }}
-        commit_user_name: "github-actions[bot]"
-        commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+      run: vendor/bin/pint --test

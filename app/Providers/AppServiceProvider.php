@@ -21,8 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(BmiCalculator::class, function () {
             
-            // return new BmiApiCalculator(config('services.rapidapi_bmi', []));
-            return new BmiLocalCalculator;
+            return new BmiApiCalculator(config('services.rapidapi_bmi', []));
         });
     }
 
