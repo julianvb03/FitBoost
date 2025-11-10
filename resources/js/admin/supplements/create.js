@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Preview image functionality
     const imageInput = document.getElementById("image");
 
     if (imageInput) {
@@ -8,14 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 const reader = new FileReader();
 
                 reader.onload = function (e) {
-                    // Si ya existe una vista previa, la eliminamos
                     let existingPreview =
                         document.querySelector(".image-preview");
                     if (existingPreview) {
                         existingPreview.remove();
                     }
 
-                    // Crear elemento para la vista previa
                     const preview = document.createElement("div");
                     preview.className = "image-preview mt-4";
                     preview.innerHTML = `
@@ -28,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     `;
 
-                    // Insertar después del input
                     imageInput.parentNode.appendChild(preview);
                 };
 

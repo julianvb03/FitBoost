@@ -15,13 +15,11 @@ class TestRecommendationController extends Controller
 
     public function create(): View
     {
-        // render create form
         return view('tests.recommendations.create');
     }
 
     public function store(CreateTestRequest $request): RedirectResponse
     {
-        // delegate creation and recommendation to services
         [$test, $supplements, $explanation] = $this->testService->createWithRecommendations(Auth::user(), $request->validated());
 
         $viewData = [];
@@ -33,7 +31,6 @@ class TestRecommendationController extends Controller
 
     public function show(int $id): View
     {
-        // load test with supplements
         $test = Test::query()->with('supplements')->findOrFail($id);
 
         $viewData = [];

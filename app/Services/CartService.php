@@ -10,7 +10,6 @@ use App\Models\Supplement;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use RuntimeException;
 
 final class CartService
 {
@@ -67,9 +66,6 @@ final class CartService
         ];
     }
 
-    /**
-     * @return array{capped: bool}
-     */
     public function addItem(int $supplementId, int $quantity): array
     {
         $quantity = max(1, min(99, $quantity));
@@ -96,7 +92,6 @@ final class CartService
             return ['capped' => $newQuantity < $requested];
         }
 
-        // Session cart
         $items = (array) Session::get('cart.items', []);
         $current = (int) ($items[$supplementId]['quantity'] ?? 0);
         $requested = $current + $quantity;
@@ -107,9 +102,6 @@ final class CartService
         return ['capped' => $newQuantity < $requested];
     }
 
-    /**
-     * @return array{capped: bool}
-     */
     public function updateQuantity(int $supplementId, int $quantity): array
     {
         $quantity = max(1, min(99, $quantity));
@@ -173,12 +165,6 @@ final class CartService
             return;
         }
 
-        // Payment method validation disabled for simulation
-        // TODO: Re-enable when payment gateway is implemented
-        // if (! method_exists($user, 'hasActivePaymentMethod') || ! $user->hasActivePaymentMethod()) {
-        //     throw new RuntimeException('Missing payment method');
-        // }
-
         $order = $this->getOrCreateUserCart();
         $items = $order->items()->with('supplement')->get();
 
@@ -195,10 +181,8 @@ final class CartService
         $order->setStatus('pending');
         $order->save();
 
-        // Create a new empty cart for user convenience
         $this->createEmptyCartIfMissing();
 
-        // Clean session cart if any
         Session::forget('cart.items');
     }
 

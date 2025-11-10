@@ -19,8 +19,6 @@ class AdminSupplementController extends Controller
     public function __construct(ImageStorage $imageStorage)
     {
         $this->imageStorage = $imageStorage;
-        // Is a best practice to use middleware for authentication and authorization here or on routes?
-        // $this->middleware('auth');
     }
 
     public function index(FilterSupplementRequest $request): View

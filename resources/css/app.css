@@ -8,46 +8,6 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-/* @theme {
-    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
-} */
-
-/* @plugin "daisyui/theme" {
-    name: "dark";
-    default: false;
-    prefersdark: true;
-    --color-base-100: oklch(30.857% 0.023 264.149);
-    --color-base-200: oklch(28.036% 0.019 264.182);
-    --color-base-300: oklch(26.346% 0.018 262.177);
-    --color-base-content: oklch(82.901% 0.031 222.959);
-    --color-primary: oklch(86.133% 0.141 139.549);
-    --color-primary-content: oklch(17.226% 0.028 139.549);
-    --color-secondary: oklch(73.375% 0.165 35.353);
-    --color-secondary-content: oklch(14.675% 0.033 35.353);
-    --color-accent: oklch(74.229% 0.133 311.379);
-    --color-accent-content: oklch(14.845% 0.026 311.379);
-    --color-neutral: oklch(24.731% 0.02 264.094);
-    --color-neutral-content: oklch(82.901% 0.031 222.959);
-    --color-info: oklch(86.078% 0.142 206.182);
-    --color-info-content: oklch(17.215% 0.028 206.182);
-    --color-success: oklch(86.171% 0.142 166.534);
-    --color-success-content: oklch(17.234% 0.028 166.534);
-    --color-warning: oklch(86.163% 0.142 94.818);
-    --color-warning-content: oklch(17.232% 0.028 94.818);
-    --color-error: oklch(82.418% 0.099 33.756);
-    --color-error-content: oklch(16.483% 0.019 33.756);
-    --radius-selector: 0.5rem;
-    --radius-field: 0.5rem;
-    --radius-box: 0.5rem;
-    --size-selector: 0.21875rem;
-    --size-field: 0.21875rem;
-    --border: 1.5px;
-    --depth: 1;
-    --noise: 0;  
-} */
-
 @plugin "daisyui/theme" {
     name: "wellness-dark";
     default: true;
@@ -109,11 +69,6 @@ select:active {
     @apply scale-95;
 }
 
-/* *:focus-visible,
-*:active {
-    @apply !outline-none !ring-0 !ring-offset-0;
-} */
-
 html {
     scrollbar-gutter: unset;
     overflow-x: hidden;
@@ -125,21 +80,18 @@ html {
     scroll-behavior: smooth;
 }
 
-/* !custom classes */
 .unselectable {
     -webkit-user-select: none;
     user-select: none;
 }
 
 .my-side-container {
-    /* scrollbar-width: thin; */
     scroll-behavior: smooth;
     scrollbar-color: color-mix(in oklch, var(--color-primary) 40%, transparent)
         transparent;
     scrollbar-arrow-color: transparent;
 }
 
-/* !Global styles */
 .prose {
     color: inherit;
 }
@@ -148,29 +100,24 @@ html {
     color: inherit;
 }
 
-/* Smooth animations */
 .hover\:scale-105:hover {
     transform: scale(1.05);
 }
 
-/* Improvements for the rating */
 .rating input:checked ~ input,
 .rating input[checked="checked"] ~ input {
     --tw-bg-opacity: 0.25;
 }
 
-/* Styles for the dropdowns */
 .dropdown-content {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover effects for action buttons */
 .dropdown-content button:hover {
     transform: translateX(2px);
     transition: transform 0.2s ease;
 }
 
-/* Animation for modals */
 .modal[open] {
     animation: modal-show 0.3s ease-out;
 }
@@ -187,20 +134,17 @@ html {
     }
 }
 
-/* Interactive rating states */
 .rating input:hover,
 .rating input:hover ~ input {
     --tw-bg-opacity: 0.5;
 }
 
-/* Visual improvements for review states */
 .badge-info {
     --tw-bg-opacity: 0.1;
     color: #0ea5e9;
     border: 1px solid #0ea5e9;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .dropdown-content {
         position: fixed;
@@ -212,7 +156,6 @@ html {
     }
 }
 
-/* !Supplements styles */
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -227,7 +170,6 @@ html {
     overflow: hidden;
 }
 
-/* Smooth animation for hover effects */
 .group:hover .group-hover\:scale-105 {
     transform: scale(1.05);
 }
@@ -236,7 +178,6 @@ html {
     @apply btn-accent;
 }
 
-/* Visual improvements for focus */
 .focus\:input-primary:focus {
     @apply input-primary;
 }
@@ -245,13 +186,10 @@ html {
     @apply select-primary;
 }
 
-/* Active filters chips */
 .chip {
     @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-base-content/80 border border-neutral/20 hover:bg-base-300 transition-colors;
 }
 
-/* !Users styles */
-/* Animaciones suaves */
 .card {
     transition: all 0.3s ease-in-out;
 }
@@ -262,7 +200,6 @@ html {
         0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* Focus styles mejorados */
 .input:focus,
 .textarea:focus,
 .select:focus {
@@ -271,7 +208,6 @@ html {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Avatar gradient animation */
 .avatar .rounded-full {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     animation: gradient-shift 4s ease-in-out infinite;
@@ -292,13 +228,11 @@ html {
     }
 }
 
-/* Password strength bars animation */
 .h-3 {
     transition: all 0.4s ease-in-out;
     transform-origin: left center;
 }
 
-/* Card headers gradient animations */
 .card-header {
     position: relative;
     overflow: hidden;
@@ -324,7 +258,6 @@ html {
     left: 100%;
 }
 
-/* Form sections spacing and responsiveness */
 @media (max-width: 768px) {
     .container {
         padding-left: 1rem;
@@ -356,12 +289,10 @@ html {
     }
 }
 
-/* Smooth scrolling for long forms */
 html {
     scroll-behavior: smooth;
 }
 
-/* Loading state animations */
 @keyframes spin {
     to {
         transform: rotate(360deg);
@@ -372,7 +303,6 @@ html {
     animation: spin 1s linear infinite;
 }
 
-/* Button hover effects */
 .btn {
     transition: all 0.2s ease-in-out;
 }
@@ -386,7 +316,6 @@ html {
     transform: translateY(0);
 }
 
-/* Toast notifications */
 .toast {
     position: fixed;
     z-index: 1000;
@@ -400,7 +329,6 @@ html {
     right: 1rem;
 }
 
-/* Enhanced form field styles */
 .form-control {
     margin-bottom: 0.5rem;
 }
@@ -410,7 +338,6 @@ html {
     color: hsl(var(--bc) / 0.8);
 }
 
-/* Custom scrollbar for textarea */
 .textarea::-webkit-scrollbar {
     width: 8px;
 }
@@ -429,7 +356,6 @@ html {
     background: hsl(var(--bc) / 0.5);
 }
 
-/* Loading state for submit button */
 .btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -441,7 +367,6 @@ html {
     box-shadow: none;
 }
 
-/* Enhanced alert styles */
 .alert {
     border-radius: 12px;
     border: 1px solid;
@@ -460,46 +385,30 @@ html {
     }
 }
 
-/* Breadcrumb hover effects */
 .breadcrumbs a:hover {
     color: hsl(var(--p));
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
-/* !Users styles */
-/* Additional animations and styles */
-/* .card:hover {
-                transform: translateY(-1px);
-                transition: transform 0.2s ease-in-out;
-            } */
-
 .stat {
     transition: all 0.2s ease-in-out;
 }
 
-/* .stat:hover {
-                transform: scale(1.02);
-            } */
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .grid-cols-1.md\\:grid-cols-2 {
         grid-template-columns: 1fr;
     }
 }
 
-/* Avatar gradient */
 .avatar .rounded-full {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Disable any inherited scale on hover */
 .hover\:scale-105:hover {
     transform: none !important;
 }
 
-/* !Admin styles */
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -507,7 +416,6 @@ html {
     overflow: hidden;
 }
 
-/* Active filters chips */
 .chip {
     @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-base-200 text-base-content/80 border border-neutral/20 hover:bg-base-300 transition-colors;
 }

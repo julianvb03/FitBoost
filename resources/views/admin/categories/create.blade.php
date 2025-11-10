@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <!-- Header Section -->
     <div class="flex justify-between items-center mb-8">
         <div>
             <div class="breadcrumbs text-sm text-base-content/70 mb-2">
@@ -24,7 +23,6 @@
         </a>
     </div>
 
-    <!-- Alert Messages -->
     @if(isset($viewData['error']))
     <div class="alert alert-error shadow-lg mb-6">
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
@@ -35,7 +33,6 @@
     @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Form Card -->
         <div class="lg:col-span-2">
             <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">
@@ -49,7 +46,6 @@
                     <form action="{{ route('admin.categories.store') }}" method="POST" id="categoryForm" data-category-form>
                         @csrf
 
-                        <!-- Name Field -->
                         <div class="form-control w-full mb-6">
                             <label class="label" for="name">
                                 <span class="label-text font-semibold">Nombre de la Categoría</span>
@@ -81,7 +77,6 @@
                             </label>
                         </div>
 
-                        <!-- Description Field -->
                         <div class="form-control w-full mb-8">
                             <label class="label" for="description">
                                 <span class="label-text font-semibold">Descripción</span>
@@ -110,7 +105,6 @@
                             </label>
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row gap-4 justify-end">
                             <button type="button"
                                 class="btn btn-ghost btn-lg order-2 sm:order-1"
@@ -136,10 +130,8 @@
             </div>
         </div>
 
-        <!-- Info Sidebar -->
         <div class="lg:col-span-1">
             <div class="space-y-6">
-                <!-- Help Card -->
                 <div class="card bg-base-100 shadow-xl">
                     <div class="card-body">
                         <h3 class="card-title text-info">
@@ -171,7 +163,6 @@
                     </div>
                 </div>
 
-                <!-- Examples Card -->
                 <div class="card bg-base-100 shadow-xl">
                     <div class="card-body">
                         <h3 class="card-title text-success">

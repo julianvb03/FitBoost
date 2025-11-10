@@ -3,10 +3,8 @@
 
 @section('content')
     <div class="space-y-16">
-        {{-- Hero section --}}
         <section class="relative">
             <div class="flex flex-col lg:flex-row lg:items-center gap-8">
-                {{-- Main content --}}
                 <div class="flex-1">
                     <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -47,7 +45,6 @@
                     </div>
                 </div>
 
-                {{-- Statistics panel --}}
                 <div class="lg:w-80 space-y-4">
                     <div class="bg-base-100 border border-neutral/20 rounded-xl p-6 shadow-lg">
                         <h3 class="text-xl font-semibold text-base-content mb-4">¿Por qué FitBoost?</h3>
@@ -97,7 +94,6 @@
             </div>
         </section>
 
-        {{-- Features section --}}
         <section class="relative">
             <div class="text-center mb-12">
                 <h2 class="text-4xl lg:text-5xl font-bold text-base-content mb-6">
@@ -110,7 +106,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {{-- Feature 1: AI recommendations --}}
                 <div
                     class="bg-base-100 border border-neutral/20 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
                     <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
@@ -131,7 +126,6 @@
                     </a>
                 </div>
 
-                {{-- Feature 2: Premium catalog --}}
                 <div
                     class="bg-base-100 border border-neutral/20 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
                     <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
@@ -151,7 +145,6 @@
                     </a>
                 </div>
 
-                {{-- Feature 3: Personalized experience --}}
                 <div
                     class="bg-base-100 border border-neutral/20 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
                     <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
@@ -173,7 +166,6 @@
             </div>
         </section>
 
-        {{-- About us section --}}
         <section class="relative bg-base-200/50 rounded-2xl p-8 lg:p-12">
             <div class="flex flex-col lg:flex-row lg:items-center gap-8">
                 <div class="flex-1">
