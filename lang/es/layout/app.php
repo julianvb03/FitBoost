@@ -20,4 +20,5 @@ return [
     'car_shop' => 'Carrito de Compras',
     'logout' => 'Cerrar sesión',
     'recommendations' => 'Recomendaciones',
+    'bmi_calculator' => 'Calculadora BMI',
 ];
