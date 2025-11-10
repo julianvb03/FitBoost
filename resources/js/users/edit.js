@@ -161,7 +161,6 @@ function setupCardScrolling() {
 function setupDraftHandling(form) {
     loadDraft(form);
 
-    // Ensure previews reflect loaded draft values.
     form.querySelectorAll('[data-preview-source]').forEach((input) => {
         input.dispatchEvent(new Event('input', { bubbles: true }));
     });

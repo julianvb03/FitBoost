@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // Initialize value when the page loads
         updateCounter();
 
         field.addEventListener('input', updateCounter);
@@ -79,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Trigger input event to refresh counters and styles
             trackedFields.forEach((field) => {
                 field.dispatchEvent(new Event('input'));
             });

@@ -3,7 +3,6 @@ import { autoHideAlerts } from '../shared/autoHideAlerts';
 document.addEventListener('DOMContentLoaded', () => {
     autoHideAlerts();
 
-    // Generic modal open/close handlers
     const openButtons = document.querySelectorAll('[data-modal-open]');
     openButtons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -32,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Edit review modal logic
     const editForm = document.getElementById('editReviewForm');
     const editModal = document.getElementById('editReviewModal');
     const editCommentInput = document.getElementById('editComment');
@@ -70,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Delete review modal logic
     const deleteForm = document.getElementById('deleteReviewForm');
     const deleteModal = document.getElementById('deleteReviewModal');
     const deleteButtons = document.querySelectorAll('[data-review-delete]');
@@ -92,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Report review modal logic
     const reportForm = document.getElementById('reportReviewForm');
     const reportModal = document.getElementById('reportReviewModal');
     const reportButtons = document.querySelectorAll('[data-review-report]');
@@ -114,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Character counters for textareas with maxlength
     const textareas = document.querySelectorAll('textarea[maxlength]');
     textareas.forEach((textarea) => {
         const maxLength = Number(textarea.getAttribute('maxlength')) || 0;
@@ -139,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         textarea.addEventListener('input', updateCounter);
     });
 
-    // Close dropdowns when clicking outside
     document.addEventListener('click', (event) => {
         const dropdowns = document.querySelectorAll('.dropdown');
         dropdowns.forEach((dropdown) => {

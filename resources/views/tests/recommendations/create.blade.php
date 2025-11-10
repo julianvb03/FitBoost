@@ -5,17 +5,8 @@
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5 py-8 rounded-lg">
         <div class="container mx-auto px-4 max-w-4xl">
-            <!-- Header Section -->
             <div class="text-center mb-8">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
-                    {{-- <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M9 12l2 2 4-4" />
-                        <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3" />
-                        <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" />
-                        <path d="M13 12h3a2 2 0 0 1 2 2v1" />
-                        <path d="M6 12H3a2 2 0 0 0-2 2v1" />
-                    </svg> --}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" class="w-8 h-8 text-primary" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-dna-icon lucide-dna">
@@ -38,14 +29,12 @@
                 </p>
             </div>
 
-            <!-- Main Form Card -->
             <div class="card bg-base-100 shadow-2xl border border-base-300/50 backdrop-blur-sm">
                 <div class="card-body p-8">
                     <form id="test-form" data-test-recommendations-form method="POST"
                         action="{{ route('tests.recommendations.store') }}" class="space-y-8">
                         @csrf
 
-                        <!-- Personal Information Section -->
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-primary rounded-full"></div>
@@ -219,7 +208,6 @@
                             </div>
                         </div>
 
-                        <!-- Goals Section -->
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-secondary rounded-full"></div>
@@ -260,7 +248,6 @@
                             </div>
                         </div>
 
-                        <!-- Additional Details Section -->
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-accent rounded-full"></div>
@@ -301,7 +288,6 @@
                             </div>
                         </div>
 
-                        <!-- Submit Button -->
                         <div class="pt-8 border-t border-base-300/50">
                             <button id="submit-btn" data-submit-btn type="submit"
                                 class="btn btn-primary btn-lg w-full group relative overflow-hidden">

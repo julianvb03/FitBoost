@@ -86,7 +86,6 @@
                             </td>
                             <td class="text-center">
                                 <div class="inline-flex justify-center gap-2">
-                                    <!-- Edit Button -->
                                     <a href="{{ route('admin.categories.edit', $category->getId()) }}"
                                         class="btn btn-sm btn-secondary tooltip"
                                         data-tip="Editar categoría">
@@ -95,7 +94,6 @@
                                         </svg>
                                     </a>
 
-                                    <!-- Delete Button -->
                                     <button type="button"
                                         class="btn btn-sm btn-error tooltip"
                                         data-tip="Eliminar categoría"
@@ -117,7 +115,6 @@
         </div>
     </div>
     @else
-    <!-- Empty State -->
     <div class="card bg-base-100 shadow-xl">
         <div class="card-body text-center py-16">
             <div class="text-base-content/40 mb-4">
@@ -138,7 +135,6 @@
     @endif
 </div>
 
-<!-- Delete Confirmation Modal -->
 <dialog id="delete_modal" class="modal">
     <div class="modal-box">
         <h3 class="font-bold text-lg mb-4">

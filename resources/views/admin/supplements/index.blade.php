@@ -18,7 +18,6 @@
 
     <div class="container mx-auto px-4 py-10">
         <div class="flex flex-col gap-8 pb-16">
-            <!-- Header -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <div class="inline-flex items-center gap-3 mb-2">
@@ -45,11 +44,9 @@
                 </a>
             </div>
 
-            <!-- Filters and Search -->
             <form id="filterForm" method="GET" action="{{ route('admin.supplements.index') }}"
                 class="card bg-base-100 border border-neutral/20 rounded-xl p-6 shadow space-y-4">
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <!-- Search -->
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Buscar</span>
@@ -58,7 +55,6 @@
                             class="input input-bordered w-full focus:input-primary" />
                     </div>
 
-                    <!-- Category -->
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Categoría</span>
@@ -74,7 +70,6 @@
                         </select>
                     </div>
 
-                    <!-- Minimum Price -->
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Precio Mínimo</span>
@@ -83,7 +78,6 @@
                             class="input input-bordered w-full focus:input-primary" />
                     </div>
 
-                    <!-- Maximum Price -->
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Precio Máximo</span>
@@ -94,9 +88,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <!-- Stock and Order -->
                     <div class="flex w-full flex-col gap-4 sm:flex-row">
-                        <!-- Stock -->
                         <div class="form-control">
                             <label class="cursor-pointer label">
                                 <span class="label-text mr-2">Solo en stock</span>
@@ -105,7 +97,6 @@
                             </label>
                         </div>
 
-                        <!-- Order By (Sort By) -->
                         <div class="form-control min-w-[200px]">
                             <select name="order_by" class="select select-bordered select-sm">
                                 <option value="">Ordenar por</option>
@@ -121,7 +112,6 @@
                             </select>
                         </div>
 
-                        <!-- Per Page (Items per page) -->
                         <div class="form-control min-w-[120px]">
                             <select name="per_page" class="select select-bordered select-sm">
                                 <option value="4" {{ request('per_page', 4) == 4 ? 'selected' : '' }}>4 por página
@@ -132,7 +122,6 @@
                         </div>
                     </div>
 
-                    <!-- Buttons -->
                     <div class="flex gap-2">
                         <button type="submit" class="btn btn-primary">
                             Filtrar
@@ -179,7 +168,6 @@
                 </div>
             @endif
 
-            <!-- Table of Products -->
             @if (count($viewData['supplements']) > 0)
                 <div class="card bg-base-100 shadow-xl">
                     <div class="card-body space-y-6">
@@ -298,11 +286,9 @@
                     </div>
                 </div>
 
-            {{-- Pagination --}}
             @if ($viewData['total_pages'] > 1)
                 <div class="flex justify-center mt-8">
                     <div class="join shadow-lg">
-                        <!-- First page -->
                         @if ($viewData['current_page'] > 1)
                             <a href="{{ request()->fullUrlWithQuery(['page' => 1]) }}"
                                 class="join-item btn btn-sm hover:btn-primary">
@@ -312,7 +298,6 @@
                             <button class="join-item btn btn-sm btn-disabled">Primera</button>
                         @endif
 
-                        <!-- Previous page -->
                         @if ($viewData['current_page'] > 1)
                             <a href="{{ request()->fullUrlWithQuery(['page' => $viewData['current_page'] - 1]) }}"
                                 class="join-item btn btn-sm hover:btn-primary">
@@ -322,7 +307,6 @@
                             <button class="join-item btn btn-sm btn-disabled">«</button>
                         @endif
 
-                        <!-- Page numbers -->
                         @for ($i = max(1, $viewData['current_page'] - 2); $i <= min($viewData['total_pages'], $viewData['current_page'] + 2); $i++)
                             <a href="{{ request()->fullUrlWithQuery(['page' => $i]) }}"
                                 class="join-item btn btn-sm {{ $i == $viewData['current_page'] ? 'btn-active btn-primary' : 'hover:btn-primary' }}">
@@ -330,7 +314,6 @@
                             </a>
                         @endfor
 
-                        <!-- Next page -->
                         @if ($viewData['current_page'] < $viewData['total_pages'])
                             <a href="{{ request()->fullUrlWithQuery(['page' => $viewData['current_page'] + 1]) }}"
                                 class="join-item btn btn-sm hover:btn-primary">
@@ -340,7 +323,6 @@
                             <button class="join-item btn btn-sm btn-disabled">»</button>
                         @endif
 
-                        <!-- Last page -->
                         @if ($viewData['current_page'] < $viewData['total_pages'])
                             <a href="{{ request()->fullUrlWithQuery(['page' => $viewData['total_pages']]) }}"
                                 class="join-item btn btn-sm hover:btn-primary">
@@ -357,7 +339,6 @@
                 </div>
             @endif
         @else
-            <!-- Empty State -->
             <div class="text-center py-12">
                 <div class="max-w-sm mx-auto">
                     <div class="mb-6">
@@ -384,7 +365,6 @@
         </div>
     </div>
 
-    <!-- Modal of confirmation of deletion -->
     <dialog id="delete_modal" class="modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold text-base-content">Confirmar eliminación</h3>
