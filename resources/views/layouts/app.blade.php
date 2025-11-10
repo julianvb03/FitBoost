@@ -30,6 +30,9 @@
                     <a href="{{ route('supplements.index') }}" class="transition {{ request()->routeIs('supplements.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
                         {{ trans('layout/app.products') }}
                     </a>
+                    <a href="{{ route('bmi.index') }}" class="transition {{ request()->routeIs('bmi.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
+                        {{ trans('layout/app.bmi_calculator') }}
+                    </a>
                     @auth
                         <a href="{{ route('users.show') }}" class="transition {{ request()->routeIs('users.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
                             {{ trans('layout/app.profile') }}
@@ -56,6 +59,7 @@
                     <ul tabindex="0" class="menu dropdown-content rounded-box bg-base-100 p-3 shadow">
                         <li><a href="{{ route('home.index') }}">{{ trans('layout/app.home') }}</a></li>
                         <li><a href="{{ route('supplements.index') }}">{{ trans('layout/app.products') }}</a></li>
+                        <li><a href="{{ route('bmi.index') }}">{{ trans('layout/app.bmi_calculator') }}</a></li>
                         <li><a href="{{ route('cart.index') }}">{{ trans('layout/app.car_shop') }}</a></li>
                         @auth
                             <li><a href="{{ route('users.show') }}">{{ trans('layout/app.profile') }}</a></li>

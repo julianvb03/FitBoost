@@ -40,4 +40,11 @@ return [
         'debug_dummy' => env('OPENAI_DEBUG_DUMMY', false),
     ],
 
+    'rapidapi_bmi' => [
+        'key' => env('RAPIDAPI_BMI_KEY'),
+        'host' => env('RAPIDAPI_BMI_HOST', 'smart-body-mass-index-calculator-bmi.p.rapidapi.com'),
+        'base_url' => env('RAPIDAPI_BMI_BASE_URL', 'https://smart-body-mass-index-calculator-bmi.p.rapidapi.com'),
+        'timeout' => env('RAPIDAPI_BMI_TIMEOUT', 10),
+    ],
+
 ];

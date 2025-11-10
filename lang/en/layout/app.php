@@ -20,4 +20,5 @@ return [
     'car_shop' => 'Car Shop',
     'logout' => 'Logout',
     'recommendations' => 'Recommendations',
+    'bmi_calculator' => 'BMI Calculator',
 ];

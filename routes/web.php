@@ -8,6 +8,10 @@ Auth::routes();
 // Home Route
 Route::get('/', 'App\\Http\\Controllers\\HomeController@index')->name('home.index');
 
+// BMI Calculator Routes
+Route::get('/bmi', 'App\\Http\\Controllers\\BMIController@index')->name('bmi.index');
+Route::post('/bmi/calculate', 'App\\Http\\Controllers\\BMIController@calculate')->name('bmi.calculate');
+
 // Language Change Route
 Route::post('/language/change', 'App\\Http\\Controllers\\LanguageController@change')->name('language.change');
 
