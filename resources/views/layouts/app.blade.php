@@ -78,8 +78,8 @@
                         @csrf
                         <select name="lang" class="select select-sm select-bordered w-32 border-base-300 bg-base-100"
                             onchange="this.form.submit()">
-                            <option value="es" @selected(session('lang', 'es') === 'es')>Español</option>
-                            <option value="en" @selected(session('lang', 'es') === 'en')>English</option>
+                            <option value="es" @selected(session('lang', 'es') === 'es')>{{ trans('layout/app.spanish') }}</option>
+                            <option value="en" @selected(session('lang', 'es') === 'en')>{{ trans('layout/app.english') }}</option>
                         </select>
                     </form>
 

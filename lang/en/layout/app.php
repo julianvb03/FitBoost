@@ -22,4 +22,6 @@ return [
     'recommendations' => 'Recommendations',
     'ai_recommendations' => 'AI Recommendations',
     'bmi_calculator' => 'BMI Calculator',
+    'spanish' => 'Spanish',
+    'english' => 'English',
 ];
