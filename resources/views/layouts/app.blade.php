@@ -78,8 +78,11 @@
                         @csrf
                         <select name="lang" class="select select-sm select-bordered w-32 border-base-300 bg-base-100"
                             onchange="this.form.submit()">
-                            <option value="es" @selected(session('lang', 'es') === 'es')>{{ trans('layout/app.spanish') }}</option>
-                            <option value="en" @selected(session('lang', 'es') === 'en')>{{ trans('layout/app.english') }}</option>
+                            @php
+                                $currentLang = session('lang') ?? request()->cookie('lang', 'es');
+                            @endphp
+                            <option value="es" @selected($currentLang === 'es')>{{ trans('layout/app.spanish') }}</option>
+                            <option value="en" @selected($currentLang === 'en')>{{ trans('layout/app.english') }}</option>
                         </select>
                     </form>
 
