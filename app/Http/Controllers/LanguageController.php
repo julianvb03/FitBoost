@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LanguageSwitchRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
@@ -14,6 +15,7 @@ class LanguageController extends Controller
         $lang = $validatedData['lang'];
 
         Session::put('lang', $lang);
+        App::setLocale($lang);
 
         return redirect()->back();
     }
