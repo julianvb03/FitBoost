@@ -17,9 +17,7 @@ class BmiViewModel
         'info' => 'alert-info',
     ];
 
-    /**
-     * Prepare the data structure consumed by the BMI blade view.
-     */
+
     public static function make(array $baseData, array $oldInput = []): array
     {
         $form = array_merge(self::DEFAULT_FORM, $baseData['form'] ?? []);
