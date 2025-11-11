@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Supplement;
 use App\Models\Test;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Throwable;

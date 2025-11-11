@@ -9,7 +9,7 @@ class BmiCalculationException extends RuntimeException
 {
     public function __construct(
         private readonly string $userMessage,
-        private readonly string $level = 'warning', ? Throwable $previous = null
+        private readonly string $level = 'warning', ?Throwable $previous = null
     ) {
         parent::__construct($userMessage, 0, $previous);
     }

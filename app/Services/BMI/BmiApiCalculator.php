@@ -42,7 +42,7 @@ class BmiApiCalculator implements BmiCalculator
             $response = Http::withHeaders([
                 'x-rapidapi-key' => $apiKey,
                 'x-rapidapi-host' => $host,
-            ])->timeout($timeout)->get($baseUrl . $endpoint, $payload);
+            ])->timeout($timeout)->get($baseUrl.$endpoint, $payload);
         } catch (Throwable $exception) {
             Log::warning('BMI API request failed', ['message' => $exception->getMessage()]);
             throw new BmiCalculationException(trans('bmi.api_error_fallback'), 'warning', $exception);

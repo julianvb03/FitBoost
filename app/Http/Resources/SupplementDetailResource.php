@@ -2,20 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Supplement;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class SupplementDetailResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         $supplement = $this->resource;
 
         $expirationDate = $supplement->getAttribute('expiration_date');
-
 
         return [
             'id' => $supplement->getAttribute('id'),
