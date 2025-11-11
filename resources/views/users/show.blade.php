@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Mi Perfil')
+@section('title', trans('users/show.title'))
 
 @section('content')
 
@@ -15,8 +15,8 @@
                     <path d="M12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7" />
                 </svg>
             </div>
-            <h1 class="text-4xl font-bold text-base-content mb-2">Mi Perfil</h1>
-            <p class="text-base-content/70 text-lg">Gestiona tu información personal y revisa tu historial</p>
+            <h1 class="text-4xl font-bold text-base-content mb-2">{{ trans('users/show.my_profile') }}</h1>
+            <p class="text-base-content/70 text-lg">{{ trans('users/show.description') }}</p>
         </div>
 
         <!-- Error/Success Messages -->
@@ -59,8 +59,7 @@
                                 </div>
                                 <div>
                                     <h2 class="text-2xl font-bold">{{ $viewData['user']->getName() }}</h2>
-                                    <p class="text-primary-content/80">Usuario desde
-                                        {{ $viewData['user']->getCreatedAt()->format('d/m/Y') }}</p>
+                                    <p class="text-primary-content/80">{{ trans('users/show.user_since', ['date' => $viewData['user']->getCreatedAt()->format('d/m/Y')]) }}</p>
                                 </div>
                             </div>
                             <a href="{{ route('users.edit') }}"
@@ -70,7 +69,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
-                                Editar Perfil
+                                {{ trans('users/show.edit_profile') }}
                             </a>
                         </div>
                     </div>
@@ -85,7 +84,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
-                                    Información Personal
+                                    {{ trans('users/show.personal_information') }}
                                 </h3>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -102,7 +101,7 @@
                                     <!-- Email Address -->
                                     <div class="form-control">
                                         <label class="label">
-                                            <span class="label-text font-medium">Correo Electrónico</span>
+                                            <span class="label-text font-medium">{{ trans('users/show.email') }}</span>
                                         </label>
                                         <div class="input input-bordered flex items-center bg-base-200">
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +178,7 @@
                                             </svg>
                                             <span class="text-base-content/40 italic">No se han registrado datos de
                                                 pago</span>
-                                            <span class="badge badge-warning badge-sm ml-auto">Pendiente</span>
+                                            <span class="badge badge-warning badge-sm ml-auto">{{ trans('users/show.pending') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -230,7 +229,7 @@
                                             d="M16 11V7a4 4 0 00-8 0v4M5 9h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9a1 1 0 011-1z" />
                                     </svg>
                                 </div>
-                                <div class="stat-title text-base-content/70">Total Órdenes</div>
+                                <div class="stat-title text-base-content/70">{{ trans('users/show.total_orders') }}</div>
                                 <div class="stat-value text-primary">{{ count($viewData['orders']) }}</div>
                             </div>
 
@@ -243,7 +242,7 @@
                                             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                                     </svg>
                                 </div>
-                                <div class="stat-title text-base-content/70">Total Gastado</div>
+                                <div class="stat-title text-base-content/70">{{ trans('users/show.total_spent') }}</div>
                                 <div class="stat-value text-success">
                                     ${{ number_format($viewData['orders']->sum(fn($order) => $order->getTotalAmount()), 0, ',', '.') }}
                                 </div>
@@ -258,7 +257,7 @@
                                             d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
-                                <div class="stat-title text-base-content/70">Estado</div>
+                                <div class="stat-title text-base-content/70">{{ trans('users/show.status') }}</div>
                                 <div class="stat-value text-info">Activa</div>
                             </div>
                         </div>
@@ -321,9 +320,9 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Estado</th>
-                                        <th>Total</th>
-                                        <th>Fecha</th>
+                                        <th>{{ trans('users/show.status') }}</th>
+                                        <th>{{ trans('users/show.total') }}</th>
+                                        <th>{{ trans('users/show.date') }}</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -346,7 +345,7 @@
                                             <td>{{ $order->getCreatedAt()->format('d/m/Y') }}</td>
                                             <td>
                                                 <button class="btn btn-ghost btn-sm"
-                                                    onclick="alert('Ver detalles de orden #{{ $order->getId() }}')">
+                                                    onclick="alert('{{ trans('users/show.view_details', ['id' => $order->getId()]) }}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
