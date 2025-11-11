@@ -233,7 +233,7 @@
                                                 <label class="flex items-center space-x-2 cursor-pointer">
                                                     <input type="checkbox" name="remove_image" value="1"
                                                         class="checkbox checkbox-error checkbox-sm">
-                                                    <span class="label-text">Eliminar imagen</span>
+                                                    <span class="label-text">{{ trans('admin/supplements/edit.remove_image') }}</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -244,11 +244,11 @@
                             <div>
                                 <label class="label" for="image">
                                     <span
-                                        class="label-text">{{ $viewData['supplement']->getImagePath() ? 'Reemplazar imagen' : 'Subir imagen' }}</span>
+                                        class="label-text">{{ $viewData['supplement']->getImagePath() ? trans('admin/supplements/edit.replace_image') : trans('admin/supplements/edit.upload_image') }}</span>
                                 </label>
                                 <input type="file" id="image" name="image" accept="image/*"
                                     class="file-input file-input-bordered w-full @error('image') file-input-error @enderror">
-                                <p class="text-xs text-base-content/60 mt-2">Formatos: JPG, PNG, GIF. Tamaño máximo: 2MB.
+                                <p class="text-xs text-base-content/60 mt-2">{{ trans('admin/supplements/edit.image_hint') }}
                                 </p>
                             </div>
 
