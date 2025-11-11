@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Editar Categoría')
+@section('title', trans('admin/categories/edit.title'))
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
@@ -8,19 +8,19 @@
         <div>
             <div class="breadcrumbs text-sm text-base-content/70 mb-2">
                 <ul>
-                    <li><a href="{{ route('admin.categories.index') }}" class="hover:text-primary">Categorías</a></li>
-                    <li class="text-base-content">Editar Categoría</li>
+                    <li><a href="{{ route('admin.categories.index') }}" class="hover:text-primary">{{ trans('admin/categories/edit.categories') }}</a></li>
+                    <li class="text-base-content">{{ trans('admin/categories/edit.edit_category') }}</li>
                 </ul>
             </div>
-            <h1 class="text-3xl font-bold text-base-content">Editar Categoría</h1>
-            <p class="text-base-content/70 mt-2">Modifica la información de la categoría <span class="text-primary font-semibold">{{ $viewData['category']->name }}</span></p>
+            <h1 class="text-3xl font-bold text-base-content">{{ trans('admin/categories/edit.heading') }}</h1>
+            <p class="text-base-content/70 mt-2">{{ trans('admin/categories/edit.description', ['name' => $viewData['category']->name]) }}</p>
         </div>
         <div class="flex gap-2">
             <a href="{{ route('admin.categories.index') }}" class="btn btn-ghost btn-lg gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Volver a la Lista
+                {{ trans('admin/categories/edit.back_to_list') }}
             </a>
         </div>
     </div>
@@ -51,7 +51,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        Información de la Categoría
+                        {{ trans('admin/categories/edit.category_information') }}
                     </h2>
 
                     <form action="{{ route('admin.categories.update', $viewData['category']->id) }}" method="POST" id="categoryForm" data-category-form>
@@ -60,14 +60,14 @@
 
                         <div class="form-control w-full mb-6">
                             <label class="label" for="name">
-                                <span class="label-text font-semibold">Nombre de la Categoría</span>
+                                <span class="label-text font-semibold">{{ trans('admin/categories/edit.category_name') }}</span>
                                 <span class="label-text-alt text-error">*</span>
                             </label>
                             <input type="text"
                                 id="name"
                                 name="name"
                                 class="input input-bordered w-full @error('name') input-error @enderror"
-                                placeholder="Ej: Suplementos Deportivos"
+                                placeholder="{{ trans('admin/categories/edit.name_placeholder') }}"
                                 value="{{ old('name', $viewData['category']->name) }}"
                                 data-max-length="255"
                                 data-counter-id="nameCounter"
@@ -84,20 +84,20 @@
                             </label>
                             @enderror
                             <label class="label">
-                                <span class="label-text-alt text-base-content/50">El nombre debe ser único y descriptivo</span>
+                                <span class="label-text-alt text-base-content/50">{{ trans('admin/categories/edit.name_hint') }}</span>
                                 <span class="label-text-alt text-base-content/50" id="nameCounter">0/255</span>
                             </label>
                         </div>
 
                         <div class="form-control w-full mb-8">
                             <label class="label" for="description">
-                                <span class="label-text font-semibold">Descripción</span>
-                                <span class="label-text-alt text-base-content/50">(Opcional)</span>
+                                <span class="label-text font-semibold">{{ trans('admin/categories/edit.description') }}</span>
+                                <span class="label-text-alt text-base-content/50">({{ trans('admin/categories/edit.optional') }})</span>
                             </label>
                             <textarea id="description"
                                 name="description"
                                 class="textarea textarea-bordered h-32 resize-none @error('description') textarea-error @enderror"
-                                placeholder="Describe brevemente esta categoría y qué tipos de productos incluye..."
+                                placeholder="{{ trans('admin/categories/edit.description_placeholder') }}"
                                 data-max-length="500"
                                 data-counter-id="descCounter"
                                 data-error-class="textarea-error">{{ old('description', $viewData['category']->description) }}</textarea>
@@ -112,7 +112,7 @@
                             </label>
                             @enderror
                             <label class="label">
-                                <span class="label-text-alt text-base-content/50">Una buena descripción ayuda a los usuarios a entender la categoría</span>
+                                <span class="label-text-alt text-base-content/50">{{ trans('admin/categories/edit.description_hint') }}</span>
                                 <span class="label-text-alt text-base-content/50" id="descCounter">0/500</span>
                             </label>
                         </div>
@@ -127,16 +127,16 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                 </svg>
-                                Restaurar
+                                {{ trans('admin/categories/edit.restore') }}
                             </button>
                             <button type="submit"
                                 class="btn btn-primary btn-lg order-1 sm:order-2"
                                 id="submitBtn"
-                                data-loading-text="Actualizando...">
+                                data-loading-text="{{ trans('admin/categories/edit.updating') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                                Actualizar Categoría
+                                {{ trans('admin/categories/edit.update_category') }}
                             </button>
                         </div>
                     </form>
@@ -152,24 +152,24 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Información Actual
+                            {{ trans('admin/categories/edit.current_information') }}
                         </h3>
                         <div class="space-y-4 text-sm">
                             <div class="flex justify-between items-start">
-                                <span class="text-base-content/60">ID:</span>
+                                <span class="text-base-content/60">{{ trans('admin/categories/edit.id') }}:</span>
                                 <span class="font-mono text-primary"># {{ $viewData['category']->id }}</span>
                             </div>
                             <div class="flex justify-between items-start">
-                                <span class="text-base-content/60">Creada:</span>
-                                <span class="text-base-content">{{ $viewData['category']->created_at ? $viewData['category']->created_at->format('d/m/Y H:i') : 'N/A' }}</span>
+                                <span class="text-base-content/60">{{ trans('admin/categories/edit.created') }}:</span>
+                                <span class="text-base-content">{{ $viewData['category']->created_at ? $viewData['category']->created_at->format('d/m/Y H:i') : trans('admin/categories/edit.not_available') }}</span>
                             </div>
                             <div class="flex justify-between items-start">
-                                <span class="text-base-content/60">Última actualización:</span>
-                                <span class="text-base-content">{{ $viewData['category']->updated_at ? $viewData['category']->updated_at->format('d/m/Y H:i') : 'N/A' }}</span>
+                                <span class="text-base-content/60">{{ trans('admin/categories/edit.last_updated') }}:</span>
+                                <span class="text-base-content">{{ $viewData['category']->updated_at ? $viewData['category']->updated_at->format('d/m/Y H:i') : trans('admin/categories/edit.not_available') }}</span>
                             </div>
                             @if(method_exists($viewData['category'], 'products'))
                             <div class="flex justify-between items-start">
-                                <span class="text-base-content/60">Productos:</span>
+                                <span class="text-base-content/60">{{ trans('admin/categories/edit.products') }}:</span>
                                 <span class="badge badge-secondary">{{ $viewData['category']->products()->count() }}</span>
                             </div>
                             @endif
