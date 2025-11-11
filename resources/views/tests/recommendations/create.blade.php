@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Recomendaciones con IA')
+@section('title', trans('tests/recommendations/create.title'))
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5 py-8 rounded-lg">
@@ -23,9 +23,9 @@
                         <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993" />
                     </svg>
                 </div>
-                <h1 class="text-4xl font-bold text-base-content mb-3">Test de Recomendaciones IA</h1>
+                <h1 class="text-4xl font-bold text-base-content mb-3">{{ trans('tests/recommendations/create.heading') }}</h1>
                 <p class="text-lg text-base-content/70 max-w-2xl mx-auto">
-                    Cuéntanos sobre tu estilo de vida y objetivos para obtener recomendaciones personalizadas de suplementos
+                    {{ trans('tests/recommendations/create.description') }}
                 </p>
             </div>
 
@@ -38,15 +38,15 @@
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-primary rounded-full"></div>
-                                <h2 class="text-2xl font-semibold text-base-content">Información Personal</h2>
+                                <h2 class="text-2xl font-semibold text-base-content">{{ trans('tests/recommendations/create.personal_information') }}</h2>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="form-control group">
                                     <label class="label flex items-center gap-2 mb-2">
-                                        <span class="font-medium text-base-content">Contexto</span>
+                                        <span class="font-medium text-base-content">{{ trans('tests/recommendations/create.context') }}</span>
                                         <span class="tooltip tooltip-right"
-                                            data-tip="Área principal de interés (p. ej., Fitness, Nutrición, Rendimiento)">
+                                            data-tip="{{ trans('tests/recommendations/create.context_tooltip') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 class="w-4 h-4 text-base-content/60 hover:text-primary transition-colors"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -60,7 +60,7 @@
                                     </label>
                                     <input name="context"
                                         class="input input-bordered w-full transition-all duration-200 focus:input-primary focus:shadow-lg focus:scale-[1.02] group-hover:border-primary/50"
-                                        value="{{ old('context') }}" placeholder="Ej: Fitness, Nutrición, Rendimiento"
+                                        value="{{ old('context') }}" placeholder="{{ trans('tests/recommendations/create.context_placeholder') }}"
                                         required>
                                     @error('context')
                                         <div class="flex items-center gap-2 mt-2 text-error">
@@ -77,9 +77,9 @@
 
                                 <div class="form-control group">
                                     <label class="label flex items-center gap-2 mb-2">
-                                        <span class="font-medium text-base-content">Rutina</span>
+                                        <span class="font-medium text-base-content">{{ trans('tests/recommendations/create.routine') }}</span>
                                         <span class="tooltip tooltip-right"
-                                            data-tip="Frecuencia o tipo de entrenamiento (p. ej., 3x full-body, cardio 2x)">
+                                            data-tip="{{ trans('tests/recommendations/create.routine_tooltip') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 class="w-4 h-4 text-base-content/60 hover:text-primary transition-colors"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -93,7 +93,7 @@
                                     </label>
                                     <input name="routine"
                                         class="input input-bordered w-full transition-all duration-200 focus:input-primary focus:shadow-lg focus:scale-[1.02] group-hover:border-primary/50"
-                                        value="{{ old('routine') }}" placeholder="Ej: 3x full-body, cardio 2x" required>
+                                        value="{{ old('routine') }}" placeholder="{{ trans('tests/recommendations/create.routine_placeholder') }}" required>
                                     @error('routine')
                                         <div class="flex items-center gap-2 mt-2 text-error">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
@@ -109,9 +109,9 @@
 
                                 <div class="form-control group">
                                     <label class="label flex items-center gap-2 mb-2">
-                                        <span class="font-medium text-base-content">Dieta</span>
+                                        <span class="font-medium text-base-content">{{ trans('tests/recommendations/create.diet') }}</span>
                                         <span class="tooltip tooltip-right"
-                                            data-tip="Tipo de alimentación (p. ej., Balanceada, Keto, Vegetariana)">
+                                            data-tip="{{ trans('tests/recommendations/create.diet_tooltip') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 class="w-4 h-4 text-base-content/60 hover:text-primary transition-colors"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -125,7 +125,7 @@
                                     </label>
                                     <input name="diet"
                                         class="input input-bordered w-full transition-all duration-200 focus:input-primary focus:shadow-lg focus:scale-[1.02] group-hover:border-primary/50"
-                                        value="{{ old('diet') }}" placeholder="Ej: Balanceada, Keto, Vegetariana"
+                                        value="{{ old('diet') }}" placeholder="{{ trans('tests/recommendations/create.diet_placeholder') }}"
                                         required>
                                     @error('diet')
                                         <div class="flex items-center gap-2 mt-2 text-error">
@@ -142,9 +142,9 @@
 
                                 <div class="form-control group">
                                     <label class="label flex items-center gap-2 mb-2">
-                                        <span class="font-medium text-base-content">Peso (kg)</span>
+                                        <span class="font-medium text-base-content">{{ trans('tests/recommendations/create.weight') }}</span>
                                         <span class="tooltip tooltip-right"
-                                            data-tip="Escribe tu peso actual en kilogramos">
+                                            data-tip="{{ trans('tests/recommendations/create.weight_tooltip') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 class="w-4 h-4 text-base-content/60 hover:text-primary transition-colors"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -175,9 +175,9 @@
 
                                 <div class="form-control group">
                                     <label class="label flex items-center gap-2 mb-2">
-                                        <span class="font-medium text-base-content">Altura (cm)</span>
+                                        <span class="font-medium text-base-content">{{ trans('tests/recommendations/create.height') }}</span>
                                         <span class="tooltip tooltip-right"
-                                            data-tip="Escribe tu altura en centímetros (ej: 175)">
+                                            data-tip="{{ trans('tests/recommendations/create.height_tooltip') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 class="w-4 h-4 text-base-content/60 hover:text-primary transition-colors"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -211,14 +211,14 @@
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-secondary rounded-full"></div>
-                                <h2 class="text-2xl font-semibold text-base-content">Objetivos</h2>
+                                <h2 class="text-2xl font-semibold text-base-content">{{ trans('tests/recommendations/create.goals') }}</h2>
                             </div>
 
                             <div class="form-control group">
                                 <label class="label flex items-center gap-2 mb-2">
-                                    <span class="font-medium text-base-content">¿Cuáles son tus objetivos?</span>
+                                    <span class="font-medium text-base-content">{{ trans('tests/recommendations/create.goals_question') }}</span>
                                     <span class="tooltip tooltip-right"
-                                        data-tip="Escribe un objetivo por línea (ej.: Ganar masa, Perder grasa)">
+                                        data-tip="{{ trans('tests/recommendations/create.goals_tooltip') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             class="w-4 h-4 text-base-content/60 hover:text-primary transition-colors"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -251,14 +251,14 @@
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-accent rounded-full"></div>
-                                <h2 class="text-2xl font-semibold text-base-content">Detalles Adicionales</h2>
+                                <h2 class="text-2xl font-semibold text-base-content">{{ trans('tests/recommendations/create.additional_details') }}</h2>
                             </div>
 
                             <div class="form-control group">
                                 <label class="label flex items-center gap-2 mb-2">
-                                    <span class="font-medium text-base-content">Información adicional</span>
+                                    <span class="font-medium text-base-content">{{ trans('tests/recommendations/create.additional_info') }}</span>
                                     <span class="tooltip tooltip-right"
-                                        data-tip="Añade información útil: restricciones, lesiones, horarios. Un dato por línea.">
+                                        data-tip="{{ trans('tests/recommendations/create.additional_info_tooltip') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             class="w-4 h-4 text-base-content/60 hover:text-primary transition-colors"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -306,7 +306,7 @@
                                             <path d="m21.854 2.147-10.94 10.939" />
                                         </svg>
                                     </span>
-                                    <span id="btn-text" data-btn-text class="font-semibold">Obtener Recomendaciones IA</span>
+                                    <span id="btn-text" data-btn-text class="font-semibold">{{ trans('tests/recommendations/create.get_recommendations') }}</span>
                                 </span>
                             </button>
                         </div>

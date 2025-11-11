@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Resultados de Recomendación')
+@section('title', trans('tests/recommendations/show.title'))
 
 @section('content')
     <div class="space-y-6">
         <div class="card bg-base-100 shadow">
             <div class="card-body">
-                <h2 class="card-title">Tus recomendaciones</h2>
+                <h2 class="card-title">{{ trans('tests/recommendations/show.your_recommendations') }}</h2>
                 @if (isset($viewData['explanation']))
                     <p class="text-base-content/80">{{ $viewData['explanation'] }}</p>
                 @endif
@@ -18,18 +18,18 @@
                 <div class="card bg-base-100 shadow">
                     <div class="card-body">
                         <h3 class="card-title">{{ $s->getName() }}</h3>
-                        <p class="text-base-content/80">Sabor: {{ $s->getFlavour() }}</p>
-                        <p class="text-base-content/80">Precio: {{ $s->getPrice() }}</p>
-                        <p class="text-base-content/80">Stock: {{ $s->getStock() }}</p>
+                        <p class="text-base-content/80">{{ trans('tests/recommendations/show.flavor') }}: {{ $s->getFlavour() }}</p>
+                        <p class="text-base-content/80">{{ trans('tests/recommendations/show.price') }}: {{ $s->getPrice() }}</p>
+                        <p class="text-base-content/80">{{ trans('tests/recommendations/show.stock') }}: {{ $s->getStock() }}</p>
                     </div>
                 </div>
             @empty
-                <p>No hay recomendaciones disponibles.</p>
+                <p>{{ trans('tests/recommendations/show.no_recommendations') }}</p>
             @endforelse
         </div>
 
         <div>
-            <a href="{{ route('tests.recommendations.create') }}" class="btn">Nueva evaluación</a>
+            <a href="{{ route('tests.recommendations.create') }}" class="btn">{{ trans('tests/recommendations/show.new_evaluation') }}</a>
         </div>
     </div>
 @endsection
