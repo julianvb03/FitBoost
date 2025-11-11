@@ -3,15 +3,6 @@
 @section('title', trans('bmi.title'))
 
 @section('content')
-    @php
-        $form = $viewData['form'] ?? [];
-        $result = $viewData['result'] ?? null;
-        $selectedSystem = old('system', $form['system'] ?? 'metric');
-        $weightValue = old('weight', $form['weight'] ?? null);
-        $heightValue = old('height', $form['height'] ?? null);
-        $message = $viewData['message'] ?? ($result['message'] ?? null);
-        $messageLevel = $viewData['message_level'] ?? ($result['message_level'] ?? 'info');
-    @endphp
 
     <div class="mx-auto max-w-5xl">
         <div class="text-center mb-10">
@@ -33,18 +24,9 @@
             </p>
         </div>
 
-        @if ($message)
-            @php
-                $alertMap = [
-                    'error' => 'alert-error',
-                    'warning' => 'alert-warning',
-                    'success' => 'alert-success',
-                    'info' => 'alert-info',
-                ];
-                $alertClass = $alertMap[$messageLevel] ?? $alertMap['info'];
-            @endphp
-            <div class="alert {{ $alertClass }} mb-6 shadow-lg">
-                <span>{{ $message }}</span>
+        @if (!empty($viewData['message']))
+            <div class="alert {{ $viewData['alert_class'] }} mb-6 shadow-lg">
+                <span>{{ $viewData['message'] }}</span>
             </div>
         @endif
 
@@ -65,10 +47,10 @@
                                     </label>
                                     <select name="system" id="system" class="select select-bordered"
                                         aria-describedby="system-help">
-                                        <option value="metric" @selected($selectedSystem === 'metric')>
+                                        <option value="metric" @selected(($viewData['selected_system'] ?? 'metric') === 'metric')>
                                             {{ trans('bmi.metric_option') }}
                                         </option>
-                                        <option value="imperial" @selected($selectedSystem === 'imperial')>
+                                        <option value="imperial" @selected(($viewData['selected_system'] ?? 'metric') === 'imperial')>
                                             {{ trans('bmi.imperial_option') }}
                                         </option>
                                     </select>
@@ -82,13 +64,13 @@
 
                                 <div class="form-control">
                                     <label class="label" for="weight">
-                                        <span class="label-text font-medium">{{ trans('bmi.form_weight_label', ['unit' => $selectedSystem === 'imperial' ? 'lb' : 'kg']) }}</span>
+                                        <span class="label-text font-medium">{{ trans('bmi.form_weight_label', ['unit' => (($viewData['selected_system'] ?? 'metric') === 'imperial') ? 'lb' : 'kg']) }}</span>
                                     </label>
                                     <input type="number" name="weight" id="weight" step="0.1" min="1"
-                                        value="{{ $weightValue }}" class="input input-bordered"
-                                        placeholder="{{ $selectedSystem === 'imperial' ? '160' : '70' }}" />
+                                        value="{{ $viewData['weight_value'] ?? '' }}" class="input input-bordered"
+                                        placeholder="{{ ($viewData['selected_system'] ?? 'metric') === 'imperial' ? '160' : '70' }}" />
                                     <span class="label-text-alt mt-2 text-base-content/60">
-                                        {{ trans('bmi.form_weight_help', ['unit' => $selectedSystem === 'imperial' ? 'lb' : 'kg']) }}
+                                        {{ trans('bmi.form_weight_help', ['unit' => (($viewData['selected_system'] ?? 'metric') === 'imperial') ? 'lb' : 'kg']) }}
                                     </span>
                                     @error('weight')
                                         <span class="text-error text-sm mt-2">{{ $message }}</span>
@@ -97,13 +79,13 @@
 
                                 <div class="form-control">
                                     <label class="label" for="height">
-                                        <span class="label-text font-medium">{{ trans('bmi.form_height_label', ['unit' => $selectedSystem === 'imperial' ? 'in' : 'cm']) }}</span>
+                                        <span class="label-text font-medium">{{ trans('bmi.form_height_label', ['unit' => (($viewData['selected_system'] ?? 'metric') === 'imperial') ? 'in' : 'cm']) }}</span>
                                     </label>
                                     <input type="number" name="height" id="height" step="0.1" min="1"
-                                        value="{{ $heightValue }}" class="input input-bordered"
-                                        placeholder="{{ $selectedSystem === 'imperial' ? '68' : '170' }}" />
+                                        value="{{ $viewData['height_value'] ?? '' }}" class="input input-bordered"
+                                        placeholder="{{ ($viewData['selected_system'] ?? 'metric') === 'imperial' ? '68' : '170' }}" />
                                     <span class="label-text-alt mt-2 text-base-content/60">
-                                        {{ trans('bmi.form_height_help', ['unit' => $selectedSystem === 'imperial' ? 'in' : 'cm']) }}
+                                        {{ trans('bmi.form_height_help', ['unit' => (($viewData['selected_system'] ?? 'metric') === 'imperial') ? 'in' : 'cm']) }}
                                     </span>
                                     @error('height')
                                         <span class="text-error text-sm mt-2">{{ $message }}</span>
@@ -126,14 +108,14 @@
                     <div class="card-body">
                         <h2 class="card-title text-2xl font-semibold mb-4">{{ trans('bmi.result_title') }}</h2>
 
-                        @if ($result)
+                        @if (!empty($viewData['result']))
                             <div class="space-y-4">
                                 <div class="rounded-lg bg-primary/10 p-4 text-primary">
                                     <p class="text-sm font-medium uppercase tracking-wide">
                                         {{ trans('bmi.result_bmi') }}
                                     </p>
                                     <p class="text-4xl font-bold">
-                                        {{ number_format((float) $result['bmi'], 1) }}
+                                        {{ number_format((float) ($viewData['result']['bmi'] ?? 0), 1) }}
                                     </p>
                                 </div>
 
@@ -142,7 +124,7 @@
                                         {{ trans('bmi.result_health') }}
                                     </p>
                                     <p class="text-lg font-semibold text-base-content">
-                                        {{ $result['category'] }}
+                                        {{ $viewData['result']['category'] ?? '' }}
                                     </p>
                                 </div>
 
@@ -151,17 +133,12 @@
                                         {{ trans('bmi.result_range') }}
                                     </p>
                                     <p class="text-lg font-medium text-base-content">
-                                        {{ $result['healthy_range'] }}
+                                        {{ $viewData['result']['healthy_range'] ?? '' }}
                                     </p>
                                 </div>
 
                                 <div class="alert alert-neutral">
-                                    @php
-                                        $sourceKey = $result['fallback']
-                                            ? 'local_fallback'
-                                            : ($result['source'] ?? 'local');
-                                    @endphp
-                                    <span>{{ trans('bmi.result_source.' . $sourceKey) }}</span>
+                                    <span>{{ trans('bmi.result_source.' . ($viewData['result_source_key'] ?? 'local')) }}</span>
                                 </div>
                             </div>
                         @else

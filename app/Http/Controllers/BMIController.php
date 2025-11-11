@@ -6,6 +6,7 @@ use App\DTO\BmiCalculationInput;
 use App\Exceptions\BmiCalculationException;
 use App\Http\Requests\CalculateBmiRequest;
 use App\Interfaces\BmiCalculator;
+use App\ViewModels\BmiViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -26,12 +27,12 @@ class BMIController extends Controller
         ];
 
         if ($sessionData = session('viewData')) {
-            foreach ($sessionData as $key => $value) {
-                $viewData[$key] = $value;
-            }
+            $viewData = array_replace_recursive($viewData, $sessionData);
         }
 
-        return view('bmi.index')->with('viewData', $viewData);
+        $viewData = BmiViewModel::make($viewData, session()->getOldInput());
+
+        return view('bmi.index', ['viewData' => $viewData]);
     }
 
     public function calculate(CalculateBmiRequest $request): RedirectResponse
