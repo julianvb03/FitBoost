@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between">
             <h1 class="text-4xl font-bold text-base-content">{{ trans('layout/app.car_shop') }}</h1>
             @if ($viewData['count'] > 0)
-                <span class="badge badge-primary badge-lg text-lg px-4 py-3">{{ $viewData['count'] }} {{ __('items') }}</span>
+                <span class="badge badge-primary badge-lg text-lg px-4 py-3">{{ $viewData['count'] }} {{ trans('items') }}</span>
             @endif
         </div>
 
@@ -51,10 +51,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <h2 class="card-title text-3xl mt-6">{{ __('Your cart is empty.') }}</h2>
-                    <p class="text-base-content/70 mb-8 text-lg">{{ __('Start adding products to your cart!') }}</p>
+                    <h2 class="card-title text-3xl mt-6">{{ trans('Your cart is empty.') }}</h2>
+                    <p class="text-base-content/70 mb-8 text-lg">{{ trans('Start adding products to your cart!') }}</p>
                     <a class="btn btn-primary btn-lg" href="{{ route('supplements.index') }}">
-                        {{ __('Continue shopping') }}
+                        {{ trans('Continue shopping') }}
                     </a>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                                 <div class="flex-1 w-full">
                                     <h2 class="card-title text-2xl mb-2">{{ $supplement->getName() }}</h2>
                                     <p class="text-base-content/60 text-lg mb-4">
-                                        {{ __('Stock') }}: <span class="font-semibold">{{ $supplement->getStock() }}</span>
+                                        {{ trans('Stock') }}: <span class="font-semibold">{{ $supplement->getStock() }}</span>
                                     </p>
                                     <div class="text-2xl font-bold text-primary mb-6">
                                         ${{ number_format($supplement->getPrice(), 0) }}
@@ -95,7 +95,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <div class="flex items-center gap-3">
-                                                <label class="text-lg font-semibold">{{ __('Quantity') }}:</label>
+                                                <label class="text-lg font-semibold">{{ trans('Quantity') }}:</label>
                                                 <input name="quantity" type="number" min="1" max="99"
                                                     class="input input-bordered input-lg w-24 text-center text-lg font-semibold"
                                                     value="{{ $quantity }}">
@@ -106,7 +106,7 @@
                                                             stroke-width="2"
                                                             d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                                     </svg>
-                                                    {{ __('Update') }}
+                                                    {{ trans('Update') }}
                                                 </button>
                                             </div>
                                         </form>
@@ -115,7 +115,7 @@
                                     <div class="divider divider-horizontal lg:block hidden"></div>
 
                                     <div class="flex flex-col items-center gap-4">
-                                        <div class="text-xl font-semibold text-base-content/60">{{ __('Subtotal') }}</div>
+                                        <div class="text-xl font-semibold text-base-content/60">{{ trans('Subtotal') }}</div>
                                         <div class="text-3xl font-bold text-primary">
                                             ${{ number_format($subtotal, 0) }}
                                         </div>
@@ -126,7 +126,7 @@
                                     <div>
                                         <form method="POST"
                                             action="{{ route('cart.items.destroy', ['supplement' => $supplementId]) }}"
-                                            onsubmit="return confirm('{{ __('Are you sure you want to remove this item?') }}');">
+                                            onsubmit="return confirm('{{ trans('Are you sure you want to remove this item?') }}');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-error btn-lg">
@@ -136,7 +136,7 @@
                                                         stroke-width="2"
                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
-                                                {{ __('Remove') }}
+                                                {{ trans('Remove') }}
                                             </button>
                                         </form>
                                     </div>
@@ -150,7 +150,7 @@
             <div class="flex flex-col lg:flex-row gap-6 mt-8">
                 <div class="flex-1">
                     <form method="POST" action="{{ route('cart.clear') }}"
-                        onsubmit="return confirm('{{ __('Are you sure you want to empty your cart?') }}');">
+                        onsubmit="return confirm('{{ trans('Are you sure you want to empty your cart?') }}');">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-outline btn-error btn-lg">
@@ -159,22 +159,22 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
-                            {{ __('Empty cart') }}
+                            {{ trans('Empty cart') }}
                         </button>
                     </form>
                 </div>
 
                 <div class="card bg-base-200 shadow-xl lg:w-[400px]">
                     <div class="card-body p-8">
-                        <h2 class="card-title text-3xl mb-6">{{ __('Total') }}</h2>
+                        <h2 class="card-title text-3xl mb-6">{{ trans('Total') }}</h2>
                         <div class="space-y-4 mb-8">
                             <div class="flex justify-between text-xl text-base-content/70">
-                                <span>{{ __('Subtotal') }}</span>
+                                <span>{{ trans('Subtotal') }}</span>
                                 <span class="font-semibold">${{ number_format($viewData['total'], 0) }}</span>
                             </div>
                             <div class="divider my-4"></div>
                             <div class="flex justify-between text-3xl font-bold">
-                                <span>{{ __('Total') }}</span>
+                                <span>{{ trans('Total') }}</span>
                                 <span class="text-primary">${{ number_format($viewData['total'], 0) }}</span>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
-                                        {{ __('Buy now') }}
+                                        {{ trans('Buy now') }}
                                     </button>
                                 </form>
                             @else
@@ -198,7 +198,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                                     </svg>
-                                    {{ trans('auth/auth.login') }} {{ __('to checkout') }}
+                                    {{ trans('auth/auth.login') }} {{ trans('to checkout') }}
                                 </a>
                             @endauth
                         </div>
