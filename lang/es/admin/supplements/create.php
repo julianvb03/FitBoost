@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'title' => 'Crear Suplemento',
+    'heading' => 'Crear Suplemento',
+    'description' => 'Ingresa la información del nuevo suplemento',
+    'back' => 'Volver',
+    'basic_information' => 'Información Básica',
+    'name' => 'Nombre',
+    'name_placeholder' => 'Ej: Proteína Whey Chocolate',
+    'laboratory' => 'Laboratorio',
+    'laboratory_placeholder' => 'Ej: OptimumNutrition',
+    'price' => 'Precio',
+    'stock' => 'Stock',
+    'flavor' => 'Sabor',
+    'flavor_placeholder' => 'Ej: Chocolate, Vainilla, Sin sabor',
+    'expiration_date' => 'Fecha de Vencimiento',
+    'description' => 'Descripción',
+    'description_placeholder' => 'Describe las características, beneficios y uso recomendado del suplemento...',
+    'categories' => 'Categorías',
+    'no_categories_available' => 'No hay categorías disponibles.',
+    'create_categories' => 'Crear categorías',
+    'first' => 'primero',
+    'image' => 'Imagen',
+    'optional' => 'Opcional',
+    'product_image' => 'Imagen del producto',
+    'image_hint' => 'Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB.',
+    'ingredients' => 'Ingredientes',
+    'ingredients_placeholder' => 'Ingresa los ingredientes separados por comas (Ej: Proteína de suero, creatina, taurina)',
+    'cancel' => 'Cancelar',
+    'create_supplement' => 'Crear Suplemento',
+];
+

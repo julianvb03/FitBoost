@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Crear Suplemento')
+@section('title', trans('admin/supplements/create.title'))
 
 @section('content')
     <div class="container mx-auto px-4 py-8">
@@ -18,15 +18,15 @@
                                 <path d="M7 17h10" />
                             </svg>
                         </div>
-                        <h1 class="text-3xl font-bold text-base-content">Crear Suplemento</h1>
-                        <p class="text-base-content/70 mt-2">Ingresa la información del nuevo suplemento</p>
+                        <h1 class="text-3xl font-bold text-base-content">{{ trans('admin/supplements/create.heading') }}</h1>
+                        <p class="text-base-content/70 mt-2">{{ trans('admin/supplements/create.description') }}</p>
                     </div>
                     <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost btn-sm">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        Volver
+                        {{ trans('admin/supplements/create.back') }}
                     </a>
                 </div>
             </div>
@@ -42,17 +42,17 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Información Básica
+                            {{ trans('admin/supplements/create.basic_information') }}
                         </h2>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-control">
                                 <label class="label" for="name">
-                                    <span class="label-text">Nombre *</span>
+                                    <span class="label-text">{{ trans('admin/supplements/create.name') }} *</span>
                                 </label>
                                 <input type="text" id="name" name="name" value="{{ old('name') }}"
                                     class="input input-bordered w-full focus:input-primary @error('name') input-error @enderror"
-                                    placeholder="Ej: Proteína Whey Chocolate" required>
+                                    placeholder="{{ trans('admin/supplements/create.name_placeholder') }}" required>
                                 @error('name')
                                     <label class="label">
                                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -62,11 +62,11 @@
 
                             <div class="form-control">
                                 <label class="label" for="laboratory">
-                                    <span class="label-text">Laboratorio *</span>
+                                    <span class="label-text">{{ trans('admin/supplements/create.laboratory') }} *</span>
                                 </label>
                                 <input type="text" id="laboratory" name="laboratory" value="{{ old('laboratory') }}"
                                     class="input input-bordered w-full focus:input-primary @error('laboratory') input-error @enderror"
-                                    placeholder="Ej: OptimumNutrition" required>
+                                    placeholder="{{ trans('admin/supplements/create.laboratory_placeholder') }}" required>
                                 @error('laboratory')
                                     <label class="label">
                                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -76,7 +76,7 @@
 
                             <div class="form-control">
                                 <label class="label" for="price">
-                                    <span class="label-text">Precio *</span>
+                                    <span class="label-text">{{ trans('admin/supplements/create.price') }} *</span>
                                 </label>
                                 <div class="relative">
                                     <span
@@ -94,7 +94,7 @@
 
                             <div class="form-control">
                                 <label class="label" for="stock">
-                                    <span class="label-text">Stock *</span>
+                                    <span class="label-text">{{ trans('admin/supplements/create.stock') }} *</span>
                                 </label>
                                 <input type="number" id="stock" name="stock" value="{{ old('stock') }}"
                                     class="input input-bordered w-full focus:input-primary @error('stock') input-error @enderror"
@@ -108,11 +108,11 @@
 
                             <div class="form-control">
                                 <label class="label" for="flavour">
-                                    <span class="label-text">Sabor *</span>
+                                    <span class="label-text">{{ trans('admin/supplements/create.flavor') }} *</span>
                                 </label>
                                 <input type="text" id="flavour" name="flavour" value="{{ old('flavour') }}"
                                     class="input input-bordered w-full focus:input-primary @error('flavour') input-error @enderror"
-                                    placeholder="Ej: Chocolate, Vainilla, Sin sabor" required>
+                                    placeholder="{{ trans('admin/supplements/create.flavor_placeholder') }}" required>
                                 @error('flavour')
                                     <label class="label">
                                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -122,7 +122,7 @@
 
                             <div class="form-control">
                                 <label class="label" for="expiration_date">
-                                    <span class="label-text">Fecha de Vencimiento *</span>
+                                    <span class="label-text">{{ trans('admin/supplements/create.expiration_date') }} *</span>
                                 </label>
                                 <input type="date" id="expiration_date" name="expiration_date"
                                     value="{{ old('expiration_date') }}"
@@ -138,12 +138,12 @@
 
                         <div class="mt-6 flex flex-col gap-2">
                             <label class="label" for="description">
-                                <span class="label-text">Descripción *</span>
+                                <span class="label-text">{{ trans('admin/supplements/create.description') }} *</span>
                             </label>
                             <div class="form-control">
                                 <textarea id="description" name="description"
                                     class="textarea textarea-bordered h-32 focus:textarea-primary @error('description') textarea-error @enderror"
-                                    placeholder="Describe las características, beneficios y uso recomendado del suplemento..." required>{{ old('description') }}</textarea>
+                                    placeholder="{{ trans('admin/supplements/create.description_placeholder') }}" required>{{ old('description') }}</textarea>
                                 @error('description')
                                     <label class="label">
                                         <span class="label-text-alt text-error">{{ $message }}</span>
@@ -161,7 +161,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                             </svg>
-                            Categorías *
+                            {{ trans('admin/supplements/create.categories') }} *
                         </h2>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -184,8 +184,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 9v2m0 4h.01m-9 2a9 9 0 1118 0 9 9 0 01-18 0z" />
                                         </svg>
-                                        <span>No hay categorías disponibles. <a href="#" class="link">Crear
-                                                categorías</a> primero.</span>
+                                        <span>{{ trans('admin/supplements/create.no_categories_available') }} <a href="{{ route('admin.categories.create') }}" class="link">{{ trans('admin/supplements/create.create_categories') }}</a> {{ trans('admin/supplements/create.first') }}.</span>
                                     </div>
                                 </div>
                             @endif
@@ -203,18 +202,17 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
-                            Imagen
-                            <span class="text-sm font-normal text-base-content/60">(Opcional)</span>
+                            {{ trans('admin/supplements/create.image') }}
+                            <span class="text-sm font-normal text-base-content/60">({{ trans('admin/supplements/create.optional') }})</span>
                         </h2>
 
                         <div class="form-control">
                             <label class="label" for="image">
-                                <span class="label-text">Imagen del producto</span>
+                                <span class="label-text">{{ trans('admin/supplements/create.product_image') }}</span>
                             </label>
                             <input type="file" id="image" name="image" accept="image/*"
                                 class="file-input file-input-bordered w-full @error('image') file-input-error @enderror">
-                            <p class="text-xs text-base-content/60 mt-2">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo:
-                                2MB.</p>
+                            <p class="text-xs text-base-content/60 mt-2">{{ trans('admin/supplements/create.image_hint') }}</p>
                             @error('image')
                                 <label class="label">
                                     <span class="label-text-alt text-error">{{ $message }}</span>
@@ -231,13 +229,13 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
-                            Ingredientes *
+                            {{ trans('admin/supplements/create.ingredients') }} *
                         </h2>
 
                         <div class="form-control">
                             <textarea id="ingredients" name="ingredients"
                                 class="textarea textarea-bordered h-24 focus:textarea-primary @error('ingredients') textarea-error @enderror"
-                                placeholder="Ingresa los ingredientes separados por comas (Ej: Proteína de suero, creatina, taurina)" required>{{ old('ingredients') }}</textarea>
+                                placeholder="{{ trans('admin/supplements/create.ingredients_placeholder') }}" required>{{ old('ingredients') }}</textarea>
                             @error('ingredients')
                                 <label class="label">
                                     <span class="label-text-alt text-error">{{ $message }}</span>
@@ -249,12 +247,12 @@
 
                 <div
                     class="sticky bottom-4 bg-base-100/80 backdrop-blur rounded-xl border border-neutral/20 p-4 mt-6 flex justify-end gap-4 shadow">
-                    <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost">Cancelar</a>
+                    <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost">{{ trans('admin/supplements/create.cancel') }}</a>
                     <button type="submit" class="btn btn-primary">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
-                        Crear Suplemento
+                        {{ trans('admin/supplements/create.create_supplement') }}
                     </button>
                 </div>
             </form>
