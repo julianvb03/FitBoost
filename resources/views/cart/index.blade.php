@@ -61,44 +61,38 @@
         @else
             <div class="space-y-6">
                 @foreach ($viewData['items'] as $row)
-                    @php
-                        $supplement = is_array($row) ? $row['supplement'] : $row->getSupplement();
-                        $quantity = is_array($row) ? $row['quantity'] : $row->getQuantity();
-                        $subtotal = is_array($row) ? $row['subtotal'] : $row->getTotalPrice();
-                        $supplementId = $supplement->getId();
-                    @endphp
                     <div class="card bg-base-100 shadow-xl">
                         <div class="card-body p-8">
                             <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start">
                                 <div class="avatar placeholder">
                                     <div class="bg-primary text-primary-content rounded-xl w-24 h-24">
                                         <span class="text-3xl font-bold">
-                                            {{ substr($supplement->getName(), 0, 2) }}
+                                            {{ substr((is_array($row) ? $row['supplement'] : $row->getSupplement())->getName(), 0, 2) }}
                                         </span>
                                     </div>
                                 </div>
 
                                 <div class="flex-1 w-full">
-                                    <h2 class="card-title text-2xl mb-2">{{ $supplement->getName() }}</h2>
+                                    <h2 class="card-title text-2xl mb-2">{{ (is_array($row) ? $row['supplement'] : $row->getSupplement())->getName() }}</h2>
                                     <p class="text-base-content/60 text-lg mb-4">
-                                        {{ trans('Stock') }}: <span class="font-semibold">{{ $supplement->getStock() }}</span>
+                                        {{ trans('Stock') }}: <span class="font-semibold">{{ (is_array($row) ? $row['supplement'] : $row->getSupplement())->getStock() }}</span>
                                     </p>
                                     <div class="text-2xl font-bold text-primary mb-6">
-                                        ${{ number_format($supplement->getPrice(), 0) }}
+                                        ${{ number_format((is_array($row) ? $row['supplement'] : $row->getSupplement())->getPrice(), 0) }}
                                     </div>
                                 </div>
 
                                 <div class="flex flex-col lg:flex-row items-center gap-6 w-full lg:w-auto">
                                     <div class="flex items-center gap-4">
                                         <form method="POST"
-                                            action="{{ route('cart.items.update', ['supplement' => $supplementId]) }}">
+                                            action="{{ route('cart.items.update', ['supplement' => (is_array($row) ? $row['supplement'] : $row->getSupplement())->getId()]) }}">
                                             @csrf
                                             @method('PATCH')
                                             <div class="flex items-center gap-3">
                                                 <label class="text-lg font-semibold">{{ trans('Quantity') }}:</label>
                                                 <input name="quantity" type="number" min="1" max="99"
                                                     class="input input-bordered input-lg w-24 text-center text-lg font-semibold"
-                                                    value="{{ $quantity }}">
+                                                    value="{{ is_array($row) ? $row['quantity'] : $row->getQuantity() }}">
                                                 <button type="submit" class="btn btn-primary btn-lg">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor">
@@ -117,7 +111,7 @@
                                     <div class="flex flex-col items-center gap-4">
                                         <div class="text-xl font-semibold text-base-content/60">{{ trans('Subtotal') }}</div>
                                         <div class="text-3xl font-bold text-primary">
-                                            ${{ number_format($subtotal, 0) }}
+                                            ${{ number_format(is_array($row) ? $row['subtotal'] : $row->getTotalPrice(), 0) }}
                                         </div>
                                     </div>
 
@@ -125,7 +119,7 @@
 
                                     <div>
                                         <form method="POST"
-                                            action="{{ route('cart.items.destroy', ['supplement' => $supplementId]) }}"
+                                            action="{{ route('cart.items.destroy', ['supplement' => (is_array($row) ? $row['supplement'] : $row->getSupplement())->getId()]) }}"
                                             onsubmit="return confirm('{{ trans('Are you sure you want to remove this item?') }}');">
                                             @csrf
                                             @method('DELETE')
