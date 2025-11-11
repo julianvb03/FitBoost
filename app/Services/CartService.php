@@ -108,11 +108,20 @@ final class CartService
         $supplement = Supplement::findOrFail($supplementId);
 
         if ($this->auth->check()) {
-            $order = $this->getOrCreateUserCart();
+            $user = $this->auth->user();
+            $order = Order::where('user_id', $user->getId())
+                ->where('status', self::STATUS_CART)
+                ->first();
+
+            if (! $order) {
+                return ['capped' => false];
+            }
+
             $item = $order->items()->where('supplement_id', $supplementId)->first();
             if ($item === null) {
                 return ['capped' => false];
             }
+
             $final = min($supplement->getStock(), $quantity);
             $item->setQuantity($final);
             $item->setTotalPrice($supplement->getPrice() * $final);
@@ -135,8 +144,16 @@ final class CartService
     public function removeItem(int $supplementId): void
     {
         if ($this->auth->check()) {
-            $order = $this->getOrCreateUserCart();
-            $order->items()->where('supplement_id', $supplementId)->delete();
+            $user = $this->auth->user();
+            $orderId = Order::where('user_id', $user->getId())
+                ->where('status', self::STATUS_CART)
+                ->value('id');
+
+            if ($orderId) {
+                Item::where('order_id', $orderId)
+                    ->where('supplement_id', $supplementId)
+                    ->delete();
+            }
 
             return;
         }
@@ -149,8 +166,14 @@ final class CartService
     public function clear(): void
     {
         if ($this->auth->check()) {
-            $order = $this->getOrCreateUserCart();
-            $order->items()->delete();
+            $user = $this->auth->user();
+            $order = Order::where('user_id', $user->getId())
+                ->where('status', self::STATUS_CART)
+                ->first();
+
+            if ($order) {
+                $order->items()->delete();
+            }
 
             return;
         }
@@ -174,6 +197,10 @@ final class CartService
             $item->setQuantity($quantity);
             $item->setTotalPrice($supplement->getPrice() * $quantity);
             $item->save();
+
+            $newStock = $supplement->getStock() - $quantity;
+            $supplement->setStock(max(0, $newStock));
+            $supplement->save();
         }
 
         $totalAmount = $order->calculateTotalAmount();

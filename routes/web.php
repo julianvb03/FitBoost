@@ -64,7 +64,6 @@ Route::group(['prefix' => 'reviews', 'as' => 'reviews.', 'middleware' => ['auth'
     Route::post('/', 'App\Http\Controllers\ReviewController@store')->name('store');
     Route::put('/{id}', 'App\Http\Controllers\ReviewController@update')->name('update');
     Route::delete('/{id}', 'App\Http\Controllers\ReviewController@delete')->name('delete');
-    Route::post('/{id}/report', 'App\Http\Controllers\ReviewController@report')->name('report');
 });
 
 Route::group(['prefix' => 'tests', 'as' => 'tests.recommendations.', 'middleware' => ['auth', 'role:user']], function () {
