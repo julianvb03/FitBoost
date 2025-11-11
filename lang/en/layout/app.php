@@ -17,8 +17,9 @@ return [
     'goals' => 'Goals',
     'choose_language' => 'Choose your language',
     'register' => 'Join Now',
-    'car_shop' => 'Car Shop',
+    'car_shop' => 'Shopping Cart',
     'logout' => 'Logout',
     'recommendations' => 'Recommendations',
+    'ai_recommendations' => 'AI Recommendations',
     'bmi_calculator' => 'BMI Calculator',
 ];
