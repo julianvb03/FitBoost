@@ -37,9 +37,9 @@
                         <a href="{{ route('users.show') }}" class="transition {{ request()->routeIs('users.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
                             {{ trans('layout/app.profile') }}
                         </a>
-                        @if (auth()->user()->hasRole('user'))
+                            @if (auth()->user()->hasRole('user'))
                             <a href="{{ route('tests.recommendations.create') }}" class="transition {{ request()->routeIs('tests.recommendations.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
-                                Recomendaciones IA
+                                {{ trans('layout/app.ai_recommendations') }}
                             </a>
                         @endif
                         @if (auth()->user()->hasRole('admin'))
@@ -64,7 +64,7 @@
                         @auth
                             <li><a href="{{ route('users.show') }}">{{ trans('layout/app.profile') }}</a></li>
                             @if (auth()->user()->hasRole('user'))
-                                <li><a href="{{ route('tests.recommendations.create') }}">Recomendaciones IA</a></li>
+                                <li><a href="{{ route('tests.recommendations.create') }}">{{ trans('layout/app.ai_recommendations') }}</a></li>
                             @endif
                             @if (auth()->user()->hasRole('admin'))
                                 <li><a href="{{ route('admin.dashboard') }}">{{ trans('layout/app.admin_dashboard') }}</a></li>

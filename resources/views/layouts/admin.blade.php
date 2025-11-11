@@ -17,20 +17,20 @@
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
                     <img src="{{ asset('assets/logo.png') }}" alt="{{ config('app.name') }}" class="h-10 w-10">
                     <div class="flex flex-col">
-                        <span class="text-lg font-bold text-primary">Admin</span>
-                        <span class="text-xs font-semibold uppercase tracking-wide text-base-content/60">Panel de control</span>
+                        <span class="text-lg font-bold text-primary">{{ trans('layout/admin.admin') }}</span>
+                        <span class="text-xs font-semibold uppercase tracking-wide text-base-content/60">{{ trans('layout/admin.control_panel') }}</span>
                     </div>
                 </a>
 
                 <nav class="flex items-center gap-6 text-sm font-medium">
                     <a href="{{ route('admin.dashboard') }}" class="transition {{ request()->routeIs('admin.dashboard') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
-                        Panel
+                        {{ trans('layout/admin.panel') }}
                     </a>
                     <a href="{{ route('admin.supplements.index') }}" class="transition {{ request()->routeIs('admin.supplements.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
-                        Suplementos
+                        {{ trans('layout/admin.supplements') }}
                     </a>
                     <a href="{{ route('admin.categories.index') }}" class="transition {{ request()->routeIs('admin.categories.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
-                        Categorías
+                        {{ trans('layout/admin.categories') }}
                     </a>
                 </nav>
 

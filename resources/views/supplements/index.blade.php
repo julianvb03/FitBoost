@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Suplementos')
+@section('title', trans('supplements/index.title'))
 
 @section('content')
 
@@ -15,8 +15,8 @@
                     <path d="M6 12a5 5 0 0 1 6 0 5 5 0 0 0 6 0" />
                 </svg>
             </div>
-            <h1 class="text-4xl font-bold text-base-content mb-2">Catálogo de Suplementos</h1>
-            <p class="text-base-content/70 text-lg">Encuentra los mejores suplementos para tu entrenamiento</p>
+            <h1 class="text-4xl font-bold text-base-content mb-2">{{ trans('supplements/index.catalog_title') }}</h1>
+            <p class="text-base-content/70 text-lg">{{ trans('supplements/index.catalog_description') }}</p>
         </div>
 
         <form id="filterForm" method="GET" action="{{ route('supplements.index') }}"
