@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Crear Suplemento')
 
 @section('content')
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto">
-            <!-- Header -->
             <div class="mb-8">
                 <div class="flex items-center justify-between">
                     <div>
@@ -32,12 +31,10 @@
                 </div>
             </div>
 
-            <!-- Form ('admin.supplements.store') -->
             <form action="{{ route('admin.supplements.store') }}" method="POST" enctype="multipart/form-data"
                 class="space-y-8">
                 @csrf
 
-                <!-- Basic Information Card -->
                 <div class="card bg-base-100 shadow-lg border border-neutral/20">
                     <div class="card-body">
                         <h2 class="card-title text-primary mb-4">
@@ -49,7 +46,6 @@
                         </h2>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Name -->
                             <div class="form-control">
                                 <label class="label" for="name">
                                     <span class="label-text">Nombre *</span>
@@ -64,7 +60,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Laboratory -->
                             <div class="form-control">
                                 <label class="label" for="laboratory">
                                     <span class="label-text">Laboratorio *</span>
@@ -79,7 +74,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Price -->
                             <div class="form-control">
                                 <label class="label" for="price">
                                     <span class="label-text">Precio *</span>
@@ -98,7 +92,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Stock -->
                             <div class="form-control">
                                 <label class="label" for="stock">
                                     <span class="label-text">Stock *</span>
@@ -113,7 +106,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Flavour -->
                             <div class="form-control">
                                 <label class="label" for="flavour">
                                     <span class="label-text">Sabor *</span>
@@ -128,7 +120,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Expiration Date -->
                             <div class="form-control">
                                 <label class="label" for="expiration_date">
                                     <span class="label-text">Fecha de Vencimiento *</span>
@@ -145,7 +136,6 @@
                             </div>
                         </div>
 
-                        <!-- Description -->
                         <div class="mt-6 flex flex-col gap-2">
                             <label class="label" for="description">
                                 <span class="label-text">Descripción *</span>
@@ -164,7 +154,6 @@
                     </div>
                 </div>
 
-                <!-- Categories Card -->
                 <div class="card bg-base-100 shadow-lg border border-neutral/20">
                     <div class="card-body">
                         <h2 class="card-title text-primary mb-4">
@@ -207,7 +196,6 @@
                     </div>
                 </div>
 
-                <!-- Image Card -->
                 <div class="card bg-base-100 shadow-lg border border-neutral/20">
                     <div class="card-body">
                         <h2 class="card-title text-primary mb-4">
@@ -236,7 +224,6 @@
                     </div>
                 </div>
 
-                <!-- Ingredients Card -->
                 <div class="card bg-base-100 shadow-lg border border-neutral/20">
                     <div class="card-body">
                         <h2 class="card-title text-primary mb-4">
@@ -260,7 +247,6 @@
                     </div>
                 </div>
 
-                <!-- Submit Actions -->
                 <div
                     class="sticky bottom-4 bg-base-100/80 backdrop-blur rounded-xl border border-neutral/20 p-4 mt-6 flex justify-end gap-4 shadow">
                     <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost">Cancelar</a>

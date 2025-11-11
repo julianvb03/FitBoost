@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Preview image functionality
     const imageInput = document.getElementById("image");
 
     if (imageInput) {
@@ -8,14 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 const reader = new FileReader();
 
                 reader.onload = function (e) {
-                    // Si ya existe una vista previa de la nueva imagen, la eliminamos
                     let existingPreview =
                         document.querySelector(".new-image-preview");
                     if (existingPreview) {
                         existingPreview.remove();
                     }
 
-                    // Crear elemento para la vista previa
                     const preview = document.createElement("div");
                     preview.className = "new-image-preview mt-4";
                     preview.innerHTML = `
@@ -28,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     `;
 
-                    // Insertar después del input
                     imageInput.parentNode.appendChild(preview);
                 };
 
@@ -37,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Checkbox para eliminar imagen
     const removeImageCheckbox = document.querySelector(
         'input[name="remove_image"]'
     );
@@ -47,11 +42,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const imageInput = document.getElementById("image");
 
             if (this.checked) {
-                // Si está marcado para eliminar, deshabilitar la subida
                 imageInput.disabled = true;
                 imageInput.classList.add("opacity-50");
             } else {
-                // Si no, habilitar la subida
                 imageInput.disabled = false;
                 imageInput.classList.remove("opacity-50");
             }

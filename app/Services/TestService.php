@@ -10,10 +10,6 @@ class TestService
 {
     public function __construct(private readonly SupplementRecommendationService $recommendationService) {}
 
-    /**
-     * Create a Test for user, request data already validated, and attach recommendations.
-     * Returns array: [Test $test, array $supplements, string $explanation]
-     */
     public function createWithRecommendations(User $user, array $data): array
     {
         return DB::transaction(function () use ($user, $data) {
@@ -35,7 +31,6 @@ class TestService
                 return [$result['supplements'], $result['explanation']];
             })();
 
-            // Attach to pivot (no extra columns per Option A)
             $test->supplements()->sync($supplements->pluck('id')->all());
 
             return [$test, $supplements, $explanation];

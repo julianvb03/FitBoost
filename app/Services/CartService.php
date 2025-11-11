@@ -10,7 +10,6 @@ use App\Models\Supplement;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use RuntimeException;
 
 final class CartService
 {
@@ -67,9 +66,6 @@ final class CartService
         ];
     }
 
-    /**
-     * @return array{capped: bool}
-     */
     public function addItem(int $supplementId, int $quantity): array
     {
         $quantity = max(1, min(99, $quantity));
@@ -96,7 +92,6 @@ final class CartService
             return ['capped' => $newQuantity < $requested];
         }
 
-        // Session cart
         $items = (array) Session::get('cart.items', []);
         $current = (int) ($items[$supplementId]['quantity'] ?? 0);
         $requested = $current + $quantity;
@@ -107,20 +102,26 @@ final class CartService
         return ['capped' => $newQuantity < $requested];
     }
 
-    /**
-     * @return array{capped: bool}
-     */
     public function updateQuantity(int $supplementId, int $quantity): array
     {
         $quantity = max(1, min(99, $quantity));
         $supplement = Supplement::findOrFail($supplementId);
 
         if ($this->auth->check()) {
-            $order = $this->getOrCreateUserCart();
+            $user = $this->auth->user();
+            $order = Order::where('user_id', $user->getId())
+                ->where('status', self::STATUS_CART)
+                ->first();
+
+            if (! $order) {
+                return ['capped' => false];
+            }
+
             $item = $order->items()->where('supplement_id', $supplementId)->first();
             if ($item === null) {
                 return ['capped' => false];
             }
+
             $final = min($supplement->getStock(), $quantity);
             $item->setQuantity($final);
             $item->setTotalPrice($supplement->getPrice() * $final);
@@ -143,8 +144,16 @@ final class CartService
     public function removeItem(int $supplementId): void
     {
         if ($this->auth->check()) {
-            $order = $this->getOrCreateUserCart();
-            $order->items()->where('supplement_id', $supplementId)->delete();
+            $user = $this->auth->user();
+            $orderId = Order::where('user_id', $user->getId())
+                ->where('status', self::STATUS_CART)
+                ->value('id');
+
+            if ($orderId) {
+                Item::where('order_id', $orderId)
+                    ->where('supplement_id', $supplementId)
+                    ->delete();
+            }
 
             return;
         }
@@ -157,8 +166,14 @@ final class CartService
     public function clear(): void
     {
         if ($this->auth->check()) {
-            $order = $this->getOrCreateUserCart();
-            $order->items()->delete();
+            $user = $this->auth->user();
+            $order = Order::where('user_id', $user->getId())
+                ->where('status', self::STATUS_CART)
+                ->first();
+
+            if ($order) {
+                $order->items()->delete();
+            }
 
             return;
         }
@@ -173,10 +188,6 @@ final class CartService
             return;
         }
 
-        if (! method_exists($user, 'hasActivePaymentMethod') || ! $user->hasActivePaymentMethod()) {
-            throw new RuntimeException('Missing payment method');
-        }
-
         $order = $this->getOrCreateUserCart();
         $items = $order->items()->with('supplement')->get();
 
@@ -186,15 +197,19 @@ final class CartService
             $item->setQuantity($quantity);
             $item->setTotalPrice($supplement->getPrice() * $quantity);
             $item->save();
+
+            $newStock = $supplement->getStock() - $quantity;
+            $supplement->setStock(max(0, $newStock));
+            $supplement->save();
         }
 
+        $totalAmount = $order->calculateTotalAmount();
+        $order->setTotalAmount($totalAmount);
         $order->setStatus('pending');
         $order->save();
 
-        // Create a new empty cart for user convenience
         $this->createEmptyCartIfMissing();
 
-        // Clean session cart if any
         Session::forget('cart.items');
     }
 

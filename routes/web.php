@@ -8,6 +8,10 @@ Auth::routes();
 // Home Route
 Route::get('/', 'App\\Http\\Controllers\\HomeController@index')->name('home.index');
 
+// BMI Calculator Routes
+Route::get('/bmi', 'App\\Http\\Controllers\\BMIController@index')->name('bmi.index');
+Route::post('/bmi/calculate', 'App\\Http\\Controllers\\BMIController@calculate')->name('bmi.calculate');
+
 // Language Change Route
 Route::post('/language/change', 'App\\Http\\Controllers\\LanguageController@change')->name('language.change');
 
@@ -29,6 +33,8 @@ Route::prefix('cart')->name('cart.')->group(function () {
 // Admin Routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:admin']], function () {
 
+    Route::get('/', 'App\\Http\\Controllers\\Admin\\AdminHomeController@home')->name('dashboard');
+
     // Supplement Routes
     Route::prefix('supplements')->name('supplements.')->group(function () {
         Route::get('/', 'App\\Http\\Controllers\\Admin\\AdminSupplementController@index')->name('index');
@@ -44,7 +50,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'r
         Route::get('/', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@index')->name('index');
         Route::get('/create', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@create')->name('create');
         Route::post('/', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@store')->name('store');
-        Route::delete('/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@delete')->name('delete');
+        Route::delete('/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@delete')->name('destroy');
         Route::get('/edit/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@edit')->name('edit');
         Route::patch('/edit/{id}', 'App\\Http\\Controllers\\Admin\\AdminCategoryController@update')->name('update');
     });
@@ -58,7 +64,6 @@ Route::group(['prefix' => 'reviews', 'as' => 'reviews.', 'middleware' => ['auth'
     Route::post('/', 'App\Http\Controllers\ReviewController@store')->name('store');
     Route::put('/{id}', 'App\Http\Controllers\ReviewController@update')->name('update');
     Route::delete('/{id}', 'App\Http\Controllers\ReviewController@delete')->name('delete');
-    Route::post('/{id}/report', 'App\Http\Controllers\ReviewController@report')->name('report');
 });
 
 Route::group(['prefix' => 'tests', 'as' => 'tests.recommendations.', 'middleware' => ['auth', 'role:user']], function () {

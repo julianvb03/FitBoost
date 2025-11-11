@@ -5,7 +5,6 @@
 @section('content')
 
     <div class="container mx-auto px-4 py-6">
-        <!-- Breadcrumb -->
         <div class="breadcrumbs text-sm mb-6">
             <ul>
                 <li><a href="#" class="text-primary hover:text-primary-focus">Inicio</a></li>
@@ -15,9 +14,7 @@
             </ul>
         </div>
 
-        <!-- Main Product -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            <!-- Product Image -->
             <div class="space-y-4">
                 <div class="aspect-square w-full bg-base-200 rounded-lg overflow-hidden shadow-lg">
                     @if ($viewData['supplement']->getImagePath())
@@ -35,7 +32,6 @@
                     @endif
                 </div>
 
-                <!-- Availability Badge -->
                 <div class="flex justify-center">
                     @if ($viewData['supplement']->getStock() > 0)
                         <div class="badge badge-success badge-lg font-medium px-4 py-2">
@@ -59,15 +55,12 @@
                 </div>
             </div>
 
-            <!-- Product Information -->
             <div class="space-y-6">
-                <!-- Header -->
                 <div>
                     <h1 class="text-4xl font-bold text-base-content mb-2">{{ $viewData['supplement']->getName() }}</h1>
                     <p class="text-lg text-base-content/70">{{ $viewData['supplement']->getLaboratory() }}</p>
                 </div>
 
-                <!-- Rating Stars -->
                 <div class="flex items-center gap-4">
                     <div class="rating rating-lg">
                         @for ($i = 1; $i <= 5; $i++)
@@ -83,7 +76,6 @@
                     </span>
                 </div>
 
-                <!-- Price -->
                 <div class="bg-base-200 rounded-lg p-6">
                     <div class="flex items-center justify-between">
                         <div>
@@ -99,7 +91,6 @@
                     </div>
                 </div>
 
-                <!-- Additional Information -->
                 <div class="space-y-4">
                     @if ($viewData['supplement']->getFlavour())
                         <div class="flex items-center gap-3">
@@ -113,7 +104,6 @@
                         </div>
                     @endif
 
-                    <!-- Categories -->
                     @if (count($viewData['categories']) > 0)
                         <div class="flex items-start gap-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/60 mt-0.5"
@@ -133,25 +123,11 @@
                     @endif
                 </div>
 
-                <!-- Action Button -->
                 <div class="pt-4">
                     @if ($viewData['supplement']->getStock() > 0)
                         <form method="POST" action="{{ route('cart.items.store') }}" class="grid grid-cols-4 gap-3">
                             @csrf
                             <input type="hidden" name="supplement_id" value="{{ $viewData['supplement']->getId() }}" />
-                            {{-- <div class="join">
-                                <input type="number" name="quantity" min="1" max="99" value="1"
-                                    class="input input-bordered w-full join-item" />
-                                <button class="btn btn-primary btn-lg w-full join-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0H17M9 19.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM20.5 19.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                                    </svg>
-                                    Agregar al Carrito
-                                </button>
-                            </div> --}}
-                            <!-- Quantity Input -->
                             <div class="flex flex-col gap-2">
                                 <div class="">
                                     <label class="label">
@@ -189,7 +165,6 @@
             </div>
         </div>
 
-        <!-- Product Description -->
         <div class="bg-base-100 rounded-lg shadow-lg p-8 mb-8">
             <h2 class="text-2xl font-bold text-base-content mb-6">Descripción del Producto</h2>
             <div class="prose max-w-none">
@@ -199,7 +174,6 @@
             </div>
         </div>
 
-        <!-- Reviews Section -->
         <div class="bg-base-100 rounded-lg shadow-lg p-8">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold text-base-content">
@@ -209,7 +183,6 @@
                     </span>
                 </h2>
 
-                <!-- Rating Summary and Create Review Button -->
                 <div class="flex items-center gap-6">
                     <div class="text-center">
                         <div class="text-3xl font-bold text-primary mb-1">
@@ -225,7 +198,7 @@
                     </div>
 
                     @auth
-                        <button class="btn btn-primary" onclick="createReviewModal.showModal()">
+                        <button type="button" class="btn btn-primary" data-modal-open="createReviewModal">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -237,13 +210,11 @@
             </div>
 
             @if (count($viewData['reviews']) > 0)
-                <!-- List of Reviews -->
                 <div class="space-y-6 mb-8">
                     @foreach ($viewData['reviews'] as $review)
                         <div class="border-b border-neutral/20 pb-6 last:border-b-0 last:pb-0"
                             id="review-{{ $review->getId() }}">
                             <div class="flex items-start gap-4">
-                                <!-- Avatar -->
                                 <div class="placeholder">
                                     <div
                                         class="bg-neutral text-neutral-content rounded-full w-12 h-12 flex items-center justify-center">
@@ -253,7 +224,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Review Content -->
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between mb-2">
                                         <div class="flex items-center gap-3">
@@ -274,7 +244,6 @@
                                         </div>
 
                                         @auth
-                                            <!-- Actions Menu -->
                                             <div class="dropdown dropdown-end">
                                                 <div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-circle">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -287,9 +256,12 @@
                                                     class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow border border-base-300">
                                                     @if (Auth::user()->getId() == $review->getUserId())
                                                         <li>
-                                                            <button
-                                                                onclick="editReview({{ $review->getId() }}, {{ $review->getRating() }}, '{{ addslashes($review->getComment()) }}')"
-                                                                class="text-blue-600 hover:text-blue-800">
+                                                               <button type="button"
+                                                                   class="text-blue-600 hover:text-blue-800"
+                                                                   data-review-edit
+                                                                   data-review-edit-url="{{ url('reviews/' . $review->getId()) }}"
+                                                                   data-review-rating="{{ $review->getRating() }}"
+                                                                   data-review-comment="{{ e($review->getComment()) }}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -300,8 +272,10 @@
                                                             </button>
                                                         </li>
                                                         <li>
-                                                            <button onclick="deleteReview({{ $review->getId() }})"
-                                                                class="text-red-600 hover:text-red-800">
+                                                           <button type="button"
+                                                               class="text-red-600 hover:text-red-800"
+                                                               data-review-delete
+                                                               data-review-delete-url="{{ url('reviews/' . $review->getId()) }}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -309,19 +283,6 @@
                                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                                 </svg>
                                                                 Eliminar Reseña
-                                                            </button>
-                                                        </li>
-                                                    @else
-                                                        <li>
-                                                            <button onclick="reportReview({{ $review->getId() }})"
-                                                                class="text-orange-600 hover:text-orange-800">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-                                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        stroke-width="2"
-                                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                                                                </svg>
-                                                                Reportar Reseña
                                                             </button>
                                                         </li>
                                                     @endif
@@ -339,11 +300,9 @@
                     @endforeach
                 </div>
 
-                <!-- Reviews Pagination -->
                 @if ($viewData['total_pages'] > 1)
                     <div class="flex justify-center pt-6 border-t border-neutral/20">
                         <div class="join shadow">
-                            <!-- First page -->
                             @if ($viewData['current_page'] > 1)
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => 1]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -353,7 +312,6 @@
                                 <button class="join-item btn btn-sm btn-disabled">Primera</button>
                             @endif
 
-                            <!-- Previous page -->
                             @if ($viewData['current_page'] > 1)
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $viewData['current_page'] - 1]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -373,7 +331,6 @@
                                 </button>
                             @endif
 
-                            <!-- Page numbers -->
                             @for ($i = max(1, $viewData['current_page'] - 2); $i <= min($viewData['total_pages'], $viewData['current_page'] + 2); $i++)
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $i]) }}"
                                     class="join-item btn btn-sm {{ $i == $viewData['current_page'] ? 'btn-active btn-primary' : 'hover:btn-primary' }}">
@@ -381,7 +338,6 @@
                                 </a>
                             @endfor
 
-                            <!-- Next page -->
                             @if ($viewData['current_page'] < $viewData['total_pages'])
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $viewData['current_page'] + 1]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -401,7 +357,6 @@
                                 </button>
                             @endif
 
-                            <!-- Last page -->
                             @if ($viewData['current_page'] < $viewData['total_pages'])
                                 <a href="{{ route('supplements.show', ['id' => $viewData['supplement']->getId(), 'page' => $viewData['total_pages']]) }}"
                                     class="join-item btn btn-sm hover:btn-primary">
@@ -418,7 +373,6 @@
                     </div>
                 @endif
             @else
-                <!-- Empty State -->
                 <div class="text-center py-12">
                     <div class="max-w-sm mx-auto">
                         <div class="mb-6">
@@ -433,7 +387,7 @@
                             Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu experiencia!
                         </p>
                         @auth
-                            <button class="btn btn-primary btn-outline" onclick="createReviewModal.showModal()">
+                            <button type="button" class="btn btn-primary btn-outline" data-modal-open="createReviewModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -452,7 +406,6 @@
             @endif
         </div>
 
-        <!-- Back Button -->
         <div class="flex justify-center mt-8">
             <a href="{{ route('supplements.index') }}" class="btn btn-ghost btn-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
@@ -465,7 +418,6 @@
     </div>
 
     @auth
-        <!-- Modal for Create Review -->
         <dialog id="createReviewModal" class="modal">
             <div class="modal-box">
                 <form method="dialog">
@@ -479,7 +431,6 @@
                     <input type="hidden" name="supplement_id" value="{{ $viewData['supplement']->getId() }}">
 
                     <div class="space-y-4">
-                        <!-- Rating -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Calificación</span>
@@ -495,7 +446,6 @@
                             </div>
                         </div>
 
-                        <!-- Comment -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Comentario</span>
@@ -507,7 +457,6 @@
                             </div>
                         </div>
 
-                        <!-- Buttons -->
                         <div class="flex gap-3 pt-4">
                             <button type="submit" class="btn btn-primary flex-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
@@ -517,7 +466,7 @@
                                 </svg>
                                 Publicar Reseña
                             </button>
-                            <button type="button" class="btn btn-ghost flex-1" onclick="createReviewModal.close()">
+                            <button type="button" class="btn btn-ghost flex-1" data-modal-close="createReviewModal">
                                 Cancelar
                             </button>
                         </div>
@@ -526,7 +475,6 @@
             </div>
         </dialog>
 
-        <!-- Modal for Edit Review -->
         <dialog id="editReviewModal" class="modal">
             <div class="modal-box">
                 <form method="dialog">
@@ -540,7 +488,6 @@
                     @method('PUT')
 
                     <div class="space-y-4">
-                        <!-- Rating -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Calificación</span>
@@ -556,7 +503,6 @@
                             </div>
                         </div>
 
-                        <!-- Comment -->
                         <div class="form-control">
                             <label class="label">
                                 <span class="label-text font-medium">Comentario</span>
@@ -568,7 +514,6 @@
                             </div>
                         </div>
 
-                        <!-- Buttons -->
                         <div class="flex gap-3 pt-4">
                             <button type="submit" class="btn btn-primary flex-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
@@ -578,7 +523,7 @@
                                 </svg>
                                 Actualizar Reseña
                             </button>
-                            <button type="button" class="btn btn-ghost flex-1" onclick="editReviewModal.close()">
+                            <button type="button" class="btn btn-ghost flex-1" data-modal-close="editReviewModal">
                                 Cancelar
                             </button>
                         </div>
@@ -587,7 +532,6 @@
             </div>
         </dialog>
 
-        <!-- Modal for Delete Confirmation -->
         <dialog id="deleteReviewModal" class="modal">
             <div class="modal-box">
                 <h3 class="font-bold text-lg text-error mb-4">Eliminar Reseña</h3>
@@ -608,35 +552,7 @@
                             Eliminar
                         </button>
                     </form>
-                    <button class="btn btn-ghost flex-1" onclick="deleteReviewModal.close()">
-                        Cancelar
-                    </button>
-                </div>
-            </div>
-        </dialog>
-
-        <!-- Modal for Report Confirmation -->
-        <dialog id="reportReviewModal" class="modal">
-            <div class="modal-box">
-                <h3 class="font-bold text-lg text-warning mb-4">Reportar Reseña</h3>
-                <p class="text-base-content/80 mb-6">
-                    ¿Deseas reportar esta reseña? Los administradores revisarán el contenido para determinar si viola nuestras
-                    políticas.
-                </p>
-
-                <div class="flex gap-3">
-                    <form id="reportReviewForm" method="POST" class="flex-1">
-                        @csrf
-                        <button type="submit" class="btn btn-warning w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                            </svg>
-                            Reportar
-                        </button>
-                    </form>
-                    <button class="btn btn-ghost flex-1" onclick="reportReviewModal.close()">
+                    <button type="button" class="btn btn-ghost flex-1" data-modal-close="deleteReviewModal">
                         Cancelar
                     </button>
                 </div>
@@ -644,61 +560,7 @@
         </dialog>
     @endauth
 
-    <script>
-        // Edit Review
-        function editReview(reviewId, currentRating, currentComment) {
-            // Set the form action
-            document.getElementById('editReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
-
-            // Set the current values
-            document.querySelector(`#edit-rating-${currentRating}`).checked = true;
-            document.getElementById('editComment').value = currentComment;
-
-            // Show the modal
-            editReviewModal.showModal();
-        }
-
-        // Function to delete a review
-        function deleteReview(reviewId) {
-            document.getElementById('deleteReviewForm').action = `{{ url('reviews') }}/${reviewId}`;
-            deleteReviewModal.showModal();
-        }
-
-        // Function to report a review
-        function reportReview(reviewId) {
-            document.getElementById('reportReviewForm').action = `{{ url('reviews') }}/${reviewId}/report`;
-            reportReviewModal.showModal();
-        }
-
-        // Character counter for textarea
-        document.addEventListener('DOMContentLoaded', function() {
-            const textareas = document.querySelectorAll('textarea[maxlength]');
-            textareas.forEach(textarea => {
-                const maxLength = parseInt(textarea.getAttribute('maxlength'));
-                const label = textarea.parentElement.querySelector('.label-text-alt');
-
-                textarea.addEventListener('input', function() {
-                    const remaining = maxLength - this.value.length;
-                    if (label) {
-                        label.textContent = `${remaining} caracteres restantes`;
-                        if (remaining < 50) {
-                            label.classList.add('text-warning');
-                        } else {
-                            label.classList.remove('text-warning');
-                        }
-                    }
-                });
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdowns = document.querySelectorAll('.dropdown');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(event.target)) {
-                    dropdown.querySelector('[tabindex="0"]').blur();
-                }
-            });
-        });
-    </script>
+    @push('scripts')
+        @vite(entrypoints: ['resources/js/supplements/show.js'])
+    @endpush
 @endsection

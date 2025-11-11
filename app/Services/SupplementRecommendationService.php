@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Supplement;
 use App\Models\Test;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -18,7 +17,6 @@ class SupplementRecommendationService
             ->select(['id', 'name', 'stock'])
             ->get();
 
-        // precompute BMI to help the model and ensure it is mentioned
         $heightM = max(0.01, ((int) $test->getHeight()) / 100);
         $bmi = round(((int) $test->getWeight()) / ($heightM * $heightM), 1);
 
@@ -30,7 +28,6 @@ class SupplementRecommendationService
             'weight' => $test->getWeight(),
             'height' => $test->getHeight(),
             'bmi' => $bmi,
-            // keep candidate payload compact to reduce tokens
             'candidates' => $candidates->take(50)->map(fn ($c) => ['id' => $c->getId(), 'name' => $c->getName()])->all(),
             'expected_output' => [
                 'selected_ids' => '[int,int,... up to 5]',
@@ -41,7 +38,7 @@ class SupplementRecommendationService
         $selectedIds = [];
         $explanation = '';
 
-        $apiKey = config('services.openai.api_key'); // use key if present; otherwise fallback
+        $apiKey = config('services.openai.api_key');
         $debugDummy = (bool) config('services.openai.debug_dummy', false);
         if ($apiKey) {
             try {
@@ -82,7 +79,6 @@ class SupplementRecommendationService
 
                         $decoded = json_decode((string) $content, true);
                         if (! is_array($decoded)) {
-                            // try to extract JSON from code fences
                             if (preg_match('/\{[\s\S]*\}/', (string) $content, $m)) {
                                 $decoded = json_decode($m[0], true);
                             }
@@ -103,14 +99,12 @@ class SupplementRecommendationService
             }
         }
 
-        // Optional debug path: force dummy to validate UI flow
         if ($debugDummy && empty($selectedIds)) {
             $selectedIds = $candidates->pluck('id')->shuffle()->take(5)->map(fn ($id) => (int) $id)->all();
             $explanation = 'Dummy debug: random top 5 to validate UI flow.';
         }
 
         if (empty($selectedIds)) {
-            // Fallback: top 5 by stock
             $selectedIds = $candidates->sortByDesc(fn ($s) => $s->getStock())
                 ->take(5)
                 ->pluck('id')
@@ -119,7 +113,6 @@ class SupplementRecommendationService
             $explanation = $explanation ?: 'Based on availability and your goals, these supplements fit best.';
         }
 
-        /** @var Collection<int, Supplement> $supplements */
         $supplements = Supplement::query()->whereIn('id', $selectedIds)->get();
 
         return [

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Administrar Categorías')
 
@@ -69,7 +69,6 @@
                             <th class="text-base-content/80">ID</th>
                             <th class="text-base-content/80">Nombre</th>
                             <th class="text-base-content/80">Descripción</th>
-                            <th class="text-base-content/80">Fecha de Creación</th>
                             <th class="text-center text-base-content/80">Acciones</th>
                         </tr>
                     </thead>
@@ -85,9 +84,8 @@
                                     {{ $category->getDescription() ?: 'Sin descripción' }}
                                 </div>
                             </td>
-                            <td>
-                                <div class="flex justify-center gap-2">
-                                    <!-- Edit Button -->
+                            <td class="text-center">
+                                <div class="inline-flex justify-center gap-2">
                                     <a href="{{ route('admin.categories.edit', $category->getId()) }}"
                                         class="btn btn-sm btn-secondary tooltip"
                                         data-tip="Editar categoría">
@@ -96,10 +94,13 @@
                                         </svg>
                                     </a>
 
-                                    <!-- Delete Button -->
-                                    <button onclick="deleteCategory({{ $category->getId() }}, '{{ $category->getName() }}')"
+                                    <button type="button"
                                         class="btn btn-sm btn-error tooltip"
-                                        data-tip="Eliminar categoría">
+                                        data-tip="Eliminar categoría"
+                                        data-category-delete
+                                        data-category-id="{{ $category->getId() }}"
+                                        data-category-name="{{ e($category->getName()) }}"
+                                        data-category-url="{{ route('admin.categories.destroy', $category->getId()) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
@@ -114,7 +115,6 @@
         </div>
     </div>
     @else
-    <!-- Empty State -->
     <div class="card bg-base-100 shadow-xl">
         <div class="card-body text-center py-16">
             <div class="text-base-content/40 mb-4">
@@ -135,7 +135,6 @@
     @endif
 </div>
 
-<!-- Delete Confirmation Modal -->
 <dialog id="delete_modal" class="modal">
     <div class="modal-box">
         <h3 class="font-bold text-lg mb-4">
@@ -151,8 +150,8 @@
                 @csrf
                 @method('DELETE')
             </form>
-            <button type="button" class="btn btn-ghost" onclick="document.getElementById('delete_modal').close()">Cancelar</button>
-            <button type="button" class="btn btn-error" onclick="confirmDelete()">
+            <button type="button" class="btn btn-ghost" data-modal-close="delete_modal">Cancelar</button>
+            <button type="button" class="btn btn-error" data-category-confirm-delete>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
@@ -164,30 +163,7 @@
         <button>close</button>
     </form>
 </dialog>
-
-<script>
-    function deleteCategory(categoryId, categoryName) {
-        document.getElementById('category-name').textContent = categoryName;
-        document.getElementById('delete-form').action = `/admin/categories/${categoryId}`;
-        document.getElementById('delete_modal').showModal();
-    }
-
-    function confirmDelete() {
-        document.getElementById('delete-form').submit();
-    }
-
-    // Auto-hide alerts after 5 seconds
-    document.addEventListener('DOMContentLoaded', function() {
-        const alerts = document.querySelectorAll('.alert');
-        alerts.forEach(alert => {
-            setTimeout(() => {
-                alert.style.transition = 'opacity 0.5s ease-out';
-                alert.style.opacity = '0';
-                setTimeout(() => {
-                    alert.remove();
-                }, 500);
-            }, 5000);
-        });
-    });
-</script>
+@push('scripts')
+    @vite(entrypoints: ['resources/js/admin/categories/index.js'])
+@endpush
 @endsection

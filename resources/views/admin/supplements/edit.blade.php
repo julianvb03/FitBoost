@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', trans('admin/admin.edit_supplement'))
 
 @section('content')
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto">
-            <!-- Header -->
             <div class="mb-8">
                 <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -30,7 +29,6 @@
                 </div>
             </div>
 
-            <!-- Error Messages -->
             @if ($errors->any())
                 <div class="alert alert-error mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
@@ -49,7 +47,6 @@
                 </div>
             @endif
 
-            <!-- Form Card -->
             <div class="card bg-base-100 shadow-xl border border-neutral/20">
                 <div class="card-body">
                     <form action="{{ route('admin.supplements.update', $viewData['supplement']->getId()) }}" method="POST"
@@ -57,14 +54,12 @@
                         @csrf
                         @method('PATCH')
 
-                        <!-- Basic Information Section -->
                         <div class="divider divider-start">
                             <span
                                 class="text-lg font-semibold text-primary">{{ trans('admin/admin.basic_information') }}</span>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Name -->
                             <div class="form-control w-full">
                                 <label class="label" for="name">
                                     <span class="label-text text-base-content font-medium">
@@ -82,7 +77,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Laboratory -->
                             <div class="form-control w-full">
                                 <label class="label" for="laboratory">
                                     <span class="label-text text-base-content font-medium">
@@ -100,7 +94,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Price -->
                             <div class="form-control w-full">
                                 <label class="label" for="price">
                                     <span class="label-text text-base-content font-medium">
@@ -121,7 +114,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Stock -->
                             <div class="form-control w-full">
                                 <label class="label" for="stock">
                                     <span class="label-text text-base-content font-medium">
@@ -138,7 +130,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Flavour -->
                             <div class="form-control w-full">
                                 <label class="label" for="flavour">
                                     <span class="label-text text-base-content font-medium">
@@ -156,7 +147,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Expiration Date -->
                             <div class="form-control w-full">
                                 <label class="label" for="expiration_date">
                                     <span class="label-text text-base-content font-medium">
@@ -174,7 +164,6 @@
                             </div>
                         </div>
 
-                        <!-- Description -->
                         <div class="form-control w-full">
                             <label class="label" for="description">
                                 <span class="label-text text-base-content font-medium">
@@ -191,7 +180,6 @@
                             @enderror
                         </div>
 
-                        <!-- Categories Section -->
                         <div class="divider divider-start">
                             <span class="text-lg font-semibold text-primary">{{ trans('admin/admin.categories') }}</span>
                         </div>
@@ -221,7 +209,6 @@
                             @enderror
                         </div>
 
-                        <!-- Image Section -->
                         <div class="divider divider-start">
                             <span class="text-lg font-semibold text-primary">{{ trans('admin/admin.image') }}</span>
                         </div>
@@ -272,7 +259,6 @@
                             @enderror
                         </div>
 
-                        <!-- Ingredients -->
                         <div class="divider divider-start">
                             <span class="text-lg font-semibold text-primary">{{ trans('admin/admin.ingredients') }}</span>
                         </div>
@@ -293,7 +279,6 @@
                             @enderror
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="divider"></div>
                         <div
                             class="sticky bottom-4 bg-base-100/80 backdrop-blur rounded-xl border border-neutral/20 p-4 flex flex-col sm:flex-row gap-4 justify-end shadow">

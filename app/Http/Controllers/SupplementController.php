@@ -31,10 +31,12 @@ class SupplementController extends Controller
             $query->sortBy($request->input('order_by'));
         }
 
-        $query->with('reviews');
+        $query->with(['reviews', 'categories']);
+
+        $elementsPerPage = (int) $request->input('per_page', 8);
 
         $supplementsPaginated = $query->paginate(
-            $request->input('per_page'),
+            $elementsPerPage,
             ['*'],
             'page',
             $request->input('page')
@@ -43,8 +45,22 @@ class SupplementController extends Controller
         $supplements = $supplementsPaginated->items();
         $totalPages = $supplementsPaginated->lastPage();
         $currentPage = $supplementsPaginated->currentPage();
-        $elementsPerPage = $request->input('per_page');
+        $currentItemsCount = $supplementsPaginated->count();
+        $totalResults = $supplementsPaginated->total();
         $categories = Category::all();
+
+        $filters = $request->only([
+            'search',
+            'category_id',
+            'min_price',
+            'max_price',
+            'in_stock',
+            'order_by',
+            'per_page',
+        ]);
+        $hasFilters = collect($filters)
+            ->filter(fn ($value) => ! is_null($value) && $value !== '')
+            ->isNotEmpty();
 
         $viewData = [];
         $viewData['categories'] = $categories;
@@ -52,6 +68,9 @@ class SupplementController extends Controller
         $viewData['per_page'] = $elementsPerPage;
         $viewData['total_pages'] = $totalPages;
         $viewData['current_page'] = $currentPage;
+        $viewData['current_items_count'] = $currentItemsCount;
+        $viewData['has_filters'] = $hasFilters;
+        $viewData['total_results'] = $totalResults;
 
         return view('supplements.index')->with('viewData', $viewData);
     }

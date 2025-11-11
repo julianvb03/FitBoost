@@ -16,7 +16,6 @@ class Review extends Model
      * $this->attributes['status']          - boolean    - contains the review status
      * $this->attributes['user_id']         - int        - contains the review user id
      * $this->attributes['supplement_id']   - int        - contains the review supplement id
-     * $this->attributes['reported']        - boolean    - contains the review reported status
      * $this->attributes['created_at']      - timestamp  - contains the review creation date
      * $this->attributes['updated_at']      - timestamp  - contains the review last update date
      * $this->user                          - User       - contains the associated User
@@ -37,11 +36,6 @@ class Review extends Model
     public function getSupplementId(): int
     {
         return $this->getAttribute('supplement_id');
-    }
-
-    public function getReported(): bool
-    {
-        return $this->getAttribute('reported');
     }
 
     public function getId(): int
@@ -84,11 +78,6 @@ class Review extends Model
     public function setSupplementId(int $supplementId): void
     {
         $this->setAttribute('supplement_id', $supplementId);
-    }
-
-    public function setReported(bool $reported): void
-    {
-        $this->setAttribute('reported', $reported);
     }
 
     public function setRating(int $rating): void

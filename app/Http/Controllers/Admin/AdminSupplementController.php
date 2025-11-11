@@ -19,8 +19,6 @@ class AdminSupplementController extends Controller
     public function __construct(ImageStorage $imageStorage)
     {
         $this->imageStorage = $imageStorage;
-        // Is a best practice to use middleware for authentication and authorization here or on routes?
-        // $this->middleware('auth');
     }
 
     public function index(FilterSupplementRequest $request): View
@@ -43,10 +41,12 @@ class AdminSupplementController extends Controller
         }
 
         // For avoid the N + 1 problem
-        $query->with('reviews');
+        $query->with(['reviews', 'categories']);
+
+        $elementsPerPage = (int) $request->input('per_page', 4);
 
         $supplementsPaginated = $query->paginate(
-            $request->input('per_page'),
+            $elementsPerPage,
             ['*'],
             'page',
             $request->input('page')
@@ -55,7 +55,19 @@ class AdminSupplementController extends Controller
         $supplements = $supplementsPaginated->items();
         $totalPages = $supplementsPaginated->lastPage();
         $currentPage = $supplementsPaginated->currentPage();
-        $elementsPerPage = $request->input('per_page');
+
+        $filters = $request->only([
+            'search',
+            'category_id',
+            'min_price',
+            'max_price',
+            'in_stock',
+            'order_by',
+            'per_page',
+        ]);
+        $hasFilters = collect($filters)
+            ->filter(fn ($value) => ! is_null($value) && $value !== '')
+            ->isNotEmpty();
 
         $viewData = [];
         $viewData['categories'] = Category::all();
@@ -63,6 +75,7 @@ class AdminSupplementController extends Controller
         $viewData['per_page'] = $elementsPerPage;
         $viewData['total_pages'] = $totalPages;
         $viewData['current_page'] = $currentPage;
+        $viewData['has_filters'] = $hasFilters;
 
         return view('admin.supplements.index')->with('viewData', $viewData);
     }

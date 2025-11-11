@@ -9,256 +9,111 @@
     @stack('styles')
 </head>
 
-<body>
-    <main>
-        <div class="drawer xl:drawer-open">
-            <input id="left-sidebar" type="checkbox" class="drawer-toggle" />
-            <div class="drawer-content">
-                {{-- Navbar --}}
-                <div class="navbar bg-base-100 shadow-sm px-6">
-                    <div class="navbar-start">
+<body class="bg-base-200 text-base-content antialiased">
+    <div class="flex min-h-screen flex-col">
+        <header class="border-b border-base-300 bg-base-100">
+            <div class="mx-auto flex h-20 w-full max-w-[1200px] items-center justify-between px-4 sm:px-6 lg:px-8">
+                <a href="{{ route('home.index') }}" class="flex items-center gap-3">
+                    <img src="{{ asset('assets/logo.png') }}" alt="FitBoost" class="h-12 w-12">
+                    <div class="hidden sm:flex flex-col">
+                        <span class="text-lg font-bold text-primary">FitBoost</span>
+                        <span class="text-xs font-semibold uppercase tracking-wide text-base-content/60">
+                            {{ trans('layout/app.health_wellness') }}
+                        </span>
+                    </div>
+                </a>
+
+                <nav class="hidden items-center gap-6 text-sm font-medium md:flex">
+                    <a href="{{ route('home.index') }}" class="transition {{ request()->routeIs('home.index') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
+                        {{ trans('layout/app.home') }}
+                    </a>
+                    <a href="{{ route('supplements.index') }}" class="transition {{ request()->routeIs('supplements.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
+                        {{ trans('layout/app.products') }}
+                    </a>
+                    <a href="{{ route('bmi.index') }}" class="transition {{ request()->routeIs('bmi.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
+                        {{ trans('layout/app.bmi_calculator') }}
+                    </a>
+                    @auth
+                        <a href="{{ route('users.show') }}" class="transition {{ request()->routeIs('users.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
+                            {{ trans('layout/app.profile') }}
+                        </a>
+                        @if (auth()->user()->hasRole('user'))
+                            <a href="{{ route('tests.recommendations.create') }}" class="transition {{ request()->routeIs('tests.recommendations.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
+                                Recomendaciones IA
+                            </a>
+                        @endif
+                        @if (auth()->user()->hasRole('admin'))
+                            <a href="{{ route('admin.dashboard') }}" class="transition {{ request()->routeIs('admin.*') ? 'text-primary font-semibold' : 'text-base-content/70 hover:text-primary' }}">
+                                {{ trans('layout/app.admin_dashboard') }}
+                            </a>
+                        @endif
+                    @endauth
+                </nav>
+
+                <div class="dropdown dropdown-end md:hidden">
+                    <label tabindex="0" class="btn btn-ghost btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </label>
+                    <ul tabindex="0" class="menu dropdown-content rounded-box bg-base-100 p-3 shadow">
+                        <li><a href="{{ route('home.index') }}">{{ trans('layout/app.home') }}</a></li>
+                        <li><a href="{{ route('supplements.index') }}">{{ trans('layout/app.products') }}</a></li>
+                        <li><a href="{{ route('bmi.index') }}">{{ trans('layout/app.bmi_calculator') }}</a></li>
+                        <li><a href="{{ route('cart.index') }}">{{ trans('layout/app.car_shop') }}</a></li>
                         @auth
-                            <label for="left-sidebar" class="btn btn-ghost xl:hidden">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 6h16M4 12h8m-8 6h16" />
-                                </svg>
-                            </label>
+                            <li><a href="{{ route('users.show') }}">{{ trans('layout/app.profile') }}</a></li>
+                            @if (auth()->user()->hasRole('user'))
+                                <li><a href="{{ route('tests.recommendations.create') }}">Recomendaciones IA</a></li>
+                            @endif
+                            @if (auth()->user()->hasRole('admin'))
+                                <li><a href="{{ route('admin.dashboard') }}">{{ trans('layout/app.admin_dashboard') }}</a></li>
+                            @endif
                         @endauth
-                        <div class="flex items-center gap-3">
-                            <a href="/" class="">
-                                {{-- Logo --}}
-                                <img src="{{ asset('assets/logo.png') }}" alt="FitBoost" class="size-12">
-                            </a>
-                            <div class="hidden xl:block">
-                                <span class="bg-accent text-accent-content px-3 py-1 rounded-full text-sm font-medium">
-                                    {{ trans('layout/app.health_wellness') }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="navbar-center hidden xl:flex">
-                        <ul class="menu menu-horizontal px-1">
-                            <li><a href="{{ route('home.index') }}" class="text-base-content hover:text-primary">
-                                    {{ trans('layout/app.home') }} </a>
-                            </li>
-                            <li><a href="#" class="text-base-content hover:text-primary">
-                                    {{ trans('layout/app.contact') }} </a>
-                            </li>
-                            @auth
-                                @if (auth()->user()->hasRole('admin'))
-                                    <li><a href="/admin/supplements" class="text-base-content hover:text-primary">
-                                            {{ trans('layout/app.admin_dashboard') }} </a>
-                                    </li>
-                                @endif
-                                @if (auth()->user()->hasRole('user'))
-                                    {{-- <li><a href="#"
-                                            class="text-base-content hover:text-primary">{{ trans('layout/app.car_shop') }}</a>
-                                    </li> --}}
-                                    <li><a href="{{ route('tests.recommendations.create') }}"
-                                            class="text-base-content hover:text-primary">Recomendaciones con IA</a></li>
-                                @endif
-
-                            @endauth
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="navbar-end">
-                        <div class="flex items-center gap-3">
-                            {{-- Cart Link with counter for guests and users --}}
-                            <a href="{{ route('cart.index') }}"
-                                class="btn btn-outline btn-sm border-neutral relative text-base-content hover:bg-base-200">
-                                {{ trans('layout/app.car_shop') }}
-                                @php
-                                    $cartCount = 0;
-                                    if (Auth::check()) {
-                                        /** @var \App\Models\User $user */
-                                        $user = Auth::user();
-                                        $order = \App\Models\Order::where('user_id', $user->getId())
-                                            ->where('status', 'cart')
-                                            ->first();
-                                        if ($order) {
-                                            $cartCount = (int) $order->items()->sum('quantity');
-                                        }
-                                    } else {
-                                        $items = session('cart.items', []);
-                                        foreach ($items as $row) {
-                                            $cartCount += (int) ($row['quantity'] ?? 0);
-                                        }
-                                    }
-                                @endphp
-                                @if ($cartCount > 0)
-                                    <span
-                                        class="badge badge-primary badge-sm absolute -top-2 -right-2">{{ $cartCount }}</span>
-                                @endif
-                            </a>
-                            <!-- Language Selector -->
-                            <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST"
-                                class="hidden xl:block">
-                                @csrf
-                                <select name="lang"
-                                    class="select select-bordered cursor-pointer select-sm w-auto max-w-xs border-neutral text-base-content bg-base-100 hover:bg-base-200"
-                                    onchange="document.getElementById('language-form-sidebar').submit();">
-
-                                    <option disabled selected>
-                                        {{ trans('layout/app.choose_language') }}
-                                    </option>
-
-                                    <option value="es" @selected(session('lang', 'es') === 'es')>Español</option>
-                                    <option value="en" @selected(session('lang', 'es') === 'en')>English</option>
-                                </select>
-                            </form>
-
-                            {{-- <a href="#"
-                                class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:flex">
-                                {{ trans('layout/app.free_evaluation') }}
-                            </a> --}}
-                            <a href="/supplements"
-                                class="btn btn-outline btn-sm border-neutral text-base-content hover:bg-base-200 hidden xl:flex">
-                                {{ trans('layout/app.products') }}
-                            </a>
-                            @guest
-                                <a href="{{ route('login') }}" class="btn btn-primary btn-sm text-primary-content">
-                                    {{ trans('layout/app.register') }}
-                                </a>
-                            @endguest
-                            @auth
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        {{ trans('layout/app.logout') }}
-                                    </button>
-                                </form>
-                            @endauth
-                        </div>
-                    </div>
+                    </ul>
                 </div>
 
-                {{-- <!-- Page content here --> --}}
-                <div class="h-[calc(100dvh-65px)] overflow-hidden overflow-y-auto bg-base-200 my-side-container"
-                    id="main-content">
-                    <div class="container mx-auto py-10 px-4 xl:px-8">
-                        @yield('content')
-                    </div>
+                <div class="flex items-center gap-3">
+                    <form action="{{ route('language.change') }}" method="POST" class="hidden sm:block">
+                        @csrf
+                        <select name="lang" class="select select-sm select-bordered w-32 border-base-300 bg-base-100"
+                            onchange="this.form.submit()">
+                            <option value="es" @selected(session('lang', 'es') === 'es')>Español</option>
+                            <option value="en" @selected(session('lang', 'es') === 'en')>English</option>
+                        </select>
+                    </form>
+
+                    <a href="{{ route('cart.index') }}" class="btn btn-ghost btn-sm relative">
+                        {{ trans('layout/app.car_shop') }}
+                        @if (($cartItemCount ?? 0) > 0)
+                            <span class="badge badge-primary badge-sm absolute -top-2 -right-2">{{ $cartItemCount }}</span>
+                        @endif
+                    </a>
+
+                    @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-primary text-primary-content">
+                                {{ trans('layout/app.logout') }}
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-sm btn-primary text-primary-content">
+                            {{ trans('auth/auth.login') }}
+                        </a>
+                    @endauth
                 </div>
             </div>
+        </header>
 
-            {{-- Sidebar --}}
-            @auth
-                <div class="drawer-side">
-                    <label for="left-sidebar" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <div class="bg-base-100 text-base-content min-h-full w-80 p-6">
-                        {{-- Logo and branding on sidebar --}}
-                        <div class="flex flex-col items-center mb-8">
-                            <a href="/">
-                                <img src="{{ asset('assets/logo.png') }}" alt="FitBoost" class="size-24">
-                            </a>
-                            <span class="bg-accent text-accent-content px-3 py-1 rounded-full text-sm font-medium mt-2">
-                                {{ trans('layout/app.health_wellness') }}
-                            </span>
-                        </div>
+        <main class="flex-1" id="main-content">
+            <div class="mx-auto w-full max-w-[1200px] px-4 py-10 sm:px-6 lg:px-8">
+                @yield('content')
+            </div>
+        </main>
 
-                        {{-- Navigation Menu --}}
-                        <ul class="menu w-full space-y-2">
-                            @if (auth()->user()->hasRole('admin'))
-                                <li>
-                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors"
-                                        href="/admin/supplements">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                            </path>
-                                        </svg>
-                                        <span> {{ trans('layout/app.dashboard') }} </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors"
-                                        href="/admin/categories">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="lucide lucide-layers2-icon lucide-layers-2">
-                                            <path
-                                                d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74z" />
-                                            <path
-                                                d="m20 14.285 1.5.845a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74l1.5-.845" />
-                                        </svg>
-                                        <span> {{ trans('layout/app.categories') }} </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                                            </path>
-                                        </svg>
-                                        <span> {{ trans('layout/app.statistics') }} </span>
-                                    </a>
-                                </li>
-                            @endif
-                            <li>
-                                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors"
-                                    href="/profile">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                    </svg>
-                                    <span> {{ trans('layout/app.profile') }} </span>
-                                </a>
-                            </li>
-                            {{-- <li>
-                                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span> {{ trans('layout/app.recommendations') }} </span>
-                                </a>
-                            </li> --}}
-                            {{-- <li>
-                                <a class="flex items-center gap-3 p-3 rounded-lg hover:bg-base-200 transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
-                                        </path>
-                                    </svg>
-                                    <span> {{ trans('layout/app.routines') }} </span>
-                                </a>
-                            </li> --}}
-                        </ul>
-
-                        {{-- Language Selector on sidebar --}}
-                        <div class="mt-8 space-y-3">
-                            {{-- <form id="language-form-sidebar" action="{{ route('language.change') }}" method="POST">
-                                @csrf
-                                <select name="lang" class="select select-bordered w-full max-w-xs"
-                                    onchange="document.getElementById('language-form-sidebar').submit();">
-
-                                    <option disabled selected>
-                                        {{ __('Choose your language') }}
-                                    </option>
-
-                                    <option value="es" @selected(session('lang') === 'es')>Español</option>
-                                    <option value="en" @selected(session('lang') === 'en')>English</option>
-                                </select>
-                            </form> --}}
-
-                            {{-- <button class="btn btn-outline w-full border-neutral text-base-content hover:bg-base-200">
-                                {{ trans('layout/app.products') }}
-                            </button>
-                            <button class="btn btn-primary w-full text-primary-content">
-                                {{ trans('layout/app.free_evaluation') }}
-                            </button> --}}
-                        </div>
-                    </div>
-                </div>
-            @endauth
-        </div>
-    </main>
-    @stack('scripts')
+        @stack('scripts')
+    </div>
 </body>
 
 </html>

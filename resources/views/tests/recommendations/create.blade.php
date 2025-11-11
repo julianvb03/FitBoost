@@ -5,17 +5,8 @@
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5 py-8 rounded-lg">
         <div class="container mx-auto px-4 max-w-4xl">
-            <!-- Header Section -->
             <div class="text-center mb-8">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
-                    {{-- <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M9 12l2 2 4-4" />
-                        <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3" />
-                        <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" />
-                        <path d="M13 12h3a2 2 0 0 1 2 2v1" />
-                        <path d="M6 12H3a2 2 0 0 0-2 2v1" />
-                    </svg> --}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" class="w-8 h-8 text-primary" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" class="lucide lucide-dna-icon lucide-dna">
@@ -38,14 +29,12 @@
                 </p>
             </div>
 
-            <!-- Main Form Card -->
             <div class="card bg-base-100 shadow-2xl border border-base-300/50 backdrop-blur-sm">
                 <div class="card-body p-8">
-                    <form id="test-form" method="POST" action="{{ route('tests.recommendations.store') }}"
-                        class="space-y-8">
+                    <form id="test-form" data-test-recommendations-form method="POST"
+                        action="{{ route('tests.recommendations.store') }}" class="space-y-8">
                         @csrf
 
-                        <!-- Personal Information Section -->
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-primary rounded-full"></div>
@@ -219,7 +208,6 @@
                             </div>
                         </div>
 
-                        <!-- Goals Section -->
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-secondary rounded-full"></div>
@@ -242,7 +230,7 @@
                                         </svg>
                                     </span>
                                 </label>
-                                <textarea name="goals[]"
+                                <textarea name="goals[]" data-character-count data-character-limit="500"
                                     class="textarea textarea-bordered w-full transition-all duration-200 focus:textarea-secondary focus:shadow-lg focus:scale-[1.01] group-hover:border-secondary/50 resize-none"
                                     rows="4"
                                     placeholder="Ej.:&#10;Ganar masa muscular&#10;Perder grasa&#10;Mejorar resistencia&#10;Aumentar fuerza">{{ old('goals.0') }}</textarea>
@@ -260,7 +248,6 @@
                             </div>
                         </div>
 
-                        <!-- Additional Details Section -->
                         <div class="space-y-6">
                             <div class="flex items-center gap-3 mb-6">
                                 <div class="w-1 h-8 bg-accent rounded-full"></div>
@@ -283,7 +270,7 @@
                                         </svg>
                                     </span>
                                 </label>
-                                <textarea name="responses[]"
+                                <textarea name="responses[]" data-character-count data-character-limit="500"
                                     class="textarea textarea-bordered w-full transition-all duration-200 focus:textarea-accent focus:shadow-lg focus:scale-[1.01] group-hover:border-accent/50 resize-none"
                                     rows="4"
                                     placeholder="Ej.:&#10;Entreno 3 veces a la semana&#10;Lesión de rodilla pasada&#10;No consumo lactosa&#10;Horario de trabajo nocturno">{{ old('responses.0') }}</textarea>
@@ -301,22 +288,25 @@
                             </div>
                         </div>
 
-                        <!-- Submit Button -->
                         <div class="pt-8 border-t border-base-300/50">
-                            <button id="submit-btn" type="submit"
+                            <button id="submit-btn" data-submit-btn type="submit"
                                 class="btn btn-primary btn-lg w-full group relative overflow-hidden">
                                 <span
                                     class="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                                 <span class="relative z-10 flex items-center justify-center gap-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-send-icon lucide-send">
-                                        <path
-                                            d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
-                                        <path d="m21.854 2.147-10.94 10.939" />
-                                    </svg>
-                                    <span id="btn-text" class="font-semibold">Obtener Recomendaciones IA</span>
+                                    <span data-spinner
+                                        class="hidden loading loading-spinner loading-sm text-base-100"></span>
+                                    <span data-ai-icon class="flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-send-icon lucide-send">
+                                            <path
+                                                d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
+                                            <path d="m21.854 2.147-10.94 10.939" />
+                                        </svg>
+                                    </span>
+                                    <span id="btn-text" data-btn-text class="font-semibold">Obtener Recomendaciones IA</span>
                                 </span>
                             </button>
                         </div>
@@ -328,50 +318,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        const form = document.getElementById('test-form');
-        const btn = document.getElementById('submit-btn');
-        const spinner = document.getElementById('spinner');
-        const btnText = document.getElementById('btn-text');
-        const aiIcon = document.getElementById('ai-icon');
-
-        // Enhanced form submission with better UX
-        form?.addEventListener('submit', function(e) {
-            // Prevent double submission
-            if (btn.hasAttribute('disabled')) {
-                e.preventDefault();
-                return;
-            }
-
-            // Disable button and show loading state
-            btn.setAttribute('disabled', 'disabled');
-            btn.classList.add('loading');
-            spinner.classList.remove('hidden');
-            aiIcon.classList.add('hidden');
-            btnText.textContent = 'Generando recomendaciones...';
-
-            // Add a subtle pulse animation to the form
-            form.classList.add('animate-pulse');
-        });
-
-        // Add character count for textareas
-        document.querySelectorAll('textarea').forEach(textarea => {
-            const maxLength = 500;
-            const counter = document.createElement('div');
-            counter.className = 'text-xs text-base-content/60 mt-1 text-right';
-            counter.textContent = `0/${maxLength}`;
-            textarea.parentElement.appendChild(counter);
-
-            textarea.addEventListener('input', function() {
-                const length = this.value.length;
-                counter.textContent = `${length}/${maxLength}`;
-
-                if (length > maxLength * 0.9) {
-                    counter.classList.add('text-warning');
-                } else {
-                    counter.classList.remove('text-warning');
-                }
-            });
-        });
-    </script>
+    @vite('resources/js/tests/recommendations/create.js')
 @endpush

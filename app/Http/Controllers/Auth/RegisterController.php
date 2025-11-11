@@ -12,8 +12,6 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected $redirectTo = '/';
-
     public function __construct()
     {
         $this->middleware('guest');
@@ -38,5 +36,14 @@ class RegisterController extends Controller
         $user->assignRole('user');
 
         return $user;
+    }
+
+    protected function redirectTo(): string
+    {
+        $user = auth()->user();
+
+        return $user && $user->hasRole('admin')
+            ? route('admin.dashboard')
+            : route('home.index');
     }
 }
