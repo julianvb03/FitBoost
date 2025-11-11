@@ -7,8 +7,8 @@
     <div class="container mx-auto px-4 py-6">
         <div class="breadcrumbs text-sm mb-6">
             <ul>
-                <li><a href="#" class="text-primary hover:text-primary-focus">Inicio</a></li>
-                <li><a href="{{ route('supplements.index') }}" class="text-primary hover:text-primary-focus">Suplementos</a>
+                <li><a href="#" class="text-primary hover:text-primary-focus">{{ trans('supplements/show.home') }}</a></li>
+                <li><a href="{{ route('supplements.index') }}" class="text-primary hover:text-primary-focus">{{ trans('supplements/show.supplements') }}</a>
                 </li>
                 <li class="text-base-content/70">{{ $viewData['supplement']->getName() }}</li>
             </ul>
@@ -40,7 +40,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Disponible - Stock: {{ $viewData['supplement']->getStock() }}
+                            {{ trans('supplements/show.available_stock', ['stock' => $viewData['supplement']->getStock()]) }}
                         </div>
                     @else
                         <div class="badge badge-error badge-lg font-medium px-4 py-2">
@@ -49,7 +49,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Producto Agotado
+                            {{ trans('supplements/show.out_of_stock') }}
                         </div>
                     @endif
                 </div>
@@ -72,21 +72,21 @@
                         {{ number_format($viewData['averageRating'], 1) }}
                     </span>
                     <span class="text-base-content/70">
-                        ({{ $viewData['total_reviews'] ?? 0 }} reseñas)
+                        ({{ trans('supplements/show.reviews_count', ['count' => $viewData['total_reviews'] ?? 0]) }})
                     </span>
                 </div>
 
                 <div class="bg-base-200 rounded-lg p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-base-content/70 mb-1">Precio</p>
+                            <p class="text-sm text-base-content/70 mb-1">{{ trans('supplements/show.price') }}</p>
                             <p class="text-4xl font-bold text-primary">
                                 ${{ number_format($viewData['supplement']->getPrice(), 0, ',', '.') }}
                             </p>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm text-base-content/70">Por unidad</p>
-                            <div class="badge badge-neutral">IVA incluido</div>
+                            <p class="text-sm text-base-content/70">{{ trans('supplements/show.per_unit') }}</p>
+                            <div class="badge badge-neutral">{{ trans('supplements/show.vat_included') }}</div>
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                             </svg>
-                            <span class="font-medium text-base-content">Sabor:</span>
+                            <span class="font-medium text-base-content">{{ trans('supplements/show.flavor') }}:</span>
                             <span class="text-base-content/80">{{ $viewData['supplement']->getFlavour() }}</span>
                         </div>
                     @endif
@@ -158,7 +158,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" />
                             </svg>
-                            Producto No Disponible
+                            {{ trans('supplements/show.product_unavailable') }}
                         </button>
                     @endif
                 </div>
@@ -166,7 +166,7 @@
         </div>
 
         <div class="bg-base-100 rounded-lg shadow-lg p-8 mb-8">
-            <h2 class="text-2xl font-bold text-base-content mb-6">Descripción del Producto</h2>
+            <h2 class="text-2xl font-bold text-base-content mb-6">{{ trans('supplements/show.product_description') }}</h2>
             <div class="prose max-w-none">
                 <p class="text-base-content/80 leading-relaxed text-lg">
                     {{ $viewData['supplement']->getDescription() }}
@@ -177,7 +177,7 @@
         <div class="bg-base-100 rounded-lg shadow-lg p-8">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold text-base-content">
-                    Reseñas de Clientes
+                    {{ trans('supplements/show.customer_reviews') }}
                     <span class="text-base-content/60 font-normal text-lg ml-2">
                         ({{ count($viewData['supplement']->reviews) }})
                     </span>
@@ -268,7 +268,7 @@
                                                                         stroke-width="2"
                                                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                                 </svg>
-                                                                Editar Reseña
+                                                                {{ trans('supplements/show.edit_review') }}
                                                             </button>
                                                         </li>
                                                         <li>
@@ -282,7 +282,7 @@
                                                                         stroke-width="2"
                                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                                 </svg>
-                                                                Eliminar Reseña
+                                                                {{ trans('supplements/show.delete_review') }}
                                                             </button>
                                                         </li>
                                                     @endif
@@ -369,7 +369,7 @@
                     </div>
 
                     <div class="text-center mt-4 text-sm text-base-content/60">
-                        Mostrando página {{ $viewData['current_page'] }} de {{ $viewData['total_pages'] }} de reseñas
+                        {{ trans('supplements/show.showing_page', ['current' => $viewData['current_page'], 'total' => $viewData['total_pages']]) }}
                     </div>
                 @endif
             @else
@@ -382,9 +382,9 @@
                                     d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-base-content mb-2">Sin reseñas aún</h3>
+                        <h3 class="text-xl font-semibold text-base-content mb-2">{{ trans('supplements/show.no_reviews_yet') }}</h3>
                         <p class="text-base-content/70 mb-6">
-                            Este producto aún no tiene reseñas. ¡Sé el primero en compartir tu experiencia!
+                            {{ trans('supplements/show.no_reviews_description') }}
                         </p>
                         @auth
                             <button type="button" class="btn btn-primary btn-outline" data-modal-open="createReviewModal">
@@ -433,7 +433,7 @@
                     <div class="space-y-4">
                         <div class="form-control">
                             <label class="label">
-                                <span class="label-text font-medium">Calificación</span>
+                                <span class="label-text font-medium">{{ trans('supplements/show.rating') }}</span>
                             </label>
                             <div class="flex items-center gap-2">
                                 <div class="rating rating-lg">
@@ -467,7 +467,7 @@
                                 Publicar Reseña
                             </button>
                             <button type="button" class="btn btn-ghost flex-1" data-modal-close="createReviewModal">
-                                Cancelar
+                                {{ trans('supplements/show.cancel') }}
                             </button>
                         </div>
                     </div>
@@ -481,7 +481,7 @@
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
 
-                <h3 class="font-bold text-lg mb-6">Editar Reseña</h3>
+                <h3 class="font-bold text-lg mb-6">{{ trans('supplements/show.edit_review_title') }}</h3>
 
                 <form id="editReviewForm" method="POST">
                     @csrf
@@ -490,7 +490,7 @@
                     <div class="space-y-4">
                         <div class="form-control">
                             <label class="label">
-                                <span class="label-text font-medium">Calificación</span>
+                                <span class="label-text font-medium">{{ trans('supplements/show.rating') }}</span>
                             </label>
                             <div class="flex items-center gap-2">
                                 <div class="rating rating-lg">
@@ -524,7 +524,7 @@
                                 Actualizar Reseña
                             </button>
                             <button type="button" class="btn btn-ghost flex-1" data-modal-close="editReviewModal">
-                                Cancelar
+                                {{ trans('supplements/show.cancel') }}
                             </button>
                         </div>
                     </div>
@@ -534,9 +534,9 @@
 
         <dialog id="deleteReviewModal" class="modal">
             <div class="modal-box">
-                <h3 class="font-bold text-lg text-error mb-4">Eliminar Reseña</h3>
+                <h3 class="font-bold text-lg text-error mb-4">{{ trans('supplements/show.delete_review_title') }}</h3>
                 <p class="text-base-content/80 mb-6">
-                    ¿Estás seguro de que deseas eliminar tu reseña? Esta acción no se puede deshacer.
+                    {{ trans('supplements/show.delete_review_confirmation') }}
                 </p>
 
                 <div class="flex gap-3">
@@ -549,11 +549,11 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
-                            Eliminar
+                            {{ trans('supplements/show.delete') }}
                         </button>
                     </form>
                     <button type="button" class="btn btn-ghost flex-1" data-modal-close="deleteReviewModal">
-                        Cancelar
+                        {{ trans('supplements/show.cancel') }}
                     </button>
                 </div>
             </div>
