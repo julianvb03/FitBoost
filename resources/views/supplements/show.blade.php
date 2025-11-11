@@ -285,21 +285,6 @@
                                                                 Eliminar Reseña
                                                             </button>
                                                         </li>
-                                                    @else
-                                                        <li>
-                                                               <button type="button"
-                                                                   class="text-orange-600 hover:text-orange-800"
-                                                                   data-review-report
-                                                                   data-review-report-url="{{ url('reviews/' . $review->getId() . '/report') }}">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-                                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        stroke-width="2"
-                                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                                                                </svg>
-                                                                Reportar Reseña
-                                                            </button>
-                                                        </li>
                                                     @endif
                                                 </ul>
                                             </div>
@@ -568,33 +553,6 @@
                         </button>
                     </form>
                     <button type="button" class="btn btn-ghost flex-1" data-modal-close="deleteReviewModal">
-                        Cancelar
-                    </button>
-                </div>
-            </div>
-        </dialog>
-
-        <dialog id="reportReviewModal" class="modal">
-            <div class="modal-box">
-                <h3 class="font-bold text-lg text-warning mb-4">Reportar Reseña</h3>
-                <p class="text-base-content/80 mb-6">
-                    ¿Deseas reportar esta reseña? Los administradores revisarán el contenido para determinar si viola nuestras
-                    políticas.
-                </p>
-
-                <div class="flex gap-3">
-                    <form id="reportReviewForm" method="POST" class="flex-1">
-                        @csrf
-                        <button type="submit" class="btn btn-warning w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                            </svg>
-                            Reportar
-                        </button>
-                    </form>
-                    <button type="button" class="btn btn-ghost flex-1" data-modal-close="reportReviewModal">
                         Cancelar
                     </button>
                 </div>

@@ -174,6 +174,10 @@ final class CartService
             $item->setQuantity($quantity);
             $item->setTotalPrice($supplement->getPrice() * $quantity);
             $item->save();
+
+            $newStock = $supplement->getStock() - $quantity;
+            $supplement->setStock(max(0, $newStock));
+            $supplement->save();
         }
 
         $totalAmount = $order->calculateTotalAmount();

@@ -89,27 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const reportForm = document.getElementById('reportReviewForm');
-    const reportModal = document.getElementById('reportReviewModal');
-    const reportButtons = document.querySelectorAll('[data-review-report]');
-
-    reportButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            if (!reportForm || !reportModal) {
-                return;
-            }
-
-            const url = button.getAttribute('data-review-report-url');
-            if (url) {
-                reportForm.setAttribute('action', url);
-            }
-
-            if (typeof reportModal.showModal === 'function') {
-                reportModal.showModal();
-            }
-        });
-    });
-
     const textareas = document.querySelectorAll('textarea[maxlength]');
     textareas.forEach((textarea) => {
         const maxLength = Number(textarea.getAttribute('maxlength')) || 0;

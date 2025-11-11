@@ -79,22 +79,4 @@ class ReviewController extends Controller
 
         return redirect()->back()->with('viewData', $viewData);
     }
-
-    public function report(int $id): RedirectResponse
-    {
-        $review = Review::find($id);
-        $viewData = [];
-
-        if (! $review) {
-            $viewData['error'] = trans('user/review.error_review_not_found');
-
-            return redirect()->back()->with('viewData', $viewData);
-        }
-
-        $review->setReported(true);
-        $review->save();
-        $viewData['success'] = trans('user/review.success_report_review');
-
-        return redirect()->back()->with('viewData', $viewData);
-    }
 }
