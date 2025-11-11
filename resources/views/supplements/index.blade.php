@@ -130,11 +130,11 @@
                         <span>&times;</span></a>
                 @endif
                 @if (request('min_price'))
-                    <a href="{{ route('supplements.index', request()->except('min_price')) }}" class="chip">Min:
+                    <a href="{{ route('supplements.index', request()->except('min_price')) }}" class="chip">{{ trans('supplements/index.min') }}:
                         ${{ number_format(request('min_price'), 0, ',', '.') }} <span>&times;</span></a>
                 @endif
                 @if (request('max_price'))
-                    <a href="{{ route('supplements.index', request()->except('max_price')) }}" class="chip">Max:
+                    <a href="{{ route('supplements.index', request()->except('max_price')) }}" class="chip">{{ trans('supplements/index.max') }}:
                         ${{ number_format(request('max_price'), 0, ',', '.') }} <span>&times;</span></a>
                 @endif
                 @if (request('in_stock'))

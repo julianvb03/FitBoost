@@ -10,6 +10,8 @@ return [
     'all_categories' => 'All categories',
     'min_price' => 'Minimum Price',
     'max_price' => 'Maximum Price',
+    'min' => 'Min',
+    'max' => 'Max',
     'only_available' => 'Only available products',
     'order_by' => 'Sort by',
     'order_name_az' => 'Name A-Z',

@@ -91,7 +91,7 @@
                                     <!-- Name -->
                                     <div class="form-control">
                                         <label class="label">
-                                            <span class="label-text font-medium">Nombre Completo</span>
+                                            <span class="label-text font-medium">{{ trans('users/show.full_name') }}</span>
                                         </label>
                                         <div class="input input-bordered flex items-center bg-base-200">
                                             <span class="text-base-content">{{ $viewData['user']->getName() }}</span>
@@ -126,20 +126,19 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
-                                    Información de Contacto
+                                    {{ trans('users/show.contact_information') }}
                                 </h3>
 
                                 <!-- Address -->
                                 <div class="form-control">
                                     <label class="label">
-                                        <span class="label-text font-medium">Dirección</span>
+                                        <span class="label-text font-medium">{{ trans('users/show.address') }}</span>
                                     </label>
                                     <div class="textarea textarea-bordered bg-base-200 min-h-[4rem] flex items-start p-3">
                                         @if ($viewData['user']->getAddress())
                                             <span class="text-base-content">{{ $viewData['user']->getAddress() }}</span>
                                         @else
-                                            <span class="text-base-content/40 italic">No se ha registrado una
-                                                dirección</span>
+                                            <span class="text-base-content/40 italic">{{ trans('users/show.no_address_registered') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -153,13 +152,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                                     </svg>
-                                    Información de Pago
+                                    {{ trans('users/show.payment_information') }}
                                 </h3>
 
                                 <!-- Card Data -->
                                 <div class="form-control">
                                     <label class="label">
-                                        <span class="label-text font-medium">Datos de Tarjeta</span>
+                                        <span class="label-text font-medium">{{ trans('users/show.card_data') }}</span>
                                     </label>
                                     <div class="input input-bordered bg-base-200 flex items-center">
                                         @if ($viewData['user']->getCardData())
@@ -169,15 +168,14 @@
                                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
                                             <span class="text-base-content">•••• •••• •••• ••••</span>
-                                            <span class="badge badge-success badge-sm ml-auto">Verificada</span>
+                                            <span class="badge badge-success badge-sm ml-auto">{{ trans('users/show.verified') }}</span>
                                         @else
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-warning"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                                             </svg>
-                                            <span class="text-base-content/40 italic">No se han registrado datos de
-                                                pago</span>
+                                            <span class="text-base-content/40 italic">{{ trans('users/show.no_payment_data_registered') }}</span>
                                             <span class="badge badge-warning badge-sm ml-auto">{{ trans('users/show.pending') }}</span>
                                         @endif
                                     </div>
@@ -190,13 +188,13 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" class="btn btn-primary w-full lg:w-auto px-8"
-                                        onclick="return confirm('¿Deseas continuar con la actualización de tu perfil?')">
+                                        onclick="return confirm('{{ trans('users/show.confirm_update') }}')">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                         </svg>
-                                        Actualizar Perfil
+                                        {{ trans('users/show.update_profile') }}
                                     </button>
                                 </form>
                             </div>
@@ -216,7 +214,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
-                            Estadísticas
+                            {{ trans('users/show.statistics') }}
                         </h3>
 
                         <div class="space-y-4">
@@ -258,7 +256,7 @@
                                     </svg>
                                 </div>
                                 <div class="stat-title text-base-content/70">{{ trans('users/show.status') }}</div>
-                                <div class="stat-value text-info">Activa</div>
+                                <div class="stat-value text-info">{{ trans('users/show.active') }}</div>
                             </div>
                         </div>
                     </div>
@@ -273,7 +271,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
-                            Acciones Rápidas
+                            {{ trans('users/show.quick_actions') }}
                         </h3>
 
                         <div class="space-y-3">
@@ -283,7 +281,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
-                                Editar Información
+                                {{ trans('users/show.edit_information') }}
                             </a>
 
                             <a href="{{ route('supplements.index') }}"
@@ -293,7 +291,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M16 11V7a4 4 0 00-8 0v4M5 9h14a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9a1 1 0 011-1z" />
                                 </svg>
-                                Ver Suplementos
+                                {{ trans('users/show.view_supplements') }}
                             </a>
                         </div>
                     </div>
@@ -312,7 +310,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
-                            Órdenes Recientes
+                            {{ trans('users/show.recent_orders') }}
                         </h3>
 
                         <div class="overflow-x-auto">
@@ -323,7 +321,7 @@
                                         <th>{{ trans('users/show.status') }}</th>
                                         <th>{{ trans('users/show.total') }}</th>
                                         <th>{{ trans('users/show.date') }}</th>
-                                        <th>Acciones</th>
+                                        <th>{{ trans('users/show.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -364,8 +362,8 @@
 
                         @if (count($viewData['orders']) > 5)
                             <div class="text-center mt-4">
-                                <button class="btn btn-ghost btn-sm" onclick="alert('Ver todas las órdenes')">
-                                    Ver todas las órdenes ({{ count($viewData['orders']) }})
+                                <button class="btn btn-ghost btn-sm" onclick="alert('{{ trans('users/show.view_all_orders') }}')">
+                                    {{ trans('users/show.view_all_orders_count', ['count' => count($viewData['orders'])]) }}
                                 </button>
                             </div>
                         @endif
