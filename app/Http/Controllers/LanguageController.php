@@ -15,9 +15,9 @@ class LanguageController extends Controller
         $lang = $validatedData['lang'];
 
         Session::put('lang', $lang);
-        Session::save();
         App::setLocale($lang);
+        Session::save();
 
-        return redirect()->back()->with('locale_changed', true);
+        return redirect()->back();
     }
 }
