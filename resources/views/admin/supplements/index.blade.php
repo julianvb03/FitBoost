@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Suplementos')
+@section('title', trans('admin/supplements/index.title'))
 
 @section('content')
 
@@ -31,16 +31,16 @@
                                 <path d="M7 17h10" />
                             </svg>
                         </div>
-                        <h1 class="text-3xl font-bold text-base-content">Suplementos</h1>
+                        <h1 class="text-3xl font-bold text-base-content">{{ trans('admin/supplements/index.heading') }}</h1>
                     </div>
-                    <p class="text-base-content/70 mt-1">Gestiona el catálogo de suplementos</p>
+                    <p class="text-base-content/70 mt-1">{{ trans('admin/supplements/index.description') }}</p>
                 </div>
                 <a href="{{ route('admin.supplements.create') }}" class="btn btn-primary btn-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
-                    Crear Suplemento
+                    {{ trans('admin/supplements/index.create_supplement') }}
                 </a>
             </div>
 
@@ -49,18 +49,18 @@
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Buscar</span>
+                            <span class="label-text">{{ trans('admin/supplements/index.search') }}</span>
                         </label>
-                        <input name="search" value="{{ request('search') }}" placeholder="Buscar suplementos..."
+                        <input name="search" value="{{ request('search') }}" placeholder="{{ trans('admin/supplements/index.search_placeholder') }}"
                             class="input input-bordered w-full focus:input-primary" />
                     </div>
 
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Categoría</span>
+                            <span class="label-text">{{ trans('admin/supplements/index.category') }}</span>
                         </label>
                         <select name="category_id" class="select select-bordered w-full focus:select-primary">
-                            <option value="">Todas las categorías</option>
+                            <option value="">{{ trans('admin/supplements/index.all_categories') }}</option>
                             @foreach ($viewData['categories'] as $category)
                                 <option value="{{ $category->getId() }}"
                                     {{ request('category_id') == $category->getId() ? 'selected' : '' }}>
@@ -72,7 +72,7 @@
 
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Precio Mínimo</span>
+                            <span class="label-text">{{ trans('admin/supplements/index.min_price') }}</span>
                         </label>
                         <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="0" min="0"
                             class="input input-bordered w-full focus:input-primary" />
@@ -80,7 +80,7 @@
 
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Precio Máximo</span>
+                            <span class="label-text">{{ trans('admin/supplements/index.max_price') }}</span>
                         </label>
                         <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="100000"
                             min="0" class="input input-bordered w-full focus:input-primary" />
@@ -91,7 +91,7 @@
                     <div class="flex w-full flex-col gap-4 sm:flex-row">
                         <div class="form-control">
                             <label class="cursor-pointer label">
-                                <span class="label-text mr-2">Solo en stock</span>
+                                <span class="label-text mr-2">{{ trans('admin/supplements/index.only_in_stock') }}</span>
                                 <input type="checkbox" name="in_stock" value="1"
                                     {{ request('in_stock') ? 'checked' : '' }} class="checkbox checkbox-primary" />
                             </label>
@@ -99,12 +99,12 @@
 
                         <div class="form-control min-w-[200px]">
                             <select name="order_by" class="select select-bordered select-sm">
-                                <option value="">Ordenar por</option>
+                                <option value="">{{ trans('admin/supplements/index.order_by') }}</option>
                                 <option value="name" {{ request('order_by') == 'name' ? 'selected' : '' }}>
-                                    Nombre
+                                    {{ trans('admin/supplements/index.name') }}
                                 </option>
                                 <option value="price" {{ request('order_by') == 'price' ? 'selected' : '' }}>
-                                    Precio
+                                    {{ trans('admin/supplements/index.price') }}
                                 </option>
                                 <option value="rating" {{ request('order_by') == 'rating' ? 'selected' : '' }}>
                                     Calificación
@@ -114,10 +114,10 @@
 
                         <div class="form-control min-w-[120px]">
                             <select name="per_page" class="select select-bordered select-sm">
-                                <option value="4" {{ request('per_page', 4) == 4 ? 'selected' : '' }}>4 por página
+                                <option value="4" {{ request('per_page', 4) == 4 ? 'selected' : '' }}>{{ trans('admin/supplements/index.per_page_count', ['count' => 4]) }}
                                 </option>
-                                <option value="8" {{ request('per_page') == 8 ? 'selected' : '' }}>8 por página</option>
-                                <option value="32" {{ request('per_page') == 32 ? 'selected' : '' }}>32 por página</option>
+                                <option value="8" {{ request('per_page') == 8 ? 'selected' : '' }}>{{ trans('admin/supplements/index.per_page_count', ['count' => 8]) }}</option>
+                                <option value="32" {{ request('per_page') == 32 ? 'selected' : '' }}>{{ trans('admin/supplements/index.per_page_count', ['count' => 32]) }}</option>
                             </select>
                         </div>
                     </div>
@@ -135,14 +135,14 @@
 
             @if (! empty($viewData['has_filters']))
                 <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-sm text-base-content/70 mr-1">Filtros activos:</span>
+                    <span class="text-sm text-base-content/70 mr-1">{{ trans('admin/supplements/index.active_filters') }}:</span>
                     @if (request('search'))
-                        <a href="{{ route('admin.supplements.index', request()->except('search')) }}" class="chip">Buscar:
+                        <a href="{{ route('admin.supplements.index', request()->except('search')) }}" class="chip">{{ trans('admin/supplements/index.search') }}:
                             "{{ request('search') }}" <span>&times;</span></a>
                     @endif
                     @if (request('category_id'))
                         <a href="{{ route('admin.supplements.index', request()->except('category_id')) }}"
-                            class="chip">Categoría <span>&times;</span></a>
+                            class="chip">{{ trans('admin/supplements/index.category') }} <span>&times;</span></a>
                     @endif
                     @if (request('min_price'))
                         <a href="{{ route('admin.supplements.index', request()->except('min_price')) }}" class="chip">Min:
@@ -153,18 +153,18 @@
                             ${{ number_format(request('max_price'), 0, ',', '.') }} <span>&times;</span></a>
                     @endif
                     @if (request('in_stock'))
-                        <a href="{{ route('admin.supplements.index', request()->except('in_stock')) }}" class="chip">En
-                            stock <span>&times;</span></a>
+                        <a href="{{ route('admin.supplements.index', request()->except('in_stock')) }}" class="chip">{{ trans('admin/supplements/index.in_stock') }}
+                            <span>&times;</span></a>
                     @endif
                     @if (request('order_by'))
-                        <a href="{{ route('admin.supplements.index', request()->except('order_by')) }}" class="chip">Orden:
+                        <a href="{{ route('admin.supplements.index', request()->except('order_by')) }}" class="chip">{{ trans('admin/supplements/index.order') }}:
                             {{ ucfirst(request('order_by')) }} <span>&times;</span></a>
                     @endif
                     @if (request('per_page'))
-                        <a href="{{ route('admin.supplements.index', request()->except('per_page')) }}" class="chip">Por
-                            página: {{ request('per_page') }} <span>&times;</span></a>
+                        <a href="{{ route('admin.supplements.index', request()->except('per_page')) }}" class="chip">{{ trans('admin/supplements/index.per_page') }}:
+                            {{ request('per_page') }} <span>&times;</span></a>
                     @endif
-                    <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost btn-xs ml-1">Quitar todos</a>
+                    <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost btn-xs ml-1">{{ trans('admin/supplements/index.remove_all') }}</a>
                 </div>
             @endif
 
@@ -172,8 +172,8 @@
                 <div class="card bg-base-100 shadow-xl">
                     <div class="card-body space-y-6">
                         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                            <h2 class="card-title text-base-content text-2xl">Listado de suplementos</h2>
-                            <span class="text-sm text-base-content/60">Resultados: {{ count($viewData['supplements']) }}</span>
+                            <h2 class="card-title text-base-content text-2xl">{{ trans('admin/supplements/index.supplements_list') }}</h2>
+                            <span class="text-sm text-base-content/60">{{ trans('admin/supplements/index.results', ['count' => count($viewData['supplements'])]) }}</span>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -181,12 +181,12 @@
                                 <thead>
                                 <tr>
                                     <th class="text-base-content/70">ID</th>
-                                    <th class="text-base-content/70">Producto</th>
-                                    <th class="text-base-content/70">Categorías</th>
-                                    <th class="text-base-content/70">Precio</th>
-                                    <th class="text-base-content/70">Stock</th>
-                                    <th class="text-base-content/70">Calificación</th>
-                                    <th class="text-base-content/70 text-center">Acciones</th>
+                                    <th class="text-base-content/70">{{ trans('admin/supplements/index.product') }}</th>
+                                    <th class="text-base-content/70">{{ trans('admin/supplements/index.categories') }}</th>
+                                    <th class="text-base-content/70">{{ trans('admin/supplements/index.price') }}</th>
+                                    <th class="text-base-content/70">{{ trans('admin/supplements/index.stock') }}</th>
+                                    <th class="text-base-content/70">{{ trans('admin/supplements/index.rating') }}</th>
+                                    <th class="text-base-content/70 text-center">{{ trans('admin/supplements/index.actions') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -229,9 +229,9 @@
                                         </td>
                                         <td class="whitespace-nowrap">
                                             @if ($supplement->getStock() > 0)
-                                                <span class="badge badge-success badge-sm">{{ $supplement->getStock() }} en stock</span>
+                                                <span class="badge badge-success badge-sm">{{ trans('admin/supplements/index.in_stock_count', ['count' => $supplement->getStock()]) }}</span>
                                             @else
-                                                <span class="badge badge-error badge-sm">Agotado</span>
+                                                <span class="badge badge-error badge-sm">{{ trans('admin/supplements/index.out_of_stock') }}</span>
                                             @endif
                                         </td>
                                         <td>
@@ -248,7 +248,7 @@
                                         <td>
                                             <div class="flex justify-end gap-2">
                                                 <a href="{{ route('supplements.show', ['id' => $supplement->getId(), 'page' => 1]) }}"
-                                                    class="btn btn-ghost btn-sm" title="Ver detalle" target="_blank">
+                                                    class="btn btn-ghost btn-sm" title="{{ trans('admin/supplements/index.view_detail') }}" target="_blank">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -259,7 +259,7 @@
                                                 </a>
 
                                                 <a href="{{ route('admin.supplements.edit', ['id' => $supplement->getId()]) }}"
-                                                    class="btn btn-secondary btn-sm" title="Editar">
+                                                    class="btn btn-secondary btn-sm" title="{{ trans('admin/supplements/index.edit') }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -269,7 +269,7 @@
 
                                                 <button type="button"
                                                     onclick="confirmDelete({{ $supplement->getId() }}, '{{ $supplement->getName() }}')"
-                                                    class="btn btn-error btn-sm" title="Eliminar">
+                                                    class="btn btn-error btn-sm" title="{{ trans('admin/supplements/index.delete') }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -348,15 +348,14 @@
                                 d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-base-content mb-2">No hay suplementos</h3>
-                    <p class="text-base-content/70 mb-6">No se encontraron suplementos que coincidan con los filtros
-                        seleccionados.</p>
+                    <h3 class="text-xl font-semibold text-base-content mb-2">{{ trans('admin/supplements/index.no_supplements') }}</h3>
+                    <p class="text-base-content/70 mb-6">{{ trans('admin/supplements/index.no_supplements_description') }}</p>
                     <div class="flex gap-2 justify-center">
                         <a href="{{ route('admin.supplements.index') }}" class="btn btn-ghost">
-                            Limpiar filtros
+                            {{ trans('admin/supplements/index.clear_filters') }}
                         </a>
                         <a href="{{ route('admin.supplements.create') }}" class="btn btn-primary">
-                            Crear primer suplemento
+                            {{ trans('admin/supplements/index.create_first_supplement') }}
                         </a>
                     </div>
                 </div>
@@ -367,18 +366,17 @@
 
     <dialog id="delete_modal" class="modal">
         <div class="modal-box">
-            <h3 class="text-lg font-bold text-base-content">Confirmar eliminación</h3>
+            <h3 class="text-lg font-bold text-base-content">{{ trans('admin/supplements/index.confirm_deletion') }}</h3>
             <p class="py-4 text-base-content/80">
-                ¿Estás seguro de que deseas eliminar el suplemento
-                <span id="supplement_name" class="font-semibold text-primary"></span>?
-                Esta acción no se puede deshacer.
+                {!! trans('admin/supplements/index.confirm_deletion_message', ['name' => '<span id="supplement_name" class="font-semibold text-primary"></span>']) !!}
+                {{ trans('admin/supplements/index.cannot_undo') }}
             </p>
             <div class="modal-action">
                 <form id="delete_form" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="button" class="btn btn-ghost" onclick="delete_modal.close()">Cancelar</button>
-                    <button type="submit" class="btn btn-error ml-2">Eliminar</button>
+                    <button type="button" class="btn btn-ghost" onclick="delete_modal.close()">{{ trans('admin/supplements/index.cancel') }}</button>
+                    <button type="submit" class="btn btn-error ml-2">{{ trans('admin/supplements/index.delete') }}</button>
                 </form>
             </div>
         </div>
