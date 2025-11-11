@@ -21,6 +21,8 @@ class LanguageController extends Controller
 
         $cookie = Cookie::make('lang', $lang, 60 * 24 * 365);
 
-        return redirect()->back()->withCookie($cookie);
+        $redirectUrl = $request->header('Referer') ?? url('/');
+        
+        return redirect($redirectUrl)->withCookie($cookie);
     }
 }
