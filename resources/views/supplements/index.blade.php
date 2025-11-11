@@ -24,18 +24,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text font-medium">Buscar</span>
+                        <span class="label-text font-medium">{{ trans('supplements/index.search') }}</span>
                     </label>
-                    <input name="search" value="{{ request('search') }}" placeholder="Buscar suplementos..."
+                    <input name="search" value="{{ request('search') }}" placeholder="{{ trans('supplements/index.search_placeholder') }}"
                         class="input input-bordered w-full focus:input-primary" />
                 </div>
 
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text font-medium">Categoría</span>
+                        <span class="label-text font-medium">{{ trans('supplements/index.category') }}</span>
                     </label>
                     <select name="category_id" class="select select-bordered w-full focus:select-primary">
-                        <option value="">Todas las categorías</option>
+                        <option value="">{{ trans('supplements/index.all_categories') }}</option>
                         @foreach ($viewData['categories'] as $category)
                             <option value="{{ $category->getId() }}"
                                 {{ request('category_id') == $category->getId() ? 'selected' : '' }}>
@@ -47,7 +47,7 @@
 
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text font-medium">Precio Mínimo</span>
+                        <span class="label-text font-medium">{{ trans('supplements/index.min_price') }}</span>
                     </label>
                     <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="0" min="0"
                         class="input input-bordered w-full focus:input-primary" />
@@ -55,7 +55,7 @@
 
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text font-medium">Precio Máximo</span>
+                        <span class="label-text font-medium">{{ trans('supplements/index.max_price') }}</span>
                     </label>
                     <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="100000"
                         min="0" class="input input-bordered w-full focus:input-primary" />
@@ -66,7 +66,7 @@
                 <div class="flex flex-col sm:flex-row gap-4">
                     <div class="form-control">
                         <label class="cursor-pointer label">
-                            <span class="label-text font-medium mr-3">Solo productos disponibles</span>
+                            <span class="label-text font-medium mr-3">{{ trans('supplements/index.only_available') }}</span>
                             <input type="checkbox" name="in_stock" value="1" {{ request('in_stock') ? 'checked' : '' }}
                                 class="checkbox checkbox-primary" />
                         </label>
@@ -74,25 +74,25 @@
 
                     <div class="form-control min-w-[200px]">
                         <select name="order_by" class="select select-bordered select-sm focus:select-primary">
-                            <option value="">Ordenar por</option>
+                            <option value="">{{ trans('supplements/index.order_by') }}</option>
                             <option value="name" {{ request('order_by') == 'name' ? 'selected' : '' }}>
-                                Nombre A-Z
+                                {{ trans('supplements/index.order_name_az') }}
                             </option>
                             <option value="price" {{ request('order_by') == 'price' ? 'selected' : '' }}>
-                                Precio (menor a mayor)
+                                {{ trans('supplements/index.order_price_asc') }}
                             </option>
                             <option value="rating" {{ request('order_by') == 'rating' ? 'selected' : '' }}>
-                                Mejor calificados
+                                {{ trans('supplements/index.order_rating') }}
                             </option>
                         </select>
                     </div>
 
                     <div class="form-control min-w-[150px]">
                         <select name="per_page" class="select select-bordered select-sm focus:select-primary">
-                            <option value="8" {{ request('per_page', 8) == 8 ? 'selected' : '' }}>8 por página
+                            <option value="8" {{ request('per_page', 8) == 8 ? 'selected' : '' }}>{{ trans('supplements/index.per_page', ['count' => 8]) }}
                             </option>
-                            <option value="16" {{ request('per_page') == 16 ? 'selected' : '' }}>16 por página</option>
-                            <option value="32" {{ request('per_page') == 32 ? 'selected' : '' }}>32 por página</option>
+                            <option value="16" {{ request('per_page') == 16 ? 'selected' : '' }}>{{ trans('supplements/index.per_page', ['count' => 16]) }}</option>
+                            <option value="32" {{ request('per_page') == 32 ? 'selected' : '' }}>{{ trans('supplements/index.per_page', ['count' => 32]) }}</option>
                         </select>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        Buscar
+                        {{ trans('supplements/index.search_button') }}
                     </button>
                     <a href="{{ route('supplements.index') }}" class="btn btn-ghost px-6">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
@@ -112,7 +112,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
-                        Limpiar
+                        {{ trans('supplements/index.clear_button') }}
                     </a>
                 </div>
             </div>
@@ -120,13 +120,13 @@
 
         @if (! empty($viewData['has_filters']))
             <div class="flex flex-wrap items-center gap-2 mb-6">
-                <span class="text-sm text-base-content/70 mr-1">Filtros activos:</span>
+                <span class="text-sm text-base-content/70 mr-1">{{ trans('supplements/index.active_filters') }}</span>
                 @if (request('search'))
-                    <a href="{{ route('supplements.index', request()->except('search')) }}" class="chip">Buscar:
+                    <a href="{{ route('supplements.index', request()->except('search')) }}" class="chip">{{ trans('supplements/index.search') }}:
                         "{{ request('search') }}" <span>&times;</span></a>
                 @endif
                 @if (request('category_id'))
-                    <a href="{{ route('supplements.index', request()->except('category_id')) }}" class="chip">Categoría
+                    <a href="{{ route('supplements.index', request()->except('category_id')) }}" class="chip">{{ trans('supplements/index.category') }}
                         <span>&times;</span></a>
                 @endif
                 @if (request('min_price'))
@@ -138,18 +138,18 @@
                         ${{ number_format(request('max_price'), 0, ',', '.') }} <span>&times;</span></a>
                 @endif
                 @if (request('in_stock'))
-                    <a href="{{ route('supplements.index', request()->except('in_stock')) }}" class="chip">En stock
+                    <a href="{{ route('supplements.index', request()->except('in_stock')) }}" class="chip">{{ trans('supplements/index.in_stock') }}
                         <span>&times;</span></a>
                 @endif
                 @if (request('order_by'))
-                    <a href="{{ route('supplements.index', request()->except('order_by')) }}" class="chip">Orden:
+                    <a href="{{ route('supplements.index', request()->except('order_by')) }}" class="chip">{{ trans('supplements/index.order_label') }}:
                         {{ ucfirst(request('order_by')) }} <span>&times;</span></a>
                 @endif
                 @if (request('per_page'))
-                    <a href="{{ route('supplements.index', request()->except('per_page')) }}" class="chip">Por página:
+                    <a href="{{ route('supplements.index', request()->except('per_page')) }}" class="chip">{{ trans('supplements/index.per_page_label') }}:
                         {{ request('per_page') }} <span>&times;</span></a>
                 @endif
-                <a href="{{ route('supplements.index') }}" class="btn btn-ghost btn-xs ml-1">Quitar todos</a>
+                <a href="{{ route('supplements.index') }}" class="btn btn-ghost btn-xs ml-1">{{ trans('supplements/index.remove_all') }}</a>
             </div>
         @endif
 
@@ -178,11 +178,11 @@
                                 <div class="absolute top-2 right-2">
                                     @if ($supplement->getStock() > 0)
                                         <div class="badge badge-success badge-sm font-medium">
-                                            Stock: {{ $supplement->getStock() }}
+                                            {{ trans('supplements/index.stock') }}: {{ $supplement->getStock() }}
                                         </div>
                                     @else
                                         <div class="badge badge-error badge-sm font-medium">
-                                            Agotado
+                                            {{ trans('supplements/index.out_of_stock') }}
                                         </div>
                                     @endif
                                 </div>
@@ -202,7 +202,7 @@
                             <div class="space-y-3 mb-4">
                                 @if ($supplement->getFlavour())
                                     <p class="text-sm text-base-content/70">
-                                        <span class="font-medium">Sabor:</span> {{ $supplement->getFlavour() }}
+                                        <span class="font-medium">{{ trans('supplements/index.flavor') }}:</span> {{ $supplement->getFlavour() }}
                                     </p>
                                 @endif
 
@@ -232,7 +232,7 @@
                             <div class="card-actions pt-4 border-t border-neutral/20 grid grid-cols-2 gap-2">
                                 <a href="{{ route('supplements.show', ['id' => $supplement->getId(), 'page' => 1]) }}"
                                     class="btn btn-ghost">
-                                    Ver
+                                    {{ trans('supplements/index.view') }}
                                 </a>
                                 <form method="POST" action="{{ route('cart.items.store') }}">
                                     @csrf
@@ -240,7 +240,7 @@
                                     <input type="hidden" name="quantity" value="1" />
                                     <button class="btn btn-primary w-full"
                                         @if ($supplement->getStock() <= 0) disabled @endif>
-                                        Agregar
+                                        {{ trans('supplements/index.add') }}
                                     </button>
                                 </form>
                             </div>
@@ -251,8 +251,7 @@
 
             <div class="text-center mb-6">
                 <p class="text-base-content/70">
-                    Mostrando {{ $viewData['current_items_count'] }} de
-                    {{ $viewData['total_results'] }} productos
+                    {{ trans('supplements/index.showing_results', ['current' => $viewData['current_items_count'], 'total' => $viewData['total_results']]) }}
                 </p>
             </div>
 
@@ -262,10 +261,10 @@
                         @if ($viewData['current_page'] > 1)
                             <a href="{{ request()->fullUrlWithQuery(['page' => 1]) }}"
                                 class="join-item btn btn-sm hover:btn-primary">
-                                Primera
+                                {{ trans('supplements/index.first') }}
                             </a>
                         @else
-                            <button class="join-item btn btn-sm btn-disabled">Primera</button>
+                            <button class="join-item btn btn-sm btn-disabled">{{ trans('supplements/index.first') }}</button>
                         @endif
 
                         @if ($viewData['current_page'] > 1)
@@ -316,16 +315,16 @@
                         @if ($viewData['current_page'] < $viewData['total_pages'])
                             <a href="{{ request()->fullUrlWithQuery(['page' => $viewData['total_pages']]) }}"
                                 class="join-item btn btn-sm hover:btn-primary">
-                                Última
+                                {{ trans('supplements/index.last') }}
                             </a>
                         @else
-                            <button class="join-item btn btn-sm btn-disabled">Última</button>
+                            <button class="join-item btn btn-sm btn-disabled">{{ trans('supplements/index.last') }}</button>
                         @endif
                     </div>
                 </div>
 
                 <div class="text-center mt-4 text-sm text-base-content/60">
-                    Página {{ $viewData['current_page'] }} de {{ $viewData['total_pages'] }}
+                    {{ trans('supplements/index.page_info', ['current' => $viewData['current_page'], 'total' => $viewData['total_pages']]) }}
                 </div>
             @endif
         @else
@@ -338,10 +337,9 @@
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-semibold text-base-content mb-4">No se encontraron productos</h3>
+                    <h3 class="text-2xl font-semibold text-base-content mb-4">{{ trans('supplements/index.no_products') }}</h3>
                     <p class="text-base-content/70 mb-8 leading-relaxed">
-                        No encontramos suplementos que coincidan con los filtros seleccionados.
-                        Intenta ajustar los criterios de búsqueda.
+                        {{ trans('supplements/index.no_products_description') }}
                     </p>
                     <div class="flex gap-3 justify-center">
                         <a href="{{ route('supplements.index') }}" class="btn btn-primary px-6">
@@ -350,7 +348,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                             </svg>
-                            Ver todos los productos
+                            {{ trans('supplements/index.view_all_products') }}
                         </a>
                     </div>
                 </div>
