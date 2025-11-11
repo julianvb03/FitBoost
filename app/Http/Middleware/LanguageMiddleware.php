@@ -11,7 +11,7 @@ class LanguageMiddleware
 {
     public function handle(Request $request, Closure $next): mixed
     {
-        $locale = Session::get('lang', config('app.locale'));
+        $locale = Session::get('lang', 'es');
         App::setLocale($locale);
 
         return $next($request);
