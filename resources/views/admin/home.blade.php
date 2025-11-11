@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
-@section('title', 'Panel de administración')
+@section('title', trans('admin/home.title'))
 
 @section('content')
 	<div class="space-y-8">
 		<header class="flex flex-col gap-2">
-			<h1 class="text-3xl font-bold text-base-content">Bienvenido al panel</h1>
+			<h1 class="text-3xl font-bold text-base-content">{{ trans('admin/home.welcome') }}</h1>
 			<p class="max-w-2xl text-base-content/70">
-				Gestiona los recursos principales de la plataforma desde este panel. Usa los accesos rápidos para ir a las secciones activas.
+				{{ trans('admin/home.description') }}
 			</p>
 		</header>
 
@@ -15,8 +15,8 @@
 			<a href="{{ route('admin.supplements.index') }}" class="block rounded-2xl border border-base-300 bg-base-100 p-6 shadow transition hover:shadow-lg">
 				<div class="flex items-center justify-between">
 					<div>
-						<h2 class="text-xl font-semibold text-base-content">Suplementos</h2>
-						<p class="mt-2 text-sm text-base-content/70">Revisa, crea o edita los suplementos publicados.</p>
+						<h2 class="text-xl font-semibold text-base-content">{{ trans('admin/home.supplements') }}</h2>
+						<p class="mt-2 text-sm text-base-content/70">{{ trans('admin/home.supplements_description') }}</p>
 					</div>
 					<span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
 						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,8 +29,8 @@
 			<a href="{{ route('admin.categories.index') }}" class="block rounded-2xl border border-base-300 bg-base-100 p-6 shadow transition hover:shadow-lg">
 				<div class="flex items-center justify-between">
 					<div>
-						<h2 class="text-xl font-semibold text-base-content">Categorías</h2>
-						<p class="mt-2 text-sm text-base-content/70">Organiza las categorías para mantener el catálogo estructurado.</p>
+						<h2 class="text-xl font-semibold text-base-content">{{ trans('admin/home.categories') }}</h2>
+						<p class="mt-2 text-sm text-base-content/70">{{ trans('admin/home.categories_description') }}</p>
 					</div>
 					<span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
 						<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
