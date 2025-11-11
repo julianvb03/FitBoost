@@ -16,6 +16,7 @@ class LanguageController extends Controller
         $lang = $validatedData['lang'];
 
         Session::put('lang', $lang);
+        Session::save();
         App::setLocale($lang);
 
         $cookie = Cookie::make('lang', $lang, 60 * 24 * 365);

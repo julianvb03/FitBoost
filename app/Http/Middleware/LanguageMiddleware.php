@@ -12,9 +12,12 @@ class LanguageMiddleware
 {
     public function handle(Request $request, Closure $next): mixed
     {
-        $locale = Session::get('lang') ?? Cookie::get('lang', 'es');
+        $sessionLang = Session::get('lang');
+        $cookieLang = $request->cookie('lang');
         
-        if ($locale && $locale !== Session::get('lang')) {
+        $locale = $sessionLang ?? $cookieLang ?? 'es';
+        
+        if ($locale && $locale !== $sessionLang) {
             Session::put('lang', $locale);
         }
         
