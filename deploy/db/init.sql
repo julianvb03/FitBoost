@@ -1,0 +1,1 @@
+-- Place database bootstrap statements here. This script runs once when the MariaDB container initializes.
