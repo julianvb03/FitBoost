@@ -42,7 +42,7 @@ class CalculateBmiRequest extends FormRequest
         ]);
     }
 
-    private function normalizeDecimal(null|string $value): ?string
+    private function normalizeDecimal(?string $value): ?string
     {
         if ($value === null) {
             return null;

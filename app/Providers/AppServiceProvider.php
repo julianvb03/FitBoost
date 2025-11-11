@@ -4,9 +4,8 @@ namespace App\Providers;
 
 use App\Interfaces\BmiCalculator;
 use App\Interfaces\ImageStorage;
-use App\Services\CartService;
 use App\Services\BMI\BmiApiCalculator;
-use App\Services\BMI\BmiLocalCalculator;
+use App\Services\CartService;
 use App\Util\ImageLocalStorage;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -20,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(BmiCalculator::class, function () {
-            
+
             return new BmiApiCalculator(config('services.rapidapi_bmi', []));
         });
     }
